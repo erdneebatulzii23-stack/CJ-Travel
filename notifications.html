@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notifications - CJ Travel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-slate-100 antialiased min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<div class="text-[#0d141b] dark:text-slate-100 flex size-10 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">CJ Travel</h2>
+<div class="size-10 flex items-center justify-end">
+<span class="material-symbols-outlined text-[#0d141b] dark:text-slate-100">more_horiz</span>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-md mx-auto">
+<div class="bg-background-light dark:bg-background-dark">
+<div class="flex border-b border-slate-200 dark:border-slate-800 px-4 gap-8">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-primary text-primary pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">All</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Bookings</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Messages</p>
+</a>
+</div>
+</div>
+<div class="px-4 pt-6 pb-2">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Recent Activity</h3>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-[80px] py-3 justify-between border-b border-slate-100 dark:border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-xl bg-primary/10 shrink-0 size-12">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#0d141b] dark:text-slate-100 text-base font-semibold leading-tight line-clamp-1">New booking confirmed</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal line-clamp-2">Your tour 'Hidden Gems of Kyoto' is confirmed.</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-slate-400 text-xs font-medium">2m ago</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-[80px] py-3 justify-between border-b border-slate-100 dark:border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="text-amber-500 flex items-center justify-center rounded-xl bg-amber-500/10 shrink-0 size-12">
+<span class="material-symbols-outlined">star</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#0d141b] dark:text-slate-100 text-base font-semibold leading-tight line-clamp-1">Rating received</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal line-clamp-2">A traveler left a 5-star review for your service.</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-slate-400 text-xs font-medium">1h ago</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-[80px] py-3 justify-between border-b border-slate-100 dark:border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12 border-2 border-white dark:border-slate-800" data-alt="Professional headshot of a travel guide smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQIsn5gKfSTCRKNVKzqPoBqCFZU-pTYHMji4-wIZZbAis3w8EDcG6lAwy-RmntumYYaTkil7uapMZMJ8cttscrz6m04qHmiOHkl1RE6OqYu5Wk7-Teh3EkAr5eew14on99LvLFXIbhcKc1XjttzKYWlX7DutHCbFArWAJx8XaAQIqt5LKnZbLtKc53WDR3NhIfQPvUf5yaMZ7D3vlMHj38RJBCby6vkqjid7ri04Q_bc0UMx3a40gB_oO4yj8Mo6oWl2EolnMW1tmi");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-[#0d141b] dark:text-slate-100 text-base font-semibold leading-tight line-clamp-1">Message from guide</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal line-clamp-2">Hi! I'll be meeting you at the station at 9 AM.</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-slate-400 text-xs font-medium">3h ago</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-[80px] py-3 justify-between border-b border-slate-100 dark:border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="text-emerald-500 flex items-center justify-center rounded-xl bg-emerald-500/10 shrink-0 size-12">
+<span class="material-symbols-outlined">update</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#0d141b] dark:text-slate-100 text-base font-semibold leading-tight line-clamp-1">Itinerary updated</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal line-clamp-2">New stops added to your 'Alpine Hike' trip.</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-slate-400 text-xs font-medium">5h ago</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-[80px] py-3 justify-between border-b border-slate-100 dark:border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="text-slate-700 dark:text-slate-300 flex items-center justify-center rounded-xl bg-slate-200 dark:bg-slate-700 shrink-0 size-12">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#0d141b] dark:text-slate-100 text-base font-semibold leading-tight line-clamp-1">Payment Successful</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal line-clamp-2">Transaction #88291 has been processed.</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-slate-400 text-xs font-medium">1d ago</p>
+</div>
+</div>
+</div>
+<div class="h-24"></div> 
+</main>
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 pb-6 pt-2">
+<div class="max-w-md mx-auto flex justify-around items-center px-4">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">hail</span>
+<span class="text-[10px] font-medium">Guides</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">holiday_village</span>
+<span class="text-[10px] font-medium">Resorts</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined font-bold" style="font-variation-settings: 'FILL' 1">notifications</span>
+<span class="text-[10px] font-bold">Notifications</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-medium">My Profile</span>
+</a>
+</div>
+</footer>
+
+</body></html>
