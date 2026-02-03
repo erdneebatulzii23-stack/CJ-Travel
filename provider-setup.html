@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Company Information Registration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between border-b border-slate-200 dark:border-slate-800">
+<div class="text-[#0d141b] dark:text-slate-100 flex size-12 shrink-0 items-center cursor-pointer" data-icon="ArrowLeft">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12 font-display">CJ Travel</h2>
+</div>
+<div class="flex flex-col flex-1 pb-10">
+<!-- HeadlineText -->
+<h3 class="text-[#0d141b] dark:text-slate-100 tracking-light text-2xl font-bold leading-tight px-4 text-left pb-2 pt-5 font-display">Company Information</h3>
+<!-- BodyText -->
+<p class="text-[#4c739a] dark:text-slate-400 text-base font-normal leading-normal pb-3 pt-1 px-4 font-display">Please provide your business details for verification to start offering your services on CJ Travel.</p>
+<form class="flex flex-col gap-1">
+<!-- Business Name TextField -->
+<div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2 font-display">Business Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="Enter legal company name" value=""/>
+</label>
+</div>
+<!-- Tax ID TextField -->
+<div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2 font-display">Tax ID / Registration Number</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="Enter registration number" value=""/>
+</label>
+</div>
+<!-- Business Category (Custom Component) -->
+<div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2 font-display">Business Category</p>
+<select class="form-select flex w-full min-w-0 flex-1 rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-14 p-[15px] text-base font-normal leading-normal font-display">
+<option disabled="" selected="" value="">Select category</option>
+<option value="resort">Resort</option>
+<option value="agency">Travel Agency</option>
+<option value="camp">Camp</option>
+</select>
+</label>
+</div>
+<!-- Official Address TextField -->
+<div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2 font-display">Official Address</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="Enter registered business address" value=""/>
+</label>
+</div>
+<!-- Contact Email TextField -->
+<div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2 font-display">Contact Email</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="business@company.com" type="email" value=""/>
+</label>
+</div>
+<!-- Phone Number TextField -->
+<div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2 font-display">Phone Number</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="+1 (555) 000-0000" type="tel" value=""/>
+</label>
+</div>
+<!-- Business License Document Upload (Custom Component) -->
+<div class="flex flex-col px-4 py-3 gap-2">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal font-display">Business License</p>
+<div class="flex flex-col items-center justify-center border-2 border-dashed border-[#cfdbe7] dark:border-slate-700 rounded-xl p-8 bg-white dark:bg-slate-800/50">
+<span class="material-symbols-outlined text-primary text-4xl mb-2">cloud_upload</span>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm text-center font-display">Upload your business license or registration document (PDF, JPG, PNG)</p>
+<button class="mt-4 px-6 py-2 bg-primary/10 text-primary font-semibold rounded-lg text-sm font-display" type="button">Select File</button>
+</div>
+</div>
+<!-- Submit Button -->
+<div class="flex px-4 py-6">
+<button class="flex-1 bg-primary text-white text-base font-bold h-14 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors font-display" type="submit">
+                        Submit for Review
+                    </button>
+</div>
+</form>
+</div>
+</div>
+</body></html>
