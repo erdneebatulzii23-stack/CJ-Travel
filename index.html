@@ -1,175 +1,130 @@
 <!DOCTYPE html>
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>CJ Travel - Home</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#2b8cee",
-              "background-light": "#f6f7f8",
-              "background-dark": "#101922",
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>CJ Travel - Home</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+          tailwind.config = {
+            darkMode: "class",
+            theme: {
+              extend: {
+                colors: {
+                  "primary": "#2b8cee",
+                  "background-light": "#f6f7f8",
+                  "background-dark": "#101922",
+                },
+                fontFamily: {
+                  "display": ["Plus Jakarta Sans"]
+                },
+                borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+              },
             },
-            fontFamily: {
-              "display": ["Plus Jakarta Sans"]
-            },
-            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-          },
-        },
-      }
+          }
     </script>
-<style>
+    <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: max(884px, 100dvh);
+            min-height: 100vh;
+            margin: 0;
         }
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-50 min-h-screen flex flex-col">
-<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-    <div class="flex items-center p-4 justify-between max-w-xl mx-auto">
-        <div class="flex items-center gap-2">
+
+    <header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center p-4 justify-between max-w-xl mx-auto w-full">
             <a href="index.html" class="flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary text-3xl">explore</span>
                 <h1 class="text-[#0d141b] dark:text-white text-xl font-bold leading-tight tracking-tight">CJ Travel</h1>
             </a>
+            <div class="flex gap-3">
+                <a href="notifications.html" class="flex items-center justify-center size-10 rounded-full bg-slate-200 dark:bg-slate-800">
+                    <span class="material-symbols-outlined text-xl">notifications</span>
+                </a>
+            </div>
         </div>
-        <div class="flex gap-3">
-            <a href="notifications.html" class="flex items-center justify-center size-10 rounded-full bg-slate-200 dark:bg-slate-800">
-                <span class="material-symbols-outlined text-xl">notifications</span>
+    </header>
+
+    <main class="flex-1 pb-32 max-w-xl mx-auto w-full">
+        <div class="px-4 py-4">
+            <div class="flex w-full h-14 items-stretch rounded-xl shadow-sm bg-white dark:bg-slate-800 overflow-hidden">
+                <div class="text-[#4c739a] flex items-center justify-center pl-4">
+                    <span class="material-symbols-outlined">search</span>
+                </div>
+                <input class="w-full border-none bg-transparent focus:ring-0 text-[#0d141b] dark:text-white px-4 text-base font-medium placeholder:text-[#4c739a]" placeholder="Search guides or destinations"/>
+            </div>
+        </div>
+
+        <div class="mt-2">
+            <div class="flex items-center justify-between px-4 pb-3 pt-4">
+                <h2 class="text-[#0d141b] dark:text-white text-[22px] font-bold">Top Rated Guides</h2>
+                <a href="guides.html" class="text-primary text-sm font-semibold">See All</a>
+            </div>
+            <div class="grid grid-cols-2 gap-3 px-4">
+                <div class="bg-cover bg-center flex flex-col justify-end p-4 aspect-[3/4] rounded-xl relative overflow-hidden" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%), url("https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop");'>
+                    <div class="absolute top-2 right-2 bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1">
+                        <span class="material-symbols-outlined text-yellow-400 text-sm fill-current">star</span>
+                        <span class="text-white text-xs font-bold">4.9</span>
+                    </div>
+                    <p class="text-white text-base font-bold">Alex Rivera</p>
+                </div>
+                <div class="bg-cover bg-center flex flex-col justify-end p-4 aspect-[3/4] rounded-xl relative overflow-hidden" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%), url("https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop");'>
+                    <div class="absolute top-2 right-2 bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1">
+                        <span class="material-symbols-outlined text-yellow-400 text-sm fill-current">star</span>
+                        <span class="text-white text-xs font-bold">4.8</span>
+                    </div>
+                    <p class="text-white text-base font-bold">Sarah Chen</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <div class="flex items-center justify-between px-4 pb-3 pt-4">
+                <h2 class="text-[#0d141b] dark:text-white text-[22px] font-bold">Natural Destinations</h2>
+                <button class="text-primary text-sm font-semibold">View Maps</button>
+            </div>
+            <div class="flex flex-col gap-4 px-4">
+                <div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm">
+                    <div class="h-48 w-full bg-cover bg-center" style='background-image: url("https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800&auto=format&fit=crop");'></div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg">Bali, Indonesia</h3>
+                        <p class="text-sm text-slate-500">Southeast Asia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 pb-6 pt-2 z-50">
+        <div class="flex justify-between items-center max-w-xl mx-auto px-6">
+            <a href="index.html" class="flex flex-col items-center gap-1 text-primary">
+                <span class="material-symbols-outlined fill-current">home</span>
+                <span class="text-[10px] font-bold">Home</span>
+            </a>
+            <a href="guides.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">person_search</span>
+                <span class="text-[10px] font-medium">Guides</span>
+            </a>
+            <a href="resort.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">apartment</span>
+                <span class="text-[10px] font-medium">Resorts</span>
+            </a>
+            <a href="#" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">favorite</span>
+                <span class="text-[10px] font-medium">Favorites</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span class="text-[10px] font-medium">Profile</span>
             </a>
         </div>
-    </div>
-</header>
-<main class="flex-1 pb-32 max-w-xl mx-auto w-full">
-<div class="px-4 py-4">
-<label class="flex flex-col min-w-40 h-14 w-full">
-<div class="flex w-full flex-1 items-stretch rounded-xl h-full shadow-sm">
-<div class="text-[#4c739a] flex border-none bg-white dark:bg-slate-800 items-center justify-center pl-4 rounded-l-xl">
-<span class="material-symbols-outlined">search</span>
-</div>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-xl text-[#0d141b] dark:text-white focus:outline-0 focus:ring-0 border-none bg-white dark:bg-slate-800 focus:border-none h-full placeholder:text-[#4c739a] px-4 pl-2 text-base font-medium leading-normal" placeholder="Search guides or destinations" value=""/>
-</div>
-</label>
-</div>
-<div class="mt-2">
-<div class="flex items-center justify-between px-4 pb-3 pt-4">
-<h2 class="text-[#0d141b] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Top Rated Guides</h2>
-<button class="text-primary text-sm font-semibold">See All</button>
-</div>
-<div class="grid grid-cols-2 gap-3 px-4">
-<div class="bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-4 aspect-[3/4] relative overflow-hidden group" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAGhoSs_42VU-51An_3zBUA1DSY44PIk3DfUF9TWRpA4NXCtWtIGp3fO7Fo_1LFdtjw2QzNOT8iIRoMTEhPcwPxJdFSvettDJ1myy_mcBdrEu1iLFJqensPVq6v9tMgiRavIGIxGl94SViH1H-e0pmAdWSqMttMq8CfYiXhfSeUKsEdjDBd4QRiBWaBg-CZpZ7RSkDRLCwWsyjvIezmJTbKDP30SZUYzPEH-TMyQd3aSTheljXj2JZ-C0e6thAzNVbLIGwEiP5Vvzg6");'>
-<div class="absolute top-2 right-2 bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1">
-<span class="material-symbols-outlined text-yellow-400 text-sm fill-current">star</span>
-<span class="text-white text-xs font-bold">4.9</span>
-</div>
-<p class="text-white text-base font-bold leading-tight">Alex Rivera</p>
-</div>
-<div class="bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-4 aspect-[3/4] relative overflow-hidden group" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7WbwI2nGDRz7icbtKdBdqJhWfy4mGTcIQh_3f7NRndhm06OZRZExv4-9WQScayspRAqdepaBdEne5CmZeuu3sTik1Zo5ennp_7DvwwyZMMQ4f1V8SpwHYoxXZ81AMr7Sd9DcGtkpGsq6DmZ48OuKFfeC7HhC4gN84fo3zqm1Nrp3NJxDfr_Mu-XYqqlzOI2rXan94qmi2l7xLTMCQc6jzsw-BUL2vKjUdaqH6Ay5igOuKnFganp5LBCBJNwzYaBmJp8dJa9YRPLCR");'>
-<div class="absolute top-2 right-2 bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1">
-<span class="material-symbols-outlined text-yellow-400 text-sm fill-current">star</span>
-<span class="text-white text-xs font-bold">4.8</span>
-</div>
-<p class="text-white text-base font-bold leading-tight">Sarah Chen</p>
-</div>
-<div class="bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-4 aspect-[3/4] relative overflow-hidden group" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBRrrm8LHUelZ3bpUzdAlms_H80bfwZmwUq8RQvk5aamSyhcMXBK-ajdtVwdMK1eP0M43G3WBO_sxKfNvDJVBCF9s-bYsVtHFFmlLWHsA4gY1VXdq7l54WCClUGJ8byS2q059vXaFyKrZAHtHyMgt986DM5W2qOvjd6v2fpdnahSzXGUUzxMjQTL7IB3txy1bh5r1tDCG7JlGlKxJnv95JkM1RAClE2qQ_3DVj4W3Wh3Y2jnbxShWD-pJgfBa5x7ToAi4kfpARjOgho");'>
-<div class="absolute top-2 right-2 bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1">
-<span class="material-symbols-outlined text-yellow-400 text-sm fill-current">star</span>
-<span class="text-white text-xs font-bold">4.8</span>
-</div>
-<p class="text-white text-base font-bold leading-tight">Marcus Bell</p>
-</div>
-<div class="bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-4 aspect-[3/4] relative overflow-hidden group" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDGncX2YlE6Q1OAOWuvNOyZEWTcpu57K0kLVUssnalwdeuYCzN_NuEb7TT0PDbCsVEzYDU5q-CUbsKDNcuM6DTcRAWxEBPGm6_yoWJNnbAk6T1lb6d6ANOOjnZNzyH4USaZAkuPalEKzzKVw7FQxoV8Kdq2B0jDso_FtEORbQoqPpyhXcdpEEb0TY28IA2KHCiUnr0E4S_wvTgLwKysrgt74VnofSSZftIUptTuSa5qt9uXFVT0uCKN-XyMZxVJAiNS6rtKRjtoZZLP");'>
-<div class="absolute top-2 right-2 bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1">
-<span class="material-symbols-outlined text-yellow-400 text-sm fill-current">star</span>
-<span class="text-white text-xs font-bold">4.7</span>
-</div>
-<p class="text-white text-base font-bold leading-tight">Elena Vogt</p>
-</div>
-</div>
-</div>
-<div class="mt-6">
-<div class="flex items-center justify-between px-4 pb-3 pt-4">
-<h2 class="text-[#0d141b] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Top Natural Destinations</h2>
-<button class="text-primary text-sm font-semibold">View Maps</button>
-</div>
-<div class="flex flex-col gap-4 px-4">
-<div class="flex flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm">
-<div class="h-48 w-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDnJEZ_LLA1z0CfiLpWiMuZjUjYP0flEjIPVuAeSpBNFuHJ9sRHR9MeHfPzz3lOyohzvRuJAEZM1J-O6sPZ2xmnc7Ex5rw42juQNhehHRatJZCWm2P1DzrlVcMgeWIesFo7gF8Ncpa1tkTm-UXOxrCX3tT_sQmUPmQEa9kLzwh5wwJ94aUmNQcz8vHK4laNIHHf2pAnXfCUzaIRz6Bfv0iOluY5FR5KCF9M0ss3EcAoQQZxXDXNJWStfTllrp6auBdQYqDTbXuXDaGo");'></div>
-<div class="p-4">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="text-[#0d141b] dark:text-white text-lg font-bold">Bali, Indonesia</h3>
-<div class="flex items-center gap-1 mt-1 text-slate-500 dark:text-slate-400">
-<span class="material-symbols-outlined text-sm">location_on</span>
-<p class="text-xs font-medium">Southeast Asia</p>
-</div>
-</div>
-<div class="flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-lg">
-<span class="material-symbols-outlined text-primary text-sm fill-current">star</span>
-<span class="text-primary text-xs font-bold">4.9</span>
-</div>
-</div>
-</div>
-</div>
-<div class="flex flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm">
-<div class="h-48 w-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0cGUTQs1y5D8kwo05LRai5issXiDCXhujhnobAPsVJRPqwOUYAMOq-4kSmRyvNxrp9slMWXiDdZLs5Q3SyctlFecAC1s25nrHWVqMK6Rofkb7N9jXfanxTixAcSRZfCwWvN2BS2ObQ74epG8PqMtjNkLzp_TT_dIyrTByfPxvZ7Etgdm4zjxK6Qs9NPnpGiFd9zSJxNpKNblQZaFQolVTVV5bM5ZUUL25PmetYPzVaYv8gPclDwprUaFvDUki4K952BPbolFewnER");'></div>
-<div class="p-4">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="text-[#0d141b] dark:text-white text-lg font-bold">Amalfi Coast, Italy</h3>
-<div class="flex items-center gap-1 mt-1 text-slate-500 dark:text-slate-400">
-<span class="material-symbols-outlined text-sm">location_on</span>
-<p class="text-xs font-medium">Europe</p>
-</div>
-</div>
-<div class="flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-lg">
-<span class="material-symbols-outlined text-primary text-sm fill-current">star</span>
-<span class="text-primary text-xs font-bold">4.8</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 pb-6 pt-2 z-50">
-    <div class="flex justify-between items-center max-w-xl mx-auto px-6">
-        <a href="index.html" class="flex flex-col items-center gap-1 text-slate-400 focus:text-primary active:text-primary">
-            <span class="material-symbols-outlined">home</span>
-            <span class="text-[10px] font-medium">Home</span>
-        </a>
-        <a href="guides.html" class="flex flex-col items-center gap-1 text-slate-400 focus:text-primary active:text-primary">
-            <span class="material-symbols-outlined">person_search</span>
-            <span class="text-[10px] font-medium">Guides</span>
-        </a>
-        <a href="resort.html" class="flex flex-col items-center gap-1 text-slate-400 focus:text-primary active:text-primary">
-            <span class="material-symbols-outlined">apartment</span>
-            <span class="text-[10px] font-medium">Resorts</span>
-        </a>
-        <a href="#" class="flex flex-col items-center gap-1 text-slate-400">
-            <span class="material-symbols-outlined">favorite</span>
-            <span class="text-[10px] font-medium">Favorites</span>
-        </a>
-        <a href="profile.html" class="flex flex-col items-center gap-1 text-slate-400 focus:text-primary active:text-primary">
-            <span class="material-symbols-outlined">account_circle</span>
-            <span class="text-[10px] font-medium">My Profile</span>
-        </a>
-    </div>
-</nav>
-
-</body></html>
+    </nav>
+</body>
+</html>
