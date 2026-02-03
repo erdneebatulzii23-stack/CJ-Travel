@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Travel Guides List - CJ Travel</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -21,7 +19,7 @@
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
                     },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
                 },
             },
         }
@@ -39,6 +37,11 @@
         }
     </style>
 <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
     body {
       min-height: max(884px, 100dvh);
     }
@@ -46,7 +49,6 @@
   </head>
 <body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100">
 <div class="relative flex h-screen w-full flex-col overflow-hidden">
-<!-- TopAppBar -->
 <header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between border-b border-gray-200 dark:border-gray-800 shrink-0">
 <div class="text-[#0d141b] dark:text-slate-100 flex size-12 shrink-0 items-center justify-start">
 <span class="material-symbols-outlined cursor-pointer">arrow_back_ios</span>
@@ -58,9 +60,7 @@
 </button>
 </div>
 </header>
-<!-- Main Content Area (Scrollable) -->
 <main class="flex-1 overflow-y-auto no-scrollbar pb-24">
-<!-- Ratings Summary Section -->
 <section class="p-4 bg-white dark:bg-slate-900 mx-4 mt-4 rounded-xl shadow-sm">
 <h3 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold mb-4">Community Satisfaction</h3>
 <div class="flex flex-wrap gap-x-8 gap-y-6">
@@ -77,18 +77,23 @@
 </div>
 <div class="grid min-w-[180px] flex-1 grid-cols-[20px_1fr_40px] items-center gap-y-2">
 <p class="text-[#0d141b] dark:text-slate-300 text-xs font-normal">5</p>
-<div class="flex h-1.5 flex-1 overflow-hidden rounded-full bg-[#cfdbe7] dark:bg-slate-700"><div class="rounded-full bg-primary" style="width: 92%;"></div></div>
+<div class="flex h-1.5 flex-1 overflow-hidden rounded-full bg-[#cfdbe7] dark:bg-slate-700">
+<div class="rounded-full bg-primary" style="width: 92%;"></div>
+</div>
 <p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal text-right">92%</p>
 <p class="text-[#0d141b] dark:text-slate-300 text-xs font-normal">4</p>
-<div class="flex h-1.5 flex-1 overflow-hidden rounded-full bg-[#cfdbe7] dark:bg-slate-700"><div class="rounded-full bg-primary" style="width: 5%;"></div></div>
+<div class="flex h-1.5 flex-1 overflow-hidden rounded-full bg-[#cfdbe7] dark:bg-slate-700">
+<div class="rounded-full bg-primary" style="width: 5%;"></div>
+</div>
 <p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal text-right">5%</p>
 <p class="text-[#0d141b] dark:text-slate-300 text-xs font-normal">3</p>
-<div class="flex h-1.5 flex-1 overflow-hidden rounded-full bg-[#cfdbe7] dark:bg-slate-700"><div class="rounded-full bg-primary" style="width: 3%;"></div></div>
+<div class="flex h-1.5 flex-1 overflow-hidden rounded-full bg-[#cfdbe7] dark:bg-slate-700">
+<div class="rounded-full bg-primary" style="width: 3%;"></div>
+</div>
 <p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal text-right">3%</p>
 </div>
 </div>
 </section>
-<!-- Chips / Filters -->
 <div class="flex gap-3 p-4 overflow-x-auto no-scrollbar">
 <button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-white px-4">
 <p class="text-sm font-medium">All Guides</p>
@@ -106,9 +111,7 @@
 <span class="material-symbols-outlined text-sm">expand_more</span>
 </button>
 </div>
-<!-- Guides List -->
 <div class="flex flex-col gap-2">
-<!-- Card 1 -->
 <div class="px-4 py-2">
 <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-sm border border-gray-100 dark:border-slate-800">
 <div class="flex flex-[2_2_0px] flex-col justify-between">
@@ -133,7 +136,6 @@
 </div>
 </div>
 </div>
-<!-- Card 2 -->
 <div class="px-4 py-2">
 <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-sm border border-gray-100 dark:border-slate-800">
 <div class="flex flex-[2_2_0px] flex-col justify-between">
@@ -158,7 +160,6 @@
 </div>
 </div>
 </div>
-<!-- Card 3 -->
 <div class="px-4 py-2">
 <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-sm border border-gray-100 dark:border-slate-800">
 <div class="flex flex-[2_2_0px] flex-col justify-between">
@@ -185,24 +186,28 @@
 </div>
 </div>
 </main>
-<!-- Fixed Bottom Navigation -->
-<nav class="absolute bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-gray-200 dark:border-slate-800 h-20 flex items-center justify-around px-4 pb-4">
+<nav class="absolute bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-gray-200 dark:border-slate-800 h-20 flex items-center justify-around px-2 pb-5">
 <div class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400 cursor-pointer">
-<span class="material-symbols-outlined">explore</span>
-<span class="text-[10px] font-medium">Explore</span>
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-semibold">Home</span>
 </div>
 <div class="flex flex-col items-center gap-1 text-primary cursor-pointer">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person_search</span>
-<span class="text-[10px] font-medium">Guides</span>
+<span class="text-[10px] font-semibold">Guides</span>
 </div>
 <div class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400 cursor-pointer">
-<span class="material-symbols-outlined">confirmation_number</span>
-<span class="text-[10px] font-medium">Bookings</span>
+<span class="material-symbols-outlined">holiday_village</span>
+<span class="text-[10px] font-semibold">Resorts</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400 cursor-pointer">
+<span class="material-symbols-outlined">favorite</span>
+<span class="text-[10px] font-semibold">Favorites</span>
 </div>
 <div class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400 cursor-pointer">
 <span class="material-symbols-outlined">account_circle</span>
-<span class="text-[10px] font-medium">Profile</span>
+<span class="text-[10px] font-semibold">My Profile</span>
 </div>
 </nav>
 </div>
+
 </body></html>
