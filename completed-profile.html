@@ -78,5 +78,30 @@
             </button>
 </div>
 </div>
+<script>
+    /**
+     * Navigation Logic for Success Page
+     */
 
+    // Select the 'Explore Now' button (first button in the footer section)
+    const exploreNowBtn = document.querySelector('button.bg-primary');
+    
+    // Select the 'Go to My Profile' button (second button)
+    const profileBtn = document.querySelector('button.bg-transparent');
+
+    // Redirect to the home page (index.html) when 'Explore Now' is clicked
+    if (exploreNowBtn) {
+        exploreNowBtn.addEventListener('click', () => {
+            window.location.href = "index.html";
+        });
+    }
+
+    // Redirect to the profile page when 'Go to My Profile' is clicked
+    if (profileBtn) {
+        profileBtn.addEventListener('click', () => {
+            // Assuming you will create profile.html later
+            window.location.href = "profile.html";
+        });
+    }
+</script>
 </body></html>
