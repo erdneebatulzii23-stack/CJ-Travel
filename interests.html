@@ -183,41 +183,52 @@
 </footer>
 <script>
     /**
-     * Interests Selection Logic
+     * Interests Selection Logic (Enhanced with LocalStorage)
      */
 
-    // Select all interest cards and navigation buttons
     const cards = document.querySelectorAll('.grid > div');
     const finishBtn = document.querySelector('button.bg-primary');
-    const backBtn = document.querySelector('button.border, button.bg-gray-200'); // Support both style variants
+    const backBtn = document.querySelector('button.bg-gray-200, button.dark\\:bg-gray-700');
 
-    // Toggle selection state for each card
+    // 1. Handle Selection: Toggle visual state
     cards.forEach(card => {
         card.addEventListener('click', () => {
-            // Toggle the custom selection class
             card.classList.toggle('interest-card-selected');
         });
     });
 
-    // Back button: Navigate back to the traveler registration page
+    // 2. Back Button: Return to setup page
     if (backBtn) {
         backBtn.addEventListener('click', () => {
             window.location.href = "traveler-setup.html";
         });
     }
 
-    // Finish button: Validate selection and proceed to success page
+    // 3. Finish Button: Save and Redirect
     if (finishBtn) {
         finishBtn.addEventListener('click', () => {
-            const selectedInterests = document.querySelectorAll('.interest-card-selected');
+            const selectedCards = document.querySelectorAll('.interest-card-selected');
             
-            // Check if user has selected at least 3 interests
-            if (selectedInterests.length < 3) {
+            if (selectedCards.length < 3) {
                 alert("Please select at least 3 interests to continue!");
-            } else {
-                // Redirect to the success confirmation page
-                window.location.href = "completed-profile.html";
+                return;
             }
+
+            // Extract text from selected cards
+            const selectedInterests = Array.from(selectedCards).map(card => 
+                card.querySelector('p').textContent
+            );
+
+            // Update LocalStorage for the last registered user
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.length > 0) {
+                // Add interests to the latest user
+                users[users.length - 1].interests = selectedInterests;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+
+            // Move to final success page
+            window.location.href = "completed-profile.html";
         });
     }
 </script>
