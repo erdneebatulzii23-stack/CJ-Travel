@@ -1,12 +1,13 @@
-8<!DOCTYPE html>
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Travel Guides List - CJ Travel</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Travel Guides List - CJ Travel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -18,198 +19,131 @@
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
-                    },
-                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    }
                 },
             },
         }
     </script>
-<style>
-        body {
-            font-family: "Plus Jakarta Sans", sans-serif;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+    <style>
+        body { font-family: "Plus Jakarta Sans", sans-serif; margin: 0; padding: 0; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-<style>
-        body {
-            min-height: max(884px, 100dvh);
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100">
-<div class="relative flex h-screen w-full flex-col overflow-hidden">
-<header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between border-b border-gray-200 dark:border-gray-800 shrink-0">
-<div class="text-[#0d141b] dark:text-slate-100 flex size-12 shrink-0 items-center justify-start">
-<span class="material-symbols-outlined cursor-pointer">arrow_back_ios</span>
-</div>
-<h2 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">CJ Travel</h2>
-<div class="flex w-12 items-center justify-end">
-<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-[#0d141b] dark:text-slate-100 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
-<span class="material-symbols-outlined">search</span>
-</button>
-</div>
-</header>
-<main class="flex-1 overflow-y-auto no-scrollbar pb-24">
-<section class="p-4 bg-white dark:bg-slate-900 mx-4 mt-4 rounded-xl shadow-sm">
-<h3 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold mb-4">Community Satisfaction</h3>
-<div class="flex flex-wrap gap-x-8 gap-y-6">
-<div class="flex flex-col gap-2">
-<p class="text-[#0d141b] dark:text-slate-100 text-4xl font-black leading-tight tracking-[-0.033em]">4.9</p>
-<div class="flex gap-0.5 text-primary">
-<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1">star</span>
-<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1">star</span>
-<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1">star</span>
-<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1">star</span>
-<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1">star_half</span>
-</div>
-<p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal leading-normal">Based on 1.2k bookings</p>
-</div>
-<div class="grid min-w-[180px] flex-1 grid-cols-[20px_1fr_40px] items-center gap-y-2">
-<p class="text-[#0d141b] dark:text-slate-300 text-xs font-normal">5</p>
-<div class="flex h-1.5 flex-1 overflow-hidden rounded-full bg-[#cfdbe7] dark:bg-slate-700">
-<div class="rounded-full bg-primary" style="width: 92%;"></div>
-</div>
-<p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal text-right">92%</p>
-<p class="text-[#0d141b] dark:text-slate-300 text-xs font-normal">4</p>
-<div class="flex h-1.5 flex-1 overflow-hidden rounded-full bg-[#cfdbe7] dark:bg-slate-700">
-<div class="rounded-full bg-primary" style="width: 5%;"></div>
-</div>
-<p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal text-right">5%</p>
-<p class="text-[#0d141b] dark:text-slate-300 text-xs font-normal">3</p>
-<div class="flex h-1.5 flex-1 overflow-hidden rounded-full bg-[#cfdbe7] dark:bg-slate-700">
-<div class="rounded-full bg-primary" style="width: 3%;"></div>
-</div>
-<p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal text-right">3%</p>
-</div>
-</div>
-</section>
-<div class="flex gap-3 p-4 overflow-x-auto no-scrollbar">
-<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-white px-4">
-<p class="text-sm font-medium">All Guides</p>
-</button>
-<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#e7edf3] dark:bg-slate-800 px-4">
-<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium">Specialization</p>
-<span class="material-symbols-outlined text-sm">expand_more</span>
-</button>
-<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#e7edf3] dark:bg-slate-800 px-4">
-<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium">Language</p>
-<span class="material-symbols-outlined text-sm">expand_more</span>
-</button>
-<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#e7edf3] dark:bg-slate-800 px-4">
-<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium">Rating</p>
-<span class="material-symbols-outlined text-sm">expand_more</span>
-</button>
-</div>
-<div class="flex flex-col gap-2">
-<div class="px-4 py-2">
-<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-sm border border-gray-100 dark:border-slate-800">
-<div class="flex flex-[2_2_0px] flex-col justify-between">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-1">
-<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">verified</span>
-<p class="text-[#4c739a] dark:text-primary text-xs font-semibold uppercase tracking-wider">Certified Guide</p>
-</div>
-<p class="text-[#0d141b] dark:text-slate-100 text-base font-bold leading-tight">Elena Rodriguez</p>
-<p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal">Cultural &amp; History Expert • Spanish, English</p>
-<div class="flex items-center gap-1 mt-1">
-<span class="material-symbols-outlined text-yellow-500 text-xs" style="font-variation-settings: 'FILL' 1">star</span>
-<span class="text-[#0d141b] dark:text-slate-300 text-xs font-bold">4.9</span>
-<span class="text-[#4c739a] dark:text-slate-400 text-xs">(128 reviews)</span>
-</div>
-</div>
-<button class="flex min-w-[100px] mt-4 max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 text-primary text-sm font-bold leading-normal w-fit">
-<span class="truncate">View Profile</span>
-</button>
-</div>
-<div class="w-24 h-24 sm:w-32 sm:h-32 bg-center bg-no-repeat bg-cover rounded-xl shrink-0" data-alt="Portrait of a friendly female tour guide smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBG9noFH0XtUGn_EhP3Xr7XyL5Dn6KR-573TLeKZWNco_U_tqUImm0tLDcFmJnAugQFdYJlLHhPIDcUwqozvg8L1w8NRFJhqpjjFI2iVt7z7RYWes9NayOqVm6KJARW_buWuIxpuO8IeHrM9_uxryDcTegOrxskkKOMzAH_5jsN4yiitTpbv_kzodg9ISzBuNvcybaHxfdp_KKClT5bCUHpFB70Gcir0ntjiW5uuiwqMpJbpHVqLQV0bSXP3Lt6o_bnoYtZM7IZrt_A");'>
-</div>
-</div>
-</div>
-<div class="px-4 py-2">
-<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-sm border border-gray-100 dark:border-slate-800">
-<div class="flex flex-[2_2_0px] flex-col justify-between">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-1">
-<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">workspace_premium</span>
-<p class="text-[#4c739a] dark:text-primary text-xs font-semibold uppercase tracking-wider text-primary">Top Rated</p>
-</div>
-<p class="text-[#0d141b] dark:text-slate-100 text-base font-bold leading-tight">Marcus Chen</p>
-<p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal">Adventure &amp; Trekking • Mandarin, English</p>
-<div class="flex items-center gap-1 mt-1">
-<span class="material-symbols-outlined text-yellow-500 text-xs" style="font-variation-settings: 'FILL' 1">star</span>
-<span class="text-[#0d141b] dark:text-slate-300 text-xs font-bold">5.0</span>
-<span class="text-[#4c739a] dark:text-slate-400 text-xs">(84 reviews)</span>
-</div>
-</div>
-<button class="flex min-w-[100px] mt-4 max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 text-primary text-sm font-bold leading-normal w-fit">
-<span class="truncate">View Profile</span>
-</button>
-</div>
-<div class="w-24 h-24 sm:w-32 sm:h-32 bg-center bg-no-repeat bg-cover rounded-xl shrink-0" data-alt="Portrait of a male outdoor enthusiast with trekking gear" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAulXCqCiBY8r4groXuJcde1gtEz56VcJZqP4NgMTXi4lIwPwnkNkYJJp58E35q0vueKoR7x9cnR8IZjs018ZbuTiY0YCpUN7biBypCuuZxlhcuVdnOWk_JAoq-MgSIUegqS5rf5b0uwVwuyXIMNH1pTLdxVyxfgPoPAtnJcZcO9f9dtnOQAJkBY0D8ZpyAfkKWplNVyeVZDH-ySoRxCloaTXKOxCNPj_tQVB02N9fk9GRmvsna60J_oYvmsHhxsKtplNXwL2LcoEUf");'>
-</div>
-</div>
-</div>
-<div class="px-4 py-2">
-<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-sm border border-gray-100 dark:border-slate-800">
-<div class="flex flex-[2_2_0px] flex-col justify-between">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-1">
-<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">local_activity</span>
-<p class="text-[#4c739a] dark:text-primary text-xs font-semibold uppercase tracking-wider">Local Expert</p>
-</div>
-<p class="text-[#0d141b] dark:text-slate-100 text-base font-bold leading-tight">Sarah Jenkins</p>
-<p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal">Food &amp; Gastronomy • English, French</p>
-<div class="flex items-center gap-1 mt-1">
-<span class="material-symbols-outlined text-yellow-500 text-xs" style="font-variation-settings: 'FILL' 1">star</span>
-<span class="text-[#0d141b] dark:text-slate-300 text-xs font-bold">4.8</span>
-<span class="text-[#4c739a] dark:text-slate-400 text-xs">(210 reviews)</span>
-</div>
-</div>
-<button class="flex min-w-[100px] mt-4 max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 text-primary text-sm font-bold leading-normal w-fit">
-<span class="truncate">View Profile</span>
-</button>
-</div>
-<div class="w-24 h-24 sm:w-32 sm:h-32 bg-center bg-no-repeat bg-cover rounded-xl shrink-0" data-alt="Portrait of a smiling woman in a cafe setting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCq466u18ZCF3rwuNbS5Bkj4WCc20dTd1YtFw7FHPcDy0mu_CSVzBDyFAfaUKOURSjb-DyBxdNDRo_BywBB3FQ8GWjRZO7m8l5Yo-nMRr2CSrShQ-H524HaFH_sYXGoUKQ6wxs-urRvQikXpeADWeZs3n1FLfxPeltqYY9AALMfvac-_gTzTWaWMUI1ignRsLmXWzs-lGicFKYaveMk_hulY0T-IkX8gopspHBBoqrViWXOSNB7Jcc2fo-4LBLdusIxaiQ2cPKY4eww");'>
-</div>
-</div>
-</div>
-</div>
-</main>
-<footer class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-gray-200 dark:border-slate-800">
-    <div class="max-w-md mx-auto flex justify-around items-center h-20 px-2 pb-5">
-        <a href="index.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
-            <span class="material-symbols-outlined">home</span>
-            <span class="text-[10px] font-semibold">Home</span>
-        </a>
-        <a href="guides.html" class="flex flex-col items-center gap-1 text-primary">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person_search</span>
-            <span class="text-[10px] font-semibold">Guides</span>
-        </a>
-        <a href="resort.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
-            <span class="material-symbols-outlined">holiday_village</span>
-            <span class="text-[10px] font-semibold">Resorts</span>
-        </a>
-        <a href="favorites.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
-            <span class="material-symbols-outlined">favorite</span>
-            <span class="text-[10px] font-semibold">Favorites</span>
-        </a>
-        <a href="profile.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
-            <span class="material-symbols-outlined">account_circle</span>
-            <span class="text-[10px] font-semibold">My Profile</span>
-        </a>
-    </div>
-</footer>
-</div>
 
-</body></html>
+    <header class="sticky top-0 z-50 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm p-4 border-b border-gray-200 dark:border-gray-800">
+        <h1 class="text-[#0d141b] dark:text-slate-100 text-xl font-bold leading-tight flex-1">CJ Travel</h1>
+        <button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors">
+            <span class="material-symbols-outlined">search</span>
+        </button>
+    </header>
+
+    <main class="pb-32"> <section class="p-4 bg-white dark:bg-slate-900 mx-4 mt-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+            <h3 class="text-lg font-bold mb-4">Community Satisfaction</h3>
+            <div class="flex flex-wrap gap-x-8 gap-y-6">
+                <div class="flex flex-col gap-2">
+                    <p class="text-4xl font-black leading-tight">4.9</p>
+                    <div class="flex gap-0.5 text-primary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">star_half</span>
+                    </div>
+                    <p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal">Based on 1.2k bookings</p>
+                </div>
+                <div class="grid min-w-[180px] flex-1 grid-cols-[20px_1fr_40px] items-center gap-y-2">
+                    <p class="text-xs">5</p>
+                    <div class="h-1.5 rounded-full bg-[#cfdbe7] dark:bg-slate-700 overflow-hidden">
+                        <div class="h-full bg-primary" style="width: 92%;"></div>
+                    </div>
+                    <p class="text-xs text-right">92%</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="flex gap-3 p-4 overflow-x-auto no-scrollbar">
+            <button class="flex h-9 shrink-0 items-center justify-center rounded-lg bg-primary text-white px-4">
+                <span class="text-sm font-medium">All Guides</span>
+            </button>
+            <button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200 dark:bg-slate-800 px-4">
+                <span class="text-sm font-medium">Specialization</span>
+                <span class="material-symbols-outlined text-sm">expand_more</span>
+            </button>
+        </div>
+
+        <div class="space-y-4 pt-2">
+            <div class="px-4">
+                <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-sm border border-gray-100 dark:border-slate-800">
+                    <div class="flex flex-col justify-between flex-1">
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">workspace_premium</span>
+                                <p class="text-primary text-xs font-semibold uppercase">Top Rated</p>
+                            </div>
+                            <p class="text-[#0d141b] dark:text-slate-100 text-base font-bold">Marcus Chen</p>
+                            <p class="text-[#4c739a] dark:text-slate-400 text-xs">Adventure & Trekking • Mandarin, English</p>
+                            <div class="flex items-center gap-1 mt-1">
+                                <span class="material-symbols-outlined text-yellow-500 text-xs" style="font-variation-settings: 'FILL' 1">star</span>
+                                <span class="text-xs font-bold">5.0</span>
+                                <span class="text-[#4c739a] text-xs">(84 reviews)</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 px-4 h-9 rounded-lg bg-primary/10 text-primary text-sm font-bold w-fit">View Profile</button>
+                    </div>
+                    <div class="w-24 h-24 sm:w-32 sm:h-32 bg-center bg-cover rounded-xl shrink-0" style='background-image: url("https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop");'></div>
+                </div>
+            </div>
+
+            <div class="px-4">
+                <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-sm border border-gray-100 dark:border-slate-800">
+                    <div class="flex flex-col justify-between flex-1">
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">local_activity</span>
+                                <p class="text-primary text-xs font-semibold uppercase">Local Expert</p>
+                            </div>
+                            <p class="text-[#0d141b] dark:text-slate-100 text-base font-bold">Sarah Jenkins</p>
+                            <p class="text-[#4c739a] dark:text-slate-400 text-xs">Food & Gastronomy • English, French</p>
+                            <div class="flex items-center gap-1 mt-1">
+                                <span class="material-symbols-outlined text-yellow-500 text-xs" style="font-variation-settings: 'FILL' 1">star</span>
+                                <span class="text-xs font-bold">4.8</span>
+                                <span class="text-[#4c739a] text-xs">(210 reviews)</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 px-4 h-9 rounded-lg bg-primary/10 text-primary text-sm font-bold w-fit">View Profile</button>
+                    </div>
+                    <div class="w-24 h-24 sm:w-32 sm:h-32 bg-center bg-cover rounded-xl shrink-0" style='background-image: url("https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop");'></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-gray-200 dark:border-slate-800">
+        <div class="max-w-md mx-auto flex justify-around items-center h-20 px-2 pb-5">
+            <a href="index.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-[10px] font-semibold">Home</span>
+            </a>
+            <a href="guides.html" class="flex flex-col items-center gap-1 text-primary">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person_search</span>
+                <span class="text-[10px] font-semibold">Guides</span>
+            </a>
+            <a href="resort.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
+                <span class="material-symbols-outlined">holiday_village</span>
+                <span class="text-[10px] font-semibold">Resorts</span>
+            </a>
+            <a href="favorites.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
+                <span class="material-symbols-outlined">favorite</span>
+                <span class="text-[10px] font-semibold">Favorites</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span class="text-[10px] font-semibold">My Profile</span>
+            </a>
+        </div>
+    </footer>
+
+</body>
+</html>
