@@ -14,20 +14,41 @@ function handleProfileClick() {
 }
 
 /**
- * Sets login status and redirects to profile.
+ * Validates credentials and sets login status.
  */
 function loginUser() {
-    localStorage.setItem('isLoggedIn', 'true');
-    window.location.href = 'profile.html';
+    // 1. Input талбаруудаас утгыг нь авах
+    const emailInput = document.getElementById('login-email')?.value;
+    const passwordInput = document.getElementById('login-password')?.value;
+
+    if (!emailInput || !passwordInput) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // 2. LocalStorage-аас бүртгэлтэй хэрэглэгчдийг авах
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // 3. Хэрэглэгч байгаа эсэхийг шалгах
+    const userFound = users.find(u => u.email === emailInput && u.password === passwordInput);
+
+    if (userFound) {
+        localStorage.setItem('isLoggedIn', 'true');
+        // Нэвтэрсний дараа нүүр хуудас руу шилжүүлнэ
+        window.location.href = 'index.html';
+    } else {
+        alert("Invalid email or password. Please try again.");
+    }
 }
 
 /**
- * Clears login status and redirects to the setup or landing page.
+ * Clears login status and redirects to the Home page.
  */
 function logoutUser() {
     if (confirm("Are you sure you want to log out?")) {
         localStorage.removeItem('isLoggedIn');
-        window.location.href = "traveler-setup.html";
+        // Logout хийхэд Нүүр хуудас (index.html) руу шилжинэ
+        window.location.href = "index.html";
     }
 }
 
@@ -56,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Security check: Redirect if not logged in
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'login.html';
-            return; // Stop further execution
+            return;
         }
 
         // Display user data
@@ -64,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (users.length > 0) {
             const currentUser = users[users.length - 1];
 
-            // Select elements by ID (Your profile.html now uses these IDs)
             const nameElement = document.getElementById('userName');
             const emailElement = document.getElementById('userEmail');
 
