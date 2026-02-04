@@ -64,3 +64,77 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+/**
+ * Profile page logic: 
+ * Updates the UI with user information from LocalStorage
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Retrieve users array from LocalStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    
+    // 2. Select the most recently registered user
+    if (users.length > 0) {
+        const currentUser = users[users.length - 1];
+
+        // 3. Find target elements using CSS selectors
+        const nameElement = document.querySelector('p.text-\\[22px\\]');
+        const emailElement = document.querySelector('p.text-\\[#4c739a\\]');
+
+        // 4. Update the UI text content
+        if (nameElement) nameElement.textContent = currentUser.name;
+        if (emailElement) emailElement.textContent = currentUser.email;
+    }
+});
+/**
+ * Profile page logic: 
+ * Updates the UI with user information from LocalStorage
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Retrieve users array from LocalStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    
+    // 2. Select the most recently registered user
+    if (users.length > 0) {
+        const currentUser = users[users.length - 1];
+
+        // 3. Find target elements using CSS selectors
+        const nameElement = document.querySelector('p.text-\\[22px\\]');
+        const emailElement = document.querySelector('p.text-\\[#4c739a\\]');
+
+        // 4. Update the UI text content
+        if (nameElement) nameElement.textContent = currentUser.name;
+        if (emailElement) emailElement.textContent = currentUser.email;
+    }
+});
+
+/**
+ * Profile page logic: 
+ * Updates the UI with user information from LocalStorage
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Retrieve users array from LocalStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    
+    // 2. Select the most recently registered user
+    if (users.length > 0) {
+        const currentUser = users[users.length - 1];
+
+        // 3. Find target elements using CSS selectors
+        const nameElement = document.querySelector('p.text-\\[22px\\]');
+        const emailElement = document.querySelector('p.text-\\[#4c739a\\]');
+
+        // 4. Update the UI text content
+        if (nameElement) nameElement.textContent = currentUser.name;
+        if (emailElement) emailElement.textContent = currentUser.email;
+    }
+});
+
+/**
+ * Handle user logout functionality
+ */
+function logoutUser() {
+    if (confirm("Are you sure you want to log out?")) {
+        // Redirect back to the registration page
+        window.location.href = "traveler-setup.html";
+    }
+}
