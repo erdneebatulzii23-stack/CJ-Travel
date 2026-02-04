@@ -115,24 +115,33 @@
         return; 
     }
 
-    // 1. Одоо байгаа бүх датаг авна (Жишээ нь: email, password гэх мэт)
-    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-    
-    // 2. Зөвхөн өөрчлөгдсөн хэсгүүдийг шинэчилнэ
-    currentUser.name = name;
-    currentUser.phone = phone;
-    if(newPic) {
-        currentUser.profilePic = newPic;
-    }
+    // 1. Одоо нэвтэрсэн байгаа хэрэглэгчийг авна
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    // 2. БҮХ бүртгэлтэй хэрэглэгчдийн жагсаалтыг авна
+    let allUsers = JSON.parse(localStorage.getItem('users')) || [];
 
-    // 3. Буцаагаад localStorage-д хадгална
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    
-    // 4. Түр зуурын зургийг устгана
-    sessionStorage.removeItem('tempProfilePic');
-    
-    alert("Амжилттай хадгалагдлаа!");
-    window.location.href = 'profile.html';
+    if (currentUser) {
+        // 3. Нэвтэрсэн хэрэглэгчийн мэдээллийг шинэчилнэ
+        currentUser.name = name;
+        currentUser.phone = phone;
+        if(newPic) {
+            currentUser.profilePic = newPic;
+        }
+
+        // 4. Үндсэн жагсаалт (allUsers) доторх энэ хэрэглэгчийг олж шинэчилнэ
+        const userIndex = allUsers.findIndex(u => u.email === currentUser.email);
+        if (userIndex !== -1) {
+            allUsers[userIndex] = currentUser; // Үндсэн жагсаалтад шинэ мэдээллийг хадгалах
+        }
+
+        // 5. Хоёуланг нь буцааж хадгална
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        localStorage.setItem('users', JSON.stringify(allUsers));
+
+        sessionStorage.removeItem('tempProfilePic');
+        alert("Амжилттай хадгалагдлаа!");
+        window.location.href = 'profile.html';
+    }
 }
 </script> 
 </body>
