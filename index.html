@@ -126,5 +126,70 @@
             </a>
         </div>
     </footer>
+   <script>
+    /**
+     * Home Page Functionality Script
+     * This script handles search, navigation states, and UI effects.
+     */
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Search Bar Interaction
+        // Handles 'Enter' key press in the search input
+        const searchInput = document.querySelector('input[placeholder*="Search"]');
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        console.log(`User is searching for: ${query}`);
+                        // Future: window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+                    }
+                }
+            });
+        }
+
+        // 2. Guide Card Navigation
+        // Makes the guide profile cards clickable
+        const guideCards = document.querySelectorAll('.grid > div');
+        guideCards.forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                const guideName = card.querySelector('p')?.innerText;
+                console.log(`Opening profile for guide: ${guideName}`);
+                // Future: window.location.href = `guide-details.html?name=${encodeURIComponent(guideName)}`;
+            });
+        });
+
+        // 3. Footer Navigation Active State
+        // Automatically highlights the current page icon in the bottom menu
+        const navLinks = document.querySelectorAll('footer a');
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                // Apply primary color to the active link
+                link.classList.add('text-primary');
+                link.classList.remove('text-[#4c739a]', 'dark:text-slate-400');
+                
+                // Set the Material Icon to 'filled' state
+                const icon = link.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.style.fontVariationSettings = "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48";
+                }
+            }
+        });
+
+        // 4. Header Scroll Effect
+        // Adds a shadow to the header when the user scrolls down
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md', 'border-transparent');
+            } else {
+                header.classList.remove('shadow-md', 'border-transparent');
+            }
+        });
+    });
+</script>
 </body>
 </html>
