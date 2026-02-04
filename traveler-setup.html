@@ -98,28 +98,64 @@
 </footer>
 
 <script>
-    // 1. Initialize Countries List
-    // Note: Keep your full list of countries here
-    const countries = ["Afghanistan", "Albania", "...", "Mongolia", "..."]; 
-    
-    const select = document.getElementById('countrySelect');
-    
-    // Dynamically populate the nationality dropdown
-    countries.forEach(country => {
-        let opt = document.createElement('option');
-        opt.value = country;
-        opt.innerHTML = country;
-        select.appendChild(opt);
-    });
+    // 1. Comprehensive Countries List (180+ countries)
+    const countries = [
+        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", 
+        "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", 
+        "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", 
+        "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", 
+        "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", 
+        "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", 
+        "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", 
+        "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", 
+        "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", 
+        "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", 
+        "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", 
+        "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", 
+        "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", 
+        "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", 
+        "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", 
+        "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", 
+        "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", 
+        "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", 
+        "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", 
+        "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", 
+        "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", 
+        "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", 
+        "Saint Lucia", "Samoa", "San Marino", "Saudi Arabia", "Senegal", "Serbia", 
+        "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", 
+        "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", 
+        "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", 
+        "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", 
+        "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", 
+        "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", 
+        "Yemen", "Zambia", "Zimbabwe"
+    ];
 
-    // 2. Registration and Storage Logic
+    // 2. Populate the Nationality Dropdown
+    const select = document.getElementById('countrySelect');
+    if (select) {
+        countries.forEach(country => {
+            const opt = document.createElement('option');
+            opt.value = country;
+            opt.textContent = country;
+            
+            // Set Mongolia as the default selection
+            if (country === "Mongolia") {
+                opt.selected = true;
+            }
+            select.appendChild(opt);
+        });
+    }
+
+    // 3. Form Handling and Registration Logic
     const createBtn = document.getElementById('createBtn');
     if (createBtn) {
         createBtn.addEventListener('click', (e) => {
-            // Prevent default form submission behavior
+            // Prevent page refresh on form submission
             e.preventDefault();
 
-            // Collect user data from input fields
+            // Gather values from input fields
             const userData = {
                 name: document.getElementById('fullName').value,
                 email: document.getElementById('regEmail').value,
@@ -127,36 +163,36 @@
                 dob: document.getElementById('dob').value,
                 nationality: document.getElementById('countrySelect').value,
                 phone: document.getElementById('phone').value,
-                role: 'traveler', // Set default role as traveler
-                joinedAt: new Date().toLocaleDateString() // Record registration date
+                role: 'traveler', // Fixed role for this page
+                joinedAt: new Date().toLocaleDateString() // Registration date timestamp
             };
 
-            // Validation: Check if required fields are filled
+            // Basic Validation: Ensure primary fields are not empty
             if(!userData.email || !userData.password || !userData.name) {
                 alert("Please fill in your Name, Email, and Password!");
                 return;
             }
 
-            // LocalStorage Management: Retrieve existing users or initialize empty array
+            // Database Management: Retrieve existing users from LocalStorage
             let users = JSON.parse(localStorage.getItem('users')) || [];
             
-            // Duplicate Check: Ensure the email is not already registered
+            // Security Check: Check if email is already taken
             if(users.some(u => u.email === userData.email)) {
                 alert("This email address is already registered!");
                 return;
             }
 
-            // Save data: Add new user to the array and update LocalStorage
+            // Save: Push new user object to array and store in LocalStorage
             users.push(userData);
             localStorage.setItem('users', JSON.stringify(users));
 
-            // Success feedback and navigation
+            // Success Notification and Navigation
             alert("Account successfully created!");
             window.location.href = "interests.html"; 
         });
     }
 
-    // 3. Navigation: Back button functionality
+    // 4. Back Navigation Logic
     const backBtn = document.getElementById('backBtn');
     if (backBtn) {
         backBtn.addEventListener('click', () => {
@@ -164,6 +200,5 @@
         });
     }
 </script>
-
 </body>
 </html>
