@@ -3,22 +3,32 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Edit Profile</title>
+    <title>Edit Profile - CJ Travel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    
+    <script>
+        /** 1. Нэвтрээгүй бол Profile засахыг зөвшөөрөхгүй шууд буцаана */
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            window.location.replace('login.html');
+        }
+    </script>
+
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
         .material-symbols-outlined { font-size: 24px; display: inline-block; line-height: 1; }
-        .glass-effect { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        /* Хуудас бэлэн болтол контентыг нуух */
+        #edit-main-content { visibility: hidden; }
     </style>
 </head>
 <body class="bg-[#f3f4f6] text-[#111827]">
 
-    <div class="max-w-[480px] mx-auto min-h-screen bg-white shadow-2xl flex flex-col relative">
+    <div id="edit-main-content" class="max-w-[480px] mx-auto min-h-screen bg-white shadow-2xl flex flex-col relative">
         
         <header class="flex items-center px-6 py-5 sticky top-0 bg-white/90 backdrop-blur-md z-10 border-b border-gray-100">
-            <button onclick="window.history.back()" class="w-11 h-11 flex items-center justify-center rounded-2xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-all active:scale-90">
+            <button onclick="window.location.href='profile.html'" class="w-11 h-11 flex items-center justify-center rounded-2xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-all active:scale-90">
                 <span class="material-symbols-outlined">arrow_back</span>
             </button>
             <h1 class="flex-1 text-center text-xl font-extrabold tracking-tight mr-11">Edit Profile</h1>
@@ -80,6 +90,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('imagePreview').style.backgroundImage = `url('${e.target.result}')`;
+                    // Түр зуур зураг хадгалах
                     localStorage.setItem('tempProfilePic', e.target.result);
                 };
                 reader.readAsDataURL(file);
@@ -96,16 +107,17 @@
                 return; 
             }
 
-            let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-            currentUser.name = name;
-            currentUser.phone = phone;
-            if(newPic) currentUser.profilePic = newPic;
+            // Шинэчилсэн мэдээллийг хадгалах
+            let user = JSON.parse(localStorage.getItem('currentUser'));
+            user.name = name;
+            user.phone = phone;
+            if(newPic) user.profilePic = newPic;
 
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            localStorage.removeItem('tempProfilePic');
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.removeItem('tempProfilePic'); // Түр хадгалах санг цэвэрлэх
             
             alert("Changes saved successfully!");
-            window.location.href = 'profile.html';
+            window.location.replace('profile.html');
         }
 
         window.onload = function() {
@@ -117,6 +129,8 @@
                 if(user.profilePic) {
                     document.getElementById('imagePreview').style.backgroundImage = `url('${user.profilePic}')`;
                 }
+                // Бүх мэдээлэл бэлэн болоход контентыг харуулна
+                document.getElementById('edit-main-content').style.visibility = 'visible';
             }
         }
     </script>
