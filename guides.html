@@ -138,32 +138,12 @@
                 <span class="material-symbols-outlined">favorite</span>
                 <span class="text-[10px] font-semibold">Favorites</span>
             </a>
-            <a href="javascript:void(0)" onclick="handleProfileClick()" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
-            <span class="material-symbols-outlined">account_circle</span>
-            <span class="text-[10px] font-semibold">My Profile</span>
-        </a>
+            <a href="javascript:void(0)" onclick="handleProfileClick()" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400 hover:text-primary transition-colors">
+    <span class="material-symbols-outlined">account_circle</span>
+    <span class="text-[10px] font-semibold">My Profile</span>
+</a>
     </div>
     </footer>
-    <script>
-    /**
-     * Function to handle navigation for protected routes (like Profile).
-     * * How it works:
-     * 1. It retrieves the 'isLoggedIn' value from the browser's localStorage.
-     * 2. If 'isLoggedIn' is 'true', it redirects the user to the profile page.
-     * 3. If 'isLoggedIn' is null or 'false', it sends the user to the login page.
-     */
-    function handleProfileClick() {
-        // Fetch login status from localStorage
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-
-        if (isLoggedIn === 'true') {
-            // User is authenticated, proceed to profile
-            window.location.href = 'profile.html';
-        } else {
-            // User is not authenticated, redirect to login
-            window.location.href = 'login.html';
-        }
-    }
-</script>
+<script src="app.js"></script> 
 </body>
 </html>
