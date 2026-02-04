@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>User Personal Profile - CJ Travel</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>User Personal Profile - CJ Travel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -19,130 +20,81 @@
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
                     },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
                 },
             },
         }
     </script>
-<style type="text/tailwindcss">
+    <style type="text/tailwindcss">
         body {
             font-family: "Plus Jakarta Sans", sans-serif;
-            min-height: max(884px, 100dvh);
+            min-height: 100dvh;
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .nav-active .material-symbols-outlined {
-            font-variation-settings: 'FILL' 1;
-        }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100 min-h-screen flex flex-col">
+
 <nav class="sticky top-0 z-50 bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800">
     <div class="flex items-center p-4 max-w-md mx-auto">
         <h1 class="text-[#0d141b] dark:text-white text-xl font-bold leading-tight">CJ Travel</h1>
     </div>
 </nav>
-<main class="flex-1 pt-16 pb-24 max-w-md mx-auto w-full">
-<div class="flex p-6 @container">
-<div class="flex w-full flex-col gap-6 items-center">
-<div class="flex gap-4 flex-col items-center">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-4 border-white dark:border-gray-800 shadow-sm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxHuuOpFQ1p1KPM8qsQG75wYZu65Tg2gmxzbQKMKlyGa4aXYwOMDA-z_fPbeCCjjA8zLmY4VH06YSi7RAL2nALA1YmA5-YzAKDSy2KZ8YI8D8Iy8_4eGlwat8tBBmi-Vpi5Q-QF_CyY_7AxpAHjHWjcz-Y2_8XRQ6Pv2If4Kkezx_IcuGTN0C10Ry3f9EP5_SG14KffeF_KrvyukSaz_kvzqEbZcNdgs4FvL-pMCMkIpd7DmzRYA5G4ySbybeLgSSYV3DzkwtlOQcT");'>
-</div>
-<div class="flex flex-col items-center justify-center">
-<p id="userName" class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">James Anderson</p>
-<p id="userEmail" class="text-[#4c739a] dark:text-gray-400 text-base font-normal leading-normal text-center">james.traveler@example.com</p>
-</div>
-<div class="px-4 mt-2">
-  <button 
-    onclick="window.location.href='edit-profile.html'" 
-    class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl transition-all border border-primary/20"
-  >
-    <span class="material-symbols-outlined text-[20px]">edit</span>
-    Edit Profile
-  </button>
-</div>
-</div>
-<div class="mt-4 px-4 space-y-1">
-<div class="flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-<div class="flex items-center gap-4">
-<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
-<span class="material-symbols-outlined">calendar_month</span>
-</div>
-<p class="text-base font-medium leading-normal flex-1 truncate">My Bookings</p>
-</div>
-<div class="shrink-0 text-gray-400">
-<span class="material-symbols-outlined">chevron_right</span>
-</div>
-</div>
-<div class="flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-<div class="flex items-center gap-4">
-<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
-<span class="material-symbols-outlined">credit_card</span>
-</div>
-<p class="text-base font-medium leading-normal flex-1 truncate">Payment Methods</p>
-</div>
-<div class="shrink-0 text-gray-400">
-<span class="material-symbols-outlined">chevron_right</span>
-</div>
-</div>
-<div class="flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-<div class="flex items-center gap-4">
-<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
-<span class="material-symbols-outlined">person_add</span>
-</div>
-<p class="text-base font-medium leading-normal flex-1 truncate">Invite Friends</p>
-</div>
-<div class="shrink-0 text-gray-400">
-<span class="material-symbols-outlined">chevron_right</span>
-</div>
-</div>
-<div class="flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-<div class="flex items-center gap-4">
-<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
-<span class="material-symbols-outlined">help</span>
-</div>
-<p class="text-base font-medium leading-normal flex-1 truncate">Help &amp; Support</p>
-</div>
-<div class="shrink-0 text-gray-400">
-<span class="material-symbols-outlined">chevron_right</span>
-</div>
-</div>
-<button onclick="logoutUser()" class="w-full flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4">
-    <div class="flex items-center gap-4">
-        <div class="text-red-500 flex items-center justify-center rounded-lg bg-red-50 dark:bg-red-900/20 shrink-0 size-10">
-            <span class="material-symbols-outlined">logout</span>
+
+<main class="flex-1 pt-8 pb-24 max-w-md mx-auto w-full">
+    <div class="flex p-6 flex-col gap-6 items-center">
+        <div class="flex gap-4 flex-col items-center">
+            <div id="profileImageDiv" 
+                 class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-4 border-white dark:border-gray-800 shadow-sm transition-all duration-300" 
+                 style='background-image: url("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");'>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center">
+                <p id="userName" class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">Loading...</p>
+                <p id="userEmail" class="text-[#4c739a] dark:text-gray-400 text-base font-normal leading-normal text-center">Loading...</p>
+            </div>
+
+            <div class="px-4 mt-2 w-full">
+              <button 
+                onclick="window.location.href='edit-profile.html'" 
+                class="w-full flex items-center justify-center gap-2 py-3 px-6 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl transition-all border border-primary/20"
+              >
+                <span class="material-symbols-outlined text-[20px]">edit</span>
+                Edit Profile
+              </button>
+            </div>
         </div>
-        <p class="text-red-500 text-base font-medium leading-normal flex-1 truncate">Logout</p>
+
+        <div class="mt-4 w-full px-4 space-y-2">
+            <div class="flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:scale-[1.02] transition-all border border-transparent hover:border-primary/10">
+                <div class="flex items-center gap-4">
+                    <div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+                        <span class="material-symbols-outlined">calendar_month</span>
+                    </div>
+                    <p class="text-base font-medium leading-normal">My Bookings</p>
+                </div>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </div>
+
+            <button onclick="logoutUser()" class="w-full flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4">
+                <div class="flex items-center gap-4">
+                    <div class="text-red-500 flex items-center justify-center rounded-lg bg-red-50 dark:bg-red-900/20 shrink-0 size-10">
+                        <span class="material-symbols-outlined">logout</span>
+                    </div>
+                    <p class="text-red-500 text-base font-medium">Logout</p>
+                </div>
+                <span class="material-symbols-outlined text-red-300">chevron_right</span>
+            </button>
+        </div>
     </div>
-    <div class="shrink-0 text-red-300">
-        <span class="material-symbols-outlined">chevron_right</span>
-    </div>
-</button>
-</div>
 </main>
+
 <footer class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-gray-200 dark:border-slate-800">
     <div class="max-w-md mx-auto flex justify-around items-center h-20 px-2 pb-5">
         <a href="index.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
             <span class="material-symbols-outlined">home</span>
             <span class="text-[10px] font-semibold">Home</span>
-        </a>
-        <a href="guides.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
-            <span class="material-symbols-outlined">person_search</span>
-            <span class="text-[10px] font-semibold">Guides</span>
-        </a>
-        <a href="resort.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
-            <span class="material-symbols-outlined">holiday_village</span>
-            <span class="text-[10px] font-semibold">Resorts</span>
-        </a>
-        <a href="favorites.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
-            <span class="material-symbols-outlined">favorite</span>
-            <span class="text-[10px] font-semibold">Favorites</span>
         </a>
         <a href="profile.html" class="flex flex-col items-center gap-1 text-primary">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_circle</span>
@@ -150,38 +102,38 @@
         </a>
     </div>
 </footer>
-<script src="app.js"></script>
- <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    // 1. LocalStorage-аас мэдээллийг авах
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (currentUser) {
-        // 2. Зургийг шинэчлэх (Чиний код дээр <div> байгаа тул background-image солино)
-        // HTML-д байгаа зургийн div-д id="profileImageDiv" нэмж өгөх хэрэгтэй
-        const profileDiv = document.getElementById('profileImageDiv');
-        if (profileDiv && currentUser.profilePic) {
-            profileDiv.style.backgroundImage = `url('${currentUser.profilePic}')`;
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. LocalStorage-аас мэдээллийг авах
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (currentUser) {
+            // 2. Зургийг шинэчлэх (profileImageDiv ашиглан)
+            const profileDiv = document.getElementById('profileImageDiv');
+            if (profileDiv && currentUser.profilePic) {
+                profileDiv.style.backgroundImage = `url('${currentUser.profilePic}')`;
+            }
+
+            // 3. Нэр болон И-мэйлийг шинэчлэх
+            const nameDisplay = document.getElementById('userName');
+            const emailDisplay = document.getElementById('userEmail');
+
+            if (nameDisplay) nameDisplay.textContent = currentUser.name || "No Name Set";
+            if (emailDisplay) emailDisplay.textContent = currentUser.email || "No Email Set";
+        } else {
+            // Хэрэв хэрэглэгч нэвтрээгүй бол нэвтрэх хуудас руу шилжүүлж болно
+            // window.location.href = 'login.html';
         }
+    });
 
-        // 3. Нэр болон И-мэйлийг шинэчлэх (Чиний HTML-д байгаа ID-нуудтай тааруулав)
-        const nameDisplay = document.getElementById('userName');
-        const emailDisplay = document.getElementById('userEmail');
-
-        if (nameDisplay && currentUser.name) {
-            nameDisplay.textContent = currentUser.name;
-        }
-        if (emailDisplay && currentUser.email) {
-            emailDisplay.textContent = currentUser.email;
+    function logoutUser() {
+        if(confirm("Are you sure you want to logout?")) {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html'; 
         }
     }
-});
+</script>
 
-// Logout функц (товчлуур дээр байгаа тул заавал байх ёстой)
-function logoutUser() {
-    localStorage.removeItem('currentUser');
-    window.location.href = 'login.html'; // эсвэл index.html
-}
-    </script>
 </body>
-</html>       
+</html>
