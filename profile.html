@@ -151,5 +151,34 @@
     </div>
 </footer>
 <script src="app.js"></script>
+ <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // 1. Get the logged-in user data from LocalStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (currentUser) {
+        // 2. Update Profile Picture
+        const profileImage = document.getElementById('mainProfilePic');
+        if (profileImage && currentUser.profilePic) {
+            // Use this if your element is an <img> tag
+            profileImage.src = currentUser.profilePic;
+            
+            // Use this if your element is a <div> with a background image
+            // profileImage.style.backgroundImage = `url('${currentUser.profilePic}')`;
+        }
+
+        // 3. Update Name and Email (Optional but recommended)
+        const nameDisplay = document.getElementById('profileName');
+        const emailDisplay = document.getElementById('profileEmail');
+
+        if (nameDisplay && currentUser.name) {
+            nameDisplay.textContent = currentUser.name;
+        }
+        if (emailDisplay && currentUser.email) {
+            emailDisplay.textContent = currentUser.email;
+        }
+    }
+});
+    </script>
 </body>
-</html>
+</html>       
