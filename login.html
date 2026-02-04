@@ -1,144 +1,102 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>User Personal Profile - CJ Travel</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    
-    <script>
-        /** * ХУУДАС АЧААЛАГДАХААС ӨМНӨ ШАЛГАХ (James-ыг харуулахгүй байх гол хэсэг)
-         */
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (!currentUser) {
-            // Нэвтрээгүй бол HTML-ийг уншиж эхлэхээс өмнө шууд login руу үсэргэнэ
-            window.location.replace('login.html');
-        }
-    </script>
-
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#2b8cee",
-                        "background-light": "#f6f7f8",
-                        "background-dark": "#101922",
-                    },
-                    fontFamily: { "display": ["Plus Jakarta Sans", "sans-serif"] },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-    <style type="text/tailwindcss">
-        body { font-family: "Plus Jakarta Sans", sans-serif; }
-        /* Хуудсыг бэлэн болтол нуух */
-        #main-content { visibility: hidden; }
-    </style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>CJ Travel - Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                    },
+                    fontFamily: { "display": ["Plus Jakarta Sans", "sans-serif"] }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        .segment-tab:checked + label { @apply bg-white dark:bg-gray-600 text-primary shadow-sm; }
+    </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100 min-h-screen">
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen">
+    <div class="flex flex-col min-h-screen w-full overflow-x-hidden">
+        <div class="sticky top-0 z-50 flex items-center bg-background-light dark:bg-background-dark p-4 border-b border-transparent">
+            <h2 class="text-[#0d141b] dark:text-white text-lg font-bold w-full text-center">CJ Travel</h2>
+        </div>
 
-<div id="main-content" class="flex flex-col min-h-screen">
-    <nav class="sticky top-0 z-50 bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800">
-        <div class="flex items-center p-4 max-w-md mx-auto">
-            <h1 class="text-[#0d141b] dark:text-white text-xl font-bold leading-tight">CJ Travel</h1>
-        </div>
-    </nav>
+        <div class="flex flex-col flex-1 px-4 max-w-[480px] mx-auto w-full">
+            <div class="pt-8 pb-6 text-center">
+                <h1 class="text-[#0d141b] dark:text-white text-[32px] font-bold">Welcome Back</h1>
+                <p class="text-[#4c739a] dark:text-gray-400">Log in to your account</p>
+            </div>
 
-    <main class="flex-1 pt-8 pb-24 max-w-md mx-auto w-full">
-        <div class="flex p-6">
-            <div class="flex w-full flex-col gap-6 items-center">
-                <div class="flex gap-4 flex-col items-center">
-                    <div id="mainProfilePic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-4 border-white dark:border-gray-800 shadow-sm" 
-                         style="background-image: url('https://via.placeholder.com/150');">
-                    </div>
-                    
-                    <div class="flex flex-col items-center justify-center text-center">
-                        <p id="userName" class="text-[22px] font-bold leading-tight tracking-[-0.015em]"></p>
-                        <p id="userEmail" class="text-[#4c739a] dark:text-gray-400 text-base font-normal leading-normal"></p>
-                    </div>
+            <div class="p-1 bg-gray-200/50 dark:bg-gray-800 rounded-xl flex items-center mb-8">
+                <input checked class="segment-tab hidden" id="traveler" name="role" type="radio"/>
+                <label class="flex-1 py-2.5 text-center text-sm font-bold cursor-pointer rounded-lg transition-all text-[#4c739a]" for="traveler">Traveler</label>
+                <input class="segment-tab hidden" id="guide" name="role" type="radio"/>
+                <label class="flex-1 py-2.5 text-center text-sm font-bold cursor-pointer rounded-lg transition-all text-[#4c739a]" for="guide">Guide</label>
+                <input class="segment-tab hidden" id="company" name="role" type="radio"/>
+                <label class="flex-1 py-2.5 text-center text-sm font-bold cursor-pointer rounded-lg transition-all text-[#4c739a]" for="company">Company</label>
+            </div>
 
-                    <div class="px-4 mt-2">
-                        <button onclick="window.location.href='edit-profile.html'" 
-                                class="flex items-center justify-center gap-2 py-2.5 px-6 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl transition-all border border-primary/20">
-                            <span class="material-symbols-outlined text-[20px]">edit</span>
-                            Edit Profile
-                        </button>
-                    </div>
-                </div>
+            <div class="space-y-4">
+                <div class="flex flex-col">
+                    <p class="text-[#0d141b] dark:text-white font-medium pb-2">Email or Username</p>
+                  <input id="login-email" class="w-full rounded-lg border-[#cfdbe7] dark:border-gray-700 bg-surface-light dark:bg-surface-dark h-14 p-4 focus:ring-1 focus:ring-primary" placeholder="Enter your email" type="email"/>
+                 </div>
+                <div class="flex flex-col">
+                    <p class="text-[#0d141b] dark:text-white font-medium pb-2">Password</p>
+                    <div class="flex w-full items-stretch rounded-lg overflow-hidden border border-[#cfdbe7] dark:border-gray-700">
+                        <input id="login-password" class="flex-1 bg-surface-light dark:bg-surface-dark h-14 p-4 focus:outline-none border-none" placeholder="Enter password" type="password"/>
+                        <button id="toggle-password" type="button" class="px-4 bg-surface-light dark:bg-surface-dark text-[#4c739a] flex items-center">
+                            <span class="material-symbols-outlined">visibility</span>
+                        </button>
+                    </div>
+                </div>
 
-                <div class="mt-4 px-4 space-y-1 w-full">
-                    <div class="flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                        <div class="flex items-center gap-4">
-                            <div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 size-10"><span class="material-symbols-outlined">calendar_month</span></div>
-                            <p class="text-base font-medium">My Bookings</p>
-                        </div>
-                        <span class="material-symbols-outlined text-gray-400">chevron_right</span>
-                    </div>
+                <div class="flex justify-end pt-1">
+                    <a class="text-primary text-sm font-semibold hover:underline" href="#">Forgot Password?</a>
+                </div>
 
-                    <div class="flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                        <div class="flex items-center gap-4">
-                            <div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 size-10"><span class="material-symbols-outlined">credit_card</span></div>
-                            <p class="text-base font-medium">Payment Methods</p>
-                        </div>
-                        <span class="material-symbols-outlined text-gray-400">chevron_right</span>
-                    </div>
+                <div class="pt-6">
+                    <button onclick="loginUser()" class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-xl shadow-md transition-all">
+                        Login
+                    </button>
+                </div>
+            </div>
 
-                    <button onclick="logoutUser()" class="w-full flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4">
-                        <div class="flex items-center gap-4">
-                            <div class="text-red-500 flex items-center justify-center rounded-lg bg-red-50 dark:bg-red-900/20 size-10"><span class="material-symbols-outlined">logout</span></div>
-                            <p class="text-red-500 text-base font-medium">Logout</p>
-                        </div>
-                        <span class="material-symbols-outlined text-red-300">chevron_right</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </main>
+            <div class="flex items-center gap-4 py-8">
+                <div class="h-[1px] flex-1 bg-[#cfdbe7] dark:bg-gray-700"></div>
+                <p class="text-[#4c739a] text-sm">Or continue with</p>
+                <div class="h-[1px] flex-1 bg-[#cfdbe7] dark:bg-gray-700"></div>
+            </div>
 
-    <footer class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-gray-200 dark:border-slate-800">
-        <div class="max-w-md mx-auto flex justify-around items-center h-20 px-2 pb-5">
-            <a href="index.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
-                <span class="material-symbols-outlined">home</span>
-                <span class="text-[10px] font-semibold">Home</span>
-            </a>
-            <a href="profile.html" class="flex flex-col items-center gap-1 text-primary">
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_circle</span>
-                <span class="text-[10px] font-semibold">My Profile</span>
-            </a>
-        </div>
-    </footer>
-</div>
+            <div class="flex flex-col gap-3">
+                <button class="flex items-center justify-center gap-3 w-full h-14 border border-[#cfdbe7] dark:border-gray-700 rounded-xl bg-surface-light dark:bg-surface-dark font-semibold">
+                    <img alt="G" class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg"/>
+                    <span>Google</span>
+                </button>
+            </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const user = JSON.parse(localStorage.getItem('currentUser'));
-        
-        if (user) {
-            // Мэдээллийг оноох
-            document.getElementById('userName').textContent = user.name || "User Name";
-            document.getElementById('userEmail').textContent = user.email || "No Email";
-            
-            if (user.profilePic) {
-                document.getElementById('mainProfilePic').style.backgroundImage = `url('${user.profilePic}')`;
-            }
-
-            // Мэдээлэл бэлэн болмогц контентыг ил гаргана
-            document.getElementById('main-content').style.visibility = 'visible';
-        }
-    });
-
-    function logoutUser() {
-        if(confirm("Та системээс гарахдаа итгэлтэй байна уу?")) {
-            localStorage.removeItem('currentUser');
-            window.location.replace('login.html');
-        }
-    }
-</script>
-
+            <div class="py-10 flex flex-col items-center gap-4">
+                <p class="text-[#4c739a]">Don't have an account? <a class="text-primary font-bold hover:underline" href="role-selection.html">Sign Up</a></p>
+                <a class="flex items-center gap-1 text-[#4c739a] hover:text-primary" href="index.html">
+                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>
