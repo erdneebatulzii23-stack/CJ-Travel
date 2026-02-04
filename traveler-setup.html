@@ -111,5 +111,34 @@
             </button>
 </div>
 </footer>
+<script>
+    // Get the buttons by their order in the footer
+    const backBtn = document.querySelectorAll('footer button')[0];
+    const createAccountBtn = document.querySelectorAll('footer button')[1];
 
+    // Back button: Go back to role selection
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            window.location.href = "role-selection.html";
+        });
+    }
+
+    // Create Account button: Form submission and redirect
+    if (createAccountBtn) {
+        createAccountBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            // Basic Validation Check
+            const nameInput = document.querySelector('input[placeholder="Enter your full name"]');
+            if (nameInput && nameInput.value.trim() === "") {
+                alert("Please enter your full name to continue.");
+                return;
+            }
+
+            // In a real app, you would save data here.
+            // For now, redirect to the home dashboard or interest selection page
+            window.location.href = "index.html"; 
+        });
+    }
+</script>
 </body></html>
