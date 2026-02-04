@@ -117,30 +117,41 @@
 
     // 1. Одоо нэвтэрсэн байгаа хэрэглэгчийг авна
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    // 2. БҮХ бүртгэлтэй хэрэглэгчдийн жагсаалтыг авна
-    let allUsers = JSON.parse(localStorage.getItem('users')) || [];
+    
+    // 2. БҮХ бүртгэлтэй хэрэглэгчдийн жагсаалтыг шалгах (Key нь зөрүүтэй байж магадгүй)
+    // 'users' эсвэл 'user_data' гэсэн хоёр нэрийг хоёуланг нь шалгая
+    let usersKey = localStorage.getItem('users') ? 'users' : (localStorage.getItem('user_data') ? 'user_data' : 'users');
+    let allUsers = JSON.parse(localStorage.getItem(usersKey)) || [];
 
     if (currentUser) {
-        // 3. Нэвтэрсэн хэрэглэгчийн мэдээллийг шинэчилнэ
+        // 3. Мэдээллийг шинэчлэх
         currentUser.name = name;
         currentUser.phone = phone;
         if(newPic) {
             currentUser.profilePic = newPic;
         }
 
-        // 4. Үндсэн жагсаалт (allUsers) доторх энэ хэрэглэгчийг олж шинэчилнэ
-        const userIndex = allUsers.findIndex(u => u.email === currentUser.email);
+        // 4. Үндсэн жагсаалтад байгаа өөрийн мэдээллийг олж солих
+        // Имэйлээр нь хайж олж байна
+        let userIndex = allUsers.findIndex(u => u.email === currentUser.email);
+        
         if (userIndex !== -1) {
-            allUsers[userIndex] = currentUser; // Үндсэн жагсаалтад шинэ мэдээллийг хадгалах
+            allUsers[userIndex] = currentUser;
+        } else {
+            // Хэрэв олдохгүй бол жагсаалтад шинээр нэмнэ
+            allUsers.push(currentUser);
         }
 
-        // 5. Хоёуланг нь буцааж хадгална
+        // 5. Хадгалах (Энэ хамгийн чухал хэсэг)
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        localStorage.setItem('users', JSON.stringify(allUsers));
+        localStorage.setItem(usersKey, JSON.stringify(allUsers));
 
         sessionStorage.removeItem('tempProfilePic');
+        
         alert("Амжилттай хадгалагдлаа!");
         window.location.href = 'profile.html';
+    } else {
+        alert("Алдаа гарлаа: Хэрэв нэвтрээгүй бол мэдээлэл хадгалах боломжгүй.");
     }
 }
 </script> 
