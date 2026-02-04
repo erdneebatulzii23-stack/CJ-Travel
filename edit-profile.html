@@ -106,32 +106,34 @@
 
     // 3. Мэдээллийг хадгалах
     function saveProfileChanges() {
-        const name = document.getElementById('edit-name').value;
-        const phone = document.getElementById('edit-phone').value;
-        const newPic = sessionStorage.getItem('tempProfilePic');
+    const name = document.getElementById('edit-name').value;
+    const phone = document.getElementById('edit-phone').value;
+    const newPic = sessionStorage.getItem('tempProfilePic');
 
-        if(!name) { 
-            alert("Нэрээ оруулна уу!"); 
-            return; 
-        }
-
-        // Одоо байгаа датаг авах
-        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-        
-        // Мэдээллийг шинэчлэх
-        currentUser.name = name;
-        currentUser.phone = phone;
-        if(newPic) currentUser.profilePic = newPic;
-
-        // localStorage-д буцааж хадгалах
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        
-        // Түр зургийг устгах
-        sessionStorage.removeItem('tempProfilePic');
-        
-        alert("Амжилттай хадгалагдлаа!");
-        window.location.href = 'profile.html';
+    if(!name) { 
+        alert("Нэрээ оруулна уу!"); 
+        return; 
     }
+
+    // 1. Одоо байгаа бүх датаг авна (Жишээ нь: email, password гэх мэт)
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+    
+    // 2. Зөвхөн өөрчлөгдсөн хэсгүүдийг шинэчилнэ
+    currentUser.name = name;
+    currentUser.phone = phone;
+    if(newPic) {
+        currentUser.profilePic = newPic;
+    }
+
+    // 3. Буцаагаад localStorage-д хадгална
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    // 4. Түр зуурын зургийг устгана
+    sessionStorage.removeItem('tempProfilePic');
+    
+    alert("Амжилттай хадгалагдлаа!");
+    window.location.href = 'profile.html';
+}
 </script> 
 </body>
 </html>
