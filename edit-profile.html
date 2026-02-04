@@ -1,154 +1,125 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="mn">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Edit Traveler Profile</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <title>Edit Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#2b8cee",
-                        "background-light": "#f6f7f8",
-                        "background-dark": "#101922",
-                    },
-                    fontFamily: {
-                        "display": ["Plus Jakarta Sans", "sans-serif"]
-                    }
-                },
-            },
-        }
-    </script>
     <style>
-        body { font-family: "Plus Jakarta Sans", sans-serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        /* Icon-ийг текст шиг харагдуулахгүй байх тохиргоо */
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100 min-h-screen">
-    <div class="relative flex flex-col w-full max-w-[480px] mx-auto min-h-screen shadow-2xl bg-white dark:bg-background-dark">
+<body class="bg-[#f8fafc] text-[#1e293b]">
+
+    <div class="max-w-[480px] mx-auto min-h-screen bg-white shadow-sm flex flex-col">
         
-        <header class="sticky top-0 z-50 flex items-center bg-white dark:bg-background-dark border-b border-[#cfdbe7] dark:border-slate-800 p-4 justify-between">
-            <button onclick="window.history.back()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+        <header class="flex items-center px-4 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
+            <button onclick="window.history.back()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
                 <span class="material-symbols-outlined">arrow_back</span>
             </button>
-            <h2 class="text-[#0d141b] dark:text-white text-lg font-bold flex-1 text-center pr-10">Edit Profile</h2>
+            <h1 class="flex-1 text-center text-lg font-bold mr-10">Профайл засах</h1>
         </header>
 
-        <main class="flex-1 overflow-y-auto pb-32">
-            <div class="flex flex-col items-center py-8 bg-gradient-to-b from-primary/5 to-transparent">
-                <div class="relative group">
+        <main class="flex-1 px-6">
+            <div class="flex flex-col items-center py-8">
+                <div class="relative">
                     <div id="imagePreview" 
-                         class="h-32 w-32 rounded-full border-4 border-white dark:border-slate-800 shadow-xl bg-cover bg-center bg-no-repeat overflow-hidden"
+                         class="w-32 h-32 rounded-full border-4 border-white shadow-md bg-cover bg-center bg-gray-100"
                          style="background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');">
                     </div>
-                    
-                    <button type="button" 
-                            onclick="document.getElementById('fileInput').click()" 
-                            class="absolute bottom-0 right-0 bg-primary text-white p-2.5 rounded-full shadow-lg hover:scale-110 active:scale-90 transition-all border-2 border-white dark:border-slate-800">
+                    <label for="fileInput" class="absolute bottom-0 right-0 bg-[#2b8cee] text-white w-10 h-10 rounded-full flex items-center justify-center border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-[20px]">photo_camera</span>
-                    </button>
-
-                    <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="previewImage(event)">
+                        <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="previewImage(event)">
+                    </label>
                 </div>
-                <p class="text-primary text-sm font-semibold mt-4">Change profile photo</p>
+                <button onclick="document.getElementById('fileInput').click()" class="mt-4 text-[#2b8cee] text-sm font-semibold hover:underline">Зураг солих</button>
             </div>
 
-            <div class="px-6 space-y-6">
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Full Name</label>
-                    <input id="edit-name" type="text" class="w-full px-4 py-3.5 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="John Doe">
+            <div class="space-y-6">
+                <div class="space-y-2">
+                    <label class="text-[13px] font-bold text-gray-400 uppercase tracking-wider ml-1">Бүтэн нэр</label>
+                    <input id="edit-name" type="text" class="w-full px-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:border-[#2b8cee] focus:bg-white focus:ring-4 focus:ring-[#2b8cee]/10 outline-none transition-all" placeholder="Нэрээ оруулна уу">
                 </div>
 
-                <div class="space-y-1.5 opacity-70">
-                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Email (Cannot be changed)</label>
-                    <input id="edit-email" type="email" readonly class="w-full px-4 py-3.5 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 cursor-not-allowed" placeholder="email@example.com">
+                <div class="space-y-2">
+                    <label class="text-[13px] font-bold text-gray-400 uppercase tracking-wider ml-1">И-мэйл (Өөрчлөх боломжгүй)</label>
+                    <input id="edit-email" type="email" readonly class="w-full px-4 py-4 rounded-2xl bg-gray-100 border border-gray-100 text-gray-500 cursor-not-allowed outline-none" placeholder="example@mail.com">
                 </div>
 
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Phone Number</label>
-                    <input id="edit-phone" type="tel" class="w-full px-4 py-3.5 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="+976">
-                </div>
-
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Bio</label>
-                    <textarea id="edit-bio" rows="4" class="w-full px-4 py-3.5 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none resize-none" placeholder="Tell us about your travel style..."></textarea>
+                <div class="space-y-2">
+                    <label class="text-[13px] font-bold text-gray-400 uppercase tracking-wider ml-1">Утасны дугаар</label>
+                    <input id="edit-phone" type="tel" class="w-full px-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:border-[#2b8cee] focus:bg-white focus:ring-4 focus:ring-[#2b8cee]/10 outline-none transition-all" placeholder="99112233">
                 </div>
             </div>
         </main>
 
-        <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md p-4 border-t border-slate-100 dark:border-slate-800 flex gap-4">
-            <button onclick="saveProfileChanges()" class="w-full h-14 bg-primary text-white font-bold rounded-2xl shadow-lg shadow-primary/30 hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-lg">
-                Save Changes
+        <div class="p-6 mt-auto">
+            <button onclick="saveProfileChanges()" class="w-full bg-[#2b8cee] text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-[#2b8cee]/20 hover:bg-[#2370c0] active:scale-[0.98] transition-all">
+                Өөрчлөлтийг хадгалах
             </button>
         </div>
     </div>
 
     <script>
-        // Хуудас ачаалагдахад хэрэглэгчийн мэдээллийг бөглөх
-        document.addEventListener('DOMContentLoaded', () => {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser) {
-                document.getElementById('edit-name').value = currentUser.name || '';
-                document.getElementById('edit-email').value = currentUser.email || '';
-                document.getElementById('edit-phone').value = currentUser.phone || '';
-                document.getElementById('edit-bio').value = currentUser.bio || '';
-                
-                if (currentUser.profilePic) {
-                    document.getElementById('imagePreview').style.backgroundImage = `url('${currentUser.profilePic}')`;
-                }
-            }
-        });
-
-        // Зургийг урьдчилан харах (Preview)
+        // Профайл зураг урьдчилан харах
         function previewImage(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('imagePreview').style.backgroundImage = `url('${e.target.result}')`;
-                    // Зургийг түр хадгалах
                     localStorage.setItem('tempProfilePic', e.target.result);
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        // Мэдээллийг хадгалах
+        // Мэдээлэл хадгалах функц
         function saveProfileChanges() {
             const name = document.getElementById('edit-name').value;
             const phone = document.getElementById('edit-phone').value;
-            const bio = document.getElementById('edit-bio').value;
             const newPic = localStorage.getItem('tempProfilePic');
 
-            let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if(!name) { alert("Нэрээ оруулна уу"); return; }
 
-            if (currentUser) {
-                currentUser.name = name;
-                currentUser.phone = phone;
-                currentUser.bio = bio;
-                if (newPic) {
-                    currentUser.profilePic = newPic;
+            let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+            currentUser.name = name;
+            currentUser.phone = phone;
+            if(newPic) currentUser.profilePic = newPic;
+
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            localStorage.removeItem('tempProfilePic');
+            
+            alert("Амжилттай хадгалагдлаа!");
+            window.location.href = 'profile.html';
+        }
+
+        // Хуудас нээгдэхэд мэдээллийг татаж бөглөх
+        window.onload = function() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if(user) {
+                document.getElementById('edit-name').value = user.name || '';
+                document.getElementById('edit-email').value = user.email || '';
+                document.getElementById('edit-phone').value = user.phone || '';
+                if(user.profilePic) {
+                    document.getElementById('imagePreview').style.backgroundImage = `url('${user.profilePic}')`;
                 }
-
-                // 1. Current user-ийг шинэчлэх
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                // 2. Нийт хэрэглэгчдийн жагсаалтад шинэчлэх
-                const index = users.findIndex(u => u.email === currentUser.email);
-                if (index !== -1) {
-                    users[index] = currentUser;
-                    localStorage.setItem('users', JSON.stringify(users));
-                }
-
-                localStorage.removeItem('tempProfilePic'); // Түр зургийг устгах
-                alert("Profile successfully updated!");
-                window.location.href = 'profile.html'; // Профайл хуудас руу буцах
             }
         }
     </script>
