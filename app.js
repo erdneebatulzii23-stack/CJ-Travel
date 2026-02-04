@@ -140,3 +140,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+/**
+ * Loads the current user's data from LocalStorage and fills the edit form.
+ */
+function loadUserProfileForEditing() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (!currentUser) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Assign values to input fields
+    if (document.getElementById('edit-name')) document.getElementById('edit-name').value = currentUser.name || '';
+    if (document.getElementById('edit-email')) document.getElementById('edit-email').value = currentUser.email || '';
+    if (document.getElementById('edit-phone')) document.getElementById('edit-phone').value = currentUser.phone || '';
+    if (document.getElementById('edit-bio')) document.getElementById('edit-bio').value = currentUser.bio || '';
+}
+
+/**
+ * Saves the edited values back to both 'currentUser' and the main 'users' array.
+ */
+function saveProfileChanges() {
+    const nameValue = document.getElementById('edit-name')?.value;
+    const phoneValue = document.getElementById('edit-phone')?.value;
+    const bioValue = document.getElementById('edit-bio')?.value;
+
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    if (!currentUser) return;
+
+    // 1. Update the Current User object
+    currentUser.name = nameValue;
+    currentUser.phone = phoneValue;
+    currentUser.bio = bioValue;
+
+    // 2. Update the user in the main database array (users)
+    const userIndex = users.findIndex(u => u.email === currentUser.email);
+    if (userIndex !== -1) {
+        users[userIndex] = { ...users[userIndex], ...currentUser };
+    }
+
+    // 3. Save everything back to LocalStorage
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    localStorage.setItem('users', JSON.stringify(users));
+
+    alert("Profile updated successfully!");
+    window.location.href = 'profile.html';
+}
