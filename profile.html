@@ -50,12 +50,12 @@
     <div class="flex p-6 @container">
         <div class="flex w-full flex-col gap-6 items-center">
             <div class="flex gap-4 flex-col items-center">
-                <div id="mainProfilePic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-4 border-white dark:border-gray-800 shadow-sm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxHuuOpFQ1p1KPM8qsQG75wYZu65Tg2gmxzbQKMKlyGa4aXYwOMDA-z_fPbeCCjjA8zLmY4VH06YSi7RAL2nALA1YmA5-YzAKDSy2KZ8YI8D8Iy8_4eGlwat8tBBmi-Vpi5Q-QF_CyY_7AxpAHjHWjcz-Y2_8XRQ6Pv2If4Kkezx_IcuGTN0C10Ry3f9EP5_SG14KffeF_KrvyukSaz_kvzqEbZcNdgs4FvL-pMCMkIpd7DmzRYA5G4ySbybeLgSSYV3DzkwtlOQcT");'>
+                <div id="mainProfilePic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-4 border-white dark:border-gray-800 shadow-sm" style='background-image: url("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");'>
                 </div>
                 
                 <div class="flex flex-col items-center justify-center">
-                    <p id="userName" class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">James Anderson</p>
-                    <p id="userEmail" class="text-[#4c739a] dark:text-gray-400 text-base font-normal leading-normal text-center">james.traveler@example.com</p>
+                    <p id="userName" class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">Loading...</p>
+                    <p id="userEmail" class="text-[#4c739a] dark:text-gray-400 text-base font-normal leading-normal text-center"></p>
                 </div>
                 <div class="px-4 mt-2">
                     <button 
@@ -160,38 +160,33 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. LocalStorage-аас нэвтэрсэн хэрэглэгчийг авах
+        // LocalStorage-аас хадгалсан датаг уншина
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        // ХЭРЭВ ХЭРЭГЛЭГЧ НЭВТРЭЭГҮЙ БОЛ:
         if (!currentUser) {
-            // Шууд нэвтрэх хуудас руу шилжүүлнэ
             window.location.href = 'login.html'; 
             return; 
         }
 
-        // ХЭРЭВ НЭВТРЭСЭН БОЛ МЭДЭЭЛЛИЙГ СОЛИНО:
+        // --- ЭНЭ ХЭСЭГТ МЭДЭЭЛЛИЙГ ШИНЭЧИЛЖ БАЙНА ---
         const profileDiv = document.getElementById('mainProfilePic');
         const nameDisplay = document.getElementById('userName');
         const emailDisplay = document.getElementById('userEmail');
 
+        if (nameDisplay) {
+            nameDisplay.textContent = currentUser.name || "Username";
+        }
+        if (emailDisplay) {
+            emailDisplay.textContent = currentUser.email || "";
+        }
         if (profileDiv && currentUser.profilePic) {
             profileDiv.style.backgroundImage = `url('${currentUser.profilePic}')`;
         }
-        if (nameDisplay && currentUser.name) {
-            nameDisplay.textContent = currentUser.name;
-        }
-        if (emailDisplay && currentUser.email) {
-            emailDisplay.textContent = currentUser.email;
-        }
     });
 
-    // Logout функц
     function logoutUser() {
         if(confirm("Are you sure you want to logout?")) {
-            // 1. LocalStorage-аас устгах
             localStorage.removeItem('currentUser');
-            // 2. Нэвтрэх хуудас руу үсэргэх
             window.location.href = 'login.html'; 
         }
     }
