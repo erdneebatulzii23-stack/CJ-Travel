@@ -112,5 +112,44 @@
 </button>
 </div>
 </div>
+<script>
+    let selectedUrl = "";
 
+    // Бүх картуудыг сонгож авах
+    const providerCard = document.querySelector('div:has(p:contains("Provider"))') || document.querySelectorAll('.group.cursor-pointer')[2];
+    const nextButton = document.querySelector('button.bg-primary');
+
+    // Provider карт дээр дарах үед
+    document.querySelectorAll('.group.cursor-pointer').forEach((card, index) => {
+        card.addEventListener('click', () => {
+            // Бүх картын хүрээг эхлээд арилгана
+            document.querySelectorAll('.group.cursor-pointer').forEach(c => {
+                c.classList.remove('border-primary', 'bg-blue-50/30');
+            });
+
+            // Дарсан картыг идэвхжүүлнэ
+            card.classList.add('border-primary', 'bg-blue-50/30');
+
+            // Хэрэв 3 дахь карт буюу Provider-ыг сонговол очих замыг тохируулна
+            if (index === 2) { 
+                selectedUrl = "provider-setup.html";
+            } else {
+                selectedUrl = "#"; // Бусад дүрүүд хараахан бэлэн болоогүй үед
+            }
+        });
+    });
+
+    // Next товч дарах үед үсрэх
+    nextButton.addEventListener('click', () => {
+        if (selectedUrl !== "") {
+            if (selectedUrl === "#") {
+                alert("Энэ бүртгэлийн хэсэг удахгүй нээгдэнэ.");
+            } else {
+                window.location.href = selectedUrl;
+            }
+        } else {
+            alert("Та бүртгүүлэх төрлөө сонгоно уу.");
+        }
+    });
+</script>
 </body></html>
