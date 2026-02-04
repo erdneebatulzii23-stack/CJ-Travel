@@ -74,36 +74,64 @@
     </div>
 
     <script>
-        function previewImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imagePreview').style.backgroundImage = `url('${e.target.result}')`;
-                    localStorage.setItem('tempProfilePic', e.target.result);
-                };
-                reader.readAsDataURL(file);
+    // 1. Хуудас ачаалагдах үед хэрэглэгчийн мэдээллийг бөглөх
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        if (currentUser) {
+            if (currentUser.name) document.getElementById('edit-name').value = currentUser.name;
+            if (currentUser.email) document.getElementById('edit-email').value = currentUser.email;
+            if (currentUser.phone) document.getElementById('edit-phone').value = currentUser.phone;
+            if (currentUser.profilePic) {
+                document.getElementById('imagePreview').style.backgroundImage = `url('${currentUser.profilePic}')`;
             }
         }
+    });
 
-        function saveProfileChanges() {
-            const name = document.getElementById('edit-name').value;
-            const phone = document.getElementById('edit-phone').value;
-            const newPic = localStorage.getItem('tempProfilePic');
-
-            if(!name) { 
-                alert("Please enter your name"); 
-                return; 
-            }
-
-            let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-            currentUser.name = name;
-            currentUser.phone = phone;
-            if(newPic) currentUser.profilePic = newPic;
-
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            localStorage.removeItem('tempProfilePic');
-            
-            alert("Changes saved successfully!");
-            window.location.href = 'profile.html';
+    // 2. Зураг сонгох үед шууд харуулах
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Image = e.target.result;
+                // Зургийг шууд харуулах
+                document.getElementById('imagePreview').style.backgroundImage = `url('${base64Image}')`;
+                // Түр зуур хадгалах (Save дарахад жинхэнэ утга руу шилжинэ)
+                sessionStorage.setItem('tempProfilePic', base64Image);
+            };
+            reader.readAsDataURL(file);
         }
+    }
+
+    // 3. Мэдээллийг хадгалах
+    function saveProfileChanges() {
+        const name = document.getElementById('edit-name').value;
+        const phone = document.getElementById('edit-phone').value;
+        const newPic = sessionStorage.getItem('tempProfilePic');
+
+        if(!name) { 
+            alert("Нэрээ оруулна уу!"); 
+            return; 
+        }
+
+        // Одоо байгаа датаг авах
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+        
+        // Мэдээллийг шинэчлэх
+        currentUser.name = name;
+        currentUser.phone = phone;
+        if(newPic) currentUser.profilePic = newPic;
+
+        // localStorage-д буцааж хадгалах
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        // Түр зургийг устгах
+        sessionStorage.removeItem('tempProfilePic');
+        
+        alert("Амжилттай хадгалагдлаа!");
+        window.location.href = 'profile.html';
+    }
+</script> 
+</body>
+</html>
