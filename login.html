@@ -118,5 +118,18 @@
 </div>
 </div>
 </div>
+<script>
+    const passwordInput = document.querySelector('input[type="password"]');
+    const toggleBtn = passwordInput.nextElementSibling;
 
+    toggleBtn.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleBtn.innerHTML = '<span class="material-symbols-outlined">visibility_off</span>';
+        } else {
+            passwordInput.type = 'password';
+            toggleBtn.innerHTML = '<span class="material-symbols-outlined">visibility</span>';
+        }
+    });
+</script>
 </body></html>
