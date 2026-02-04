@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Traveler Profile</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: "Plus Jakarta Sans", sans-serif; min-height: 100dvh; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100 min-h-screen">
+    <div class="relative flex flex-col w-full max-w-[480px] mx-auto min-h-screen shadow-lg bg-white dark:bg-background-dark">
+        <header class="sticky top-0 z-50 flex items-center bg-white dark:bg-background-dark border-b border-[#cfdbe7] dark:border-slate-800 p-4 justify-between">
+            <h2 class="text-[#0d141b] dark:text-white text-lg font-bold leading-tight flex-1 text-center">CJ Travel</h2>
+        </header>
+
+        <main class="flex-1 overflow-y-auto pb-32">
+            <div class="flex p-4">
+                <div class="flex w-full flex-col gap-4 items-center text-center">
+                    <div class="relative">
+                        <div id="profile-pic" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 border-4 border-white dark:border-slate-800 shadow-sm" style='background-image: url("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");'></div>
+                        <div class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full shadow-lg cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">photo_camera</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-[22px] font-bold leading-tight">Edit Profile</p>
+                        <p class="text-primary text-base font-semibold">Tap to change photo</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="px-4 space-y-4">
+                <label class="block">
+                    <p class="text-base font-medium pb-2">Full Name</p>
+                    <input id="edit-name" type="text" class="w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-14 p-4" placeholder="Your Name"/>
+                </label>
+
+                <label class="block">
+                    <p class="text-base font-medium pb-2">Email</p>
+                    <input id="edit-email" type="email" readonly class="w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-900 h-14 p-4 text-slate-500" placeholder="Email Address"/>
+                </label>
+
+                <label class="block">
+                    <p class="text-base font-medium pb-2">Phone Number</p>
+                    <input id="edit-phone" type="tel" class="w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-14 p-4" placeholder="+976 ..."/>
+                </label>
+
+                <label class="block">
+                    <p class="text-base font-medium pb-2">Bio</p>
+                    <textarea id="edit-bio" class="w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-32 p-4" placeholder="Tell us about yourself..."></textarea>
+                </label>
+            </div>
+        </main>
+
+        <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white dark:bg-background-dark p-4 border-t border-[#cfdbe7] dark:border-slate-800 flex gap-4">
+            <button onclick="window.history.back()" class="flex-1 h-12 bg-slate-100 dark:bg-slate-800 font-bold rounded-xl">Back</button>
+            <button onclick="saveProfileChanges()" class="flex-1 h-12 bg-primary text-white font-bold rounded-xl shadow-md">Save Changes</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Хуудас нээгдэхэд мэдээллийг ачаалах
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof loadUserProfileForEditing === 'function') {
+                loadUserProfileForEditing();
+            }
+        });
+    </script>
+</body>
+</html>
