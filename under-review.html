@@ -76,5 +76,25 @@
             </button>
 </div>
 </div>
+<script>
+    // Get the first button (Back to Home)
+    const backBtn = document.querySelectorAll('button')[0];
+    // Get the second button (Contact Support)
+    const supportBtn = document.querySelectorAll('button')[1];
 
+    // Add click event for Back to Home
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            window.location.href = "index.html";
+        });
+    }
+
+    // Add click event for Contact Support
+    if (supportBtn) {
+        supportBtn.addEventListener('click', () => {
+            // This opens the user's default email app
+            window.location.href = "mailto:support@cjtravel.com";
+        });
+    }
+</script>
 </body></html>
