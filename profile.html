@@ -153,23 +153,20 @@
 <script src="app.js"></script>
  <script>
         document.addEventListener('DOMContentLoaded', () => {
-    // 1. Get the logged-in user data from LocalStorage
+    // 1. LocalStorage-аас мэдээллийг авах
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     if (currentUser) {
-        // 2. Update Profile Picture
-        const profileImage = document.getElementById('mainProfilePic');
-        if (profileImage && currentUser.profilePic) {
-            // Use this if your element is an <img> tag
-            profileImage.src = currentUser.profilePic;
-            
-            // Use this if your element is a <div> with a background image
-            // profileImage.style.backgroundImage = `url('${currentUser.profilePic}')`;
+        // 2. Зургийг шинэчлэх (Чиний код дээр <div> байгаа тул background-image солино)
+        // HTML-д байгаа зургийн div-д id="profileImageDiv" нэмж өгөх хэрэгтэй
+        const profileDiv = document.getElementById('profileImageDiv');
+        if (profileDiv && currentUser.profilePic) {
+            profileDiv.style.backgroundImage = `url('${currentUser.profilePic}')`;
         }
 
-        // 3. Update Name and Email (Optional but recommended)
-        const nameDisplay = document.getElementById('profileName');
-        const emailDisplay = document.getElementById('profileEmail');
+        // 3. Нэр болон И-мэйлийг шинэчлэх (Чиний HTML-д байгаа ID-нуудтай тааруулав)
+        const nameDisplay = document.getElementById('userName');
+        const emailDisplay = document.getElementById('userEmail');
 
         if (nameDisplay && currentUser.name) {
             nameDisplay.textContent = currentUser.name;
@@ -179,6 +176,12 @@
         }
     }
 });
+
+// Logout функц (товчлуур дээр байгаа тул заавал байх ёстой)
+function logoutUser() {
+    localStorage.removeItem('currentUser');
+    window.location.href = 'login.html'; // эсвэл index.html
+}
     </script>
 </body>
 </html>       
