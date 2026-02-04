@@ -160,36 +160,43 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // LocalStorage-аас хадгалсан датаг уншина
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    // 1. Хадгалагдсан хэрэглэгчийн датаг авна
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        if (!currentUser) {
-            window.location.href = 'login.html'; 
-            return; 
-        }
-
-        // --- ЭНЭ ХЭСЭГТ МЭДЭЭЛЛИЙГ ШИНЭЧИЛЖ БАЙНА ---
+    if (currentUser) {
+        // 2. HTML элементүүдээ олно
         const profileDiv = document.getElementById('mainProfilePic');
         const nameDisplay = document.getElementById('userName');
         const emailDisplay = document.getElementById('userEmail');
 
-        if (nameDisplay) {
-            nameDisplay.textContent = currentUser.name || "Username";
-        }
-        if (emailDisplay) {
-            emailDisplay.textContent = currentUser.email || "";
-        }
-        if (profileDiv && currentUser.profilePic) {
-            profileDiv.style.backgroundImage = `url('${currentUser.profilePic}')`;
-        }
-    });
+        // 3. Нэр болон Имэйлийг солих
+        if (nameDisplay) nameDisplay.textContent = currentUser.name || "Username";
+        if (emailDisplay) emailDisplay.textContent = currentUser.email || "";
 
-    function logoutUser() {
-        if(confirm("Are you sure you want to logout?")) {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'login.html'; 
+        // 4. Зургийг солих (ЭНЭ ХЭСЭГ ХАМГИЙН ЧУХАЛ)
+        if (profileDiv) {
+            if (currentUser.profilePic) {
+                // Хэрэв localStorage-д зураг байвал түүнийг харуулна
+                profileDiv.style.backgroundImage = `url('${currentUser.profilePic}')`;
+            } else {
+                // Байхгүй бол default зураг харуулна
+                profileDiv.style.backgroundImage = `url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')`;
+            }
         }
+    } else {
+        // Хэрэв нэвтрээгүй бол нэвтрэх хуудас руу шилжүүлнэ
+        window.location.href = 'login.html';
     }
+});
+
+function logoutUser() {
+    if(confirm("Are you sure you want to logout?")) {
+        // Logout хийсэн ч мэдээллийг localStorage-д хэвээр үлдээе
+        // Зөвхөн одоо нэвтэрсэн төлөвийг арилгаж болно
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+    }
+}
 </script>
 
 </body>
