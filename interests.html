@@ -182,34 +182,43 @@
 </div>
 </footer>
 <script>
-    // Бүх картуудыг сонгож авах
+    /**
+     * Interests Selection Logic
+     */
+
+    // Select all interest cards and navigation buttons
     const cards = document.querySelectorAll('.grid > div');
     const finishBtn = document.querySelector('button.bg-primary');
-    const backBtn = document.querySelector('button.bg-gray-200');
+    const backBtn = document.querySelector('button.border, button.bg-gray-200'); // Support both style variants
 
-    // Карт бүр дээр дарах үйлдэл
+    // Toggle selection state for each card
     cards.forEach(card => {
         card.addEventListener('click', () => {
-            // 'interest-card-selected' класс байвал устгаад, байхгүй бол нэмнэ (Toggle)
+            // Toggle the custom selection class
             card.classList.toggle('interest-card-selected');
         });
     });
 
-    // Back товч: Бүртгэлийн хуудас руу буцах
-    backBtn.addEventListener('click', () => {
-        window.location.href = "traveler-setup.html";
-    });
+    // Back button: Navigate back to the traveler registration page
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            window.location.href = "traveler-setup.html";
+        });
+    }
 
-    // Finish товч: Үндсэн нүүр хуудас руу орох
-    finishBtn.addEventListener('click', () => {
-        const selectedInterests = document.querySelectorAll('.interest-card-selected');
-        
-        if (selectedInterests.length < 3) {
-            alert("Please select at least 3 interests to continue!");
-        } else {
-            // Бүртгэл бүрэн дууссан тул нүүр хуудас руу шилжинэ
-            window.location.href = "index.html";
-        }
-    });
+    // Finish button: Validate selection and proceed to success page
+    if (finishBtn) {
+        finishBtn.addEventListener('click', () => {
+            const selectedInterests = document.querySelectorAll('.interest-card-selected');
+            
+            // Check if user has selected at least 3 interests
+            if (selectedInterests.length < 3) {
+                alert("Please select at least 3 interests to continue!");
+            } else {
+                // Redirect to the success confirmation page
+                window.location.href = "completed-profile.html";
+            }
+        });
+    }
 </script>
 </body></html>
