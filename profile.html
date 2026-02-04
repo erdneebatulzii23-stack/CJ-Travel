@@ -160,35 +160,41 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // LocalStorage-аас нэвтэрсэн хэрэглэгчийг авах
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    // 1. LocalStorage-аас нэвтэрсэн хэрэглэгчийг авах
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        if (currentUser) {
-            // 1. Зургийг шинэчлэх (Background Image ашиглаж байгаа тул)
-            const profileDiv = document.getElementById('mainProfilePic');
-            if (profileDiv && currentUser.profilePic) {
-                profileDiv.style.backgroundImage = `url('${currentUser.profilePic}')`;
-            }
-
-            // 2. Нэр болон Имэйлийг шинэчлэх
-            const nameDisplay = document.getElementById('userName');
-            const emailDisplay = document.getElementById('userEmail');
-
-            if (nameDisplay && currentUser.name) {
-                nameDisplay.textContent = currentUser.name;
-            }
-            if (emailDisplay && currentUser.email) {
-                emailDisplay.textContent = currentUser.email;
-            }
-        }
-    });
-
-    function logoutUser() {
-        if(confirm("Are you sure you want to logout?")) {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'index.html';
-        }
+    // ХЭРЭВ ХЭРЭГЛЭГЧ НЭВТРЭЭГҮЙ БОЛ:
+    if (!currentUser) {
+        // Шууд нэвтрэх хуудас руу шилжүүлнэ (login.html эсвэл index.html)
+        window.location.href = 'login.html'; 
+        return; // Доорх кодыг ажиллуулахгүй зогсооно
     }
+
+    // ХЭРЭВ НЭВТРЭСЭН БОЛ МЭДЭЭЛЛИЙГ СОЛИНО:
+    const profileDiv = document.getElementById('mainProfilePic');
+    const nameDisplay = document.getElementById('userName');
+    const emailDisplay = document.getElementById('userEmail');
+
+    if (profileDiv && currentUser.profilePic) {
+        profileDiv.style.backgroundImage = `url('${currentUser.profilePic}')`;
+    }
+    if (nameDisplay && currentUser.name) {
+        nameDisplay.textContent = currentUser.name;
+    }
+    if (emailDisplay && currentUser.email) {
+        emailDisplay.textContent = currentUser.email;
+    }
+});
+
+// Logout функц
+function logoutUser() {
+    if(confirm("Are you sure you want to logout?")) {
+        // 1. LocalStorage-аас устгах
+        localStorage.removeItem('currentUser');
+        // 2. Нэвтрэх хуудас руу үсэргэх
+        window.location.href = 'login.html'; 
+    }
+}
 </script>
 
 </body>
