@@ -113,42 +113,47 @@
 </div>
 </div>
 <script>
-    let selectedUrl = "";
+    let selectedType = ""; // Сонгосон төрлийг хадгалах
 
     // Бүх картуудыг сонгож авах
-    const providerCard = document.querySelector('div:has(p:contains("Provider"))') || document.querySelectorAll('.group.cursor-pointer')[2];
+    const cards = document.querySelectorAll('.group.cursor-pointer');
     const nextButton = document.querySelector('button.bg-primary');
 
-    // Provider карт дээр дарах үед
-    document.querySelectorAll('.group.cursor-pointer').forEach((card, index) => {
+    cards.forEach((card, index) => {
         card.addEventListener('click', () => {
-            // Бүх картын хүрээг эхлээд арилгана
-            document.querySelectorAll('.group.cursor-pointer').forEach(c => {
-                c.classList.remove('border-primary', 'bg-blue-50/30');
+            // 1. Бүх картын хүрээ болон арын өнгийг арилгаж хэвийн болгох
+            cards.forEach(c => {
+                c.classList.remove('border-primary', 'bg-blue-50/50', 'dark:bg-blue-900/20');
+                c.classList.add('border-transparent');
             });
 
-            // Дарсан картыг идэвхжүүлнэ
-            card.classList.add('border-primary', 'bg-blue-50/30');
+            // 2. Зөвхөн дарсан картыг идэвхжүүлж, цэнхэр хүрээ нэмэх
+            card.classList.remove('border-transparent');
+            card.classList.add('border-primary', 'bg-blue-50/50', 'dark:bg-blue-900/20');
 
-            // Хэрэв 3 дахь карт буюу Provider-ыг сонговол очих замыг тохируулна
-            if (index === 2) { 
-                selectedUrl = "provider-setup.html";
-            } else {
-                selectedUrl = "#"; // Бусад дүрүүд хараахан бэлэн болоогүй үед
-            }
+            // 3. Индексээр нь аль карт сонгогдсоныг тогтоох
+            // 0 = Traveler, 1 = Tour Guide, 2 = Provider
+            if (index === 0) selectedType = "traveler";
+            else if (index === 1) selectedType = "guide";
+            else if (index === 2) selectedType = "provider";
+            
+            console.log("Сонгогдсон төрөл:", selectedType); // Шалгах зориулалттай
         });
     });
 
-    // Next товч дарах үед үсрэх
-    nextButton.addEventListener('click', () => {
-        if (selectedUrl !== "") {
-            if (selectedUrl === "#") {
-                alert("Энэ бүртгэлийн хэсэг удахгүй нээгдэнэ.");
-            } else {
-                window.location.href = selectedUrl;
-            }
+    // Next товч дарах үед ажиллах
+    nextButton.addEventListener('click', (e) => {
+        e.preventDefault(); // Хуудас дахин ачааллахаас сэргийлнэ
+
+        if (selectedType === "provider") {
+            // Хэрэв Provider сонгогдсон бол
+            window.location.href = "provider-setup.html";
+        } else if (selectedType === "traveler" || selectedType === "guide") {
+            // Бусад төрөл дээр одоогоор анхааруулга өгөх
+            alert(selectedType + " бүртгэлийн хэсэг удахгүй нээгдэнэ.");
         } else {
-            alert("Та бүртгүүлэх төрлөө сонгоно уу.");
+            // Юу ч сонгоогүй үед
+            alert("Та үргэлжлүүлэхийн тулд нэг сонголт хийнэ үү.");
         }
     });
 </script>
