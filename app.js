@@ -10,12 +10,7 @@
  */
 function handleProfileClick() {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
-
-    if (isLoggedIn === 'true') {
-        window.location.href = 'profile.html';
-    } else {
-        window.location.href = 'login.html';
-    }
+    window.location.href = (isLoggedIn === 'true') ? 'profile.html' : 'login.html';
 }
 
 /**
@@ -27,21 +22,20 @@ function loginUser() {
 }
 
 /**
- * Clears login status and redirects to home.
+ * Clears login status and redirects to the setup or landing page.
  */
 function logoutUser() {
-    localStorage.removeItem('isLoggedIn');
-    window.location.href = 'index.html';
+    if (confirm("Are you sure you want to log out?")) {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = "traveler-setup.html";
+    }
 }
 
-// --- 2. UI Helper Functions ---
+// --- 2. UI and Page Logic ---
 
-/**
- * Initializing page-specific features when the DOM is loaded.
- */
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Password Visibility Toggle Logic
+    // A. Password Visibility Toggle Logic
     const passwordInput = document.getElementById('login-password');
     const toggleBtn = document.getElementById('toggle-password');
 
@@ -57,84 +51,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Profile Page Protection
+    // B. Profile Page Logic (Security & Data Display)
     if (window.location.pathname.includes('profile.html')) {
+        // Security check: Redirect if not logged in
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'login.html';
+            return; // Stop further execution
+        }
+
+        // Display user data
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        if (users.length > 0) {
+            const currentUser = users[users.length - 1];
+
+            // Select elements by ID (Your profile.html now uses these IDs)
+            const nameElement = document.getElementById('userName');
+            const emailElement = document.getElementById('userEmail');
+
+            if (nameElement) nameElement.textContent = currentUser.name;
+            if (emailElement) emailElement.textContent = currentUser.email;
         }
     }
 });
-/**
- * Profile page logic: 
- * Updates the UI with user information from LocalStorage
- */
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Retrieve users array from LocalStorage
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    // 2. Select the most recently registered user
-    if (users.length > 0) {
-        const currentUser = users[users.length - 1];
-
-        // 3. Find target elements using CSS selectors
-        const nameElement = document.querySelector('p.text-\\[22px\\]');
-        const emailElement = document.querySelector('p.text-\\[#4c739a\\]');
-
-        // 4. Update the UI text content
-        if (nameElement) nameElement.textContent = currentUser.name;
-        if (emailElement) emailElement.textContent = currentUser.email;
-    }
-});
-/**
- * Profile page logic: 
- * Updates the UI with user information from LocalStorage
- */
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Retrieve users array from LocalStorage
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    // 2. Select the most recently registered user
-    if (users.length > 0) {
-        const currentUser = users[users.length - 1];
-
-        // 3. Find target elements using CSS selectors
-        const nameElement = document.querySelector('p.text-\\[22px\\]');
-        const emailElement = document.querySelector('p.text-\\[#4c739a\\]');
-
-        // 4. Update the UI text content
-        if (nameElement) nameElement.textContent = currentUser.name;
-        if (emailElement) emailElement.textContent = currentUser.email;
-    }
-});
-
-/**
- * Profile page logic: 
- * Updates the UI with user information from LocalStorage
- */
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Retrieve users array from LocalStorage
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    // 2. Select the most recently registered user
-    if (users.length > 0) {
-        const currentUser = users[users.length - 1];
-
-        // 3. Find target elements using CSS selectors
-        const nameElement = document.querySelector('p.text-\\[22px\\]');
-        const emailElement = document.querySelector('p.text-\\[#4c739a\\]');
-
-        // 4. Update the UI text content
-        if (nameElement) nameElement.textContent = currentUser.name;
-        if (emailElement) emailElement.textContent = currentUser.email;
-    }
-});
-
-/**
- * Handle user logout functionality
- */
-function logoutUser() {
-    if (confirm("Are you sure you want to log out?")) {
-        // Redirect back to the registration page
-        window.location.href = "traveler-setup.html";
-    }
-}
