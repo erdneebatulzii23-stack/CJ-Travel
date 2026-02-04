@@ -97,3 +97,99 @@
                     <div class="flex items-center gap-4">
                         <div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
                             <span class="material-symbols-outlined">person_add</span>
+                        </div>
+                        <p class="text-base font-medium leading-normal flex-1 truncate">Invite Friends</p>
+                    </div>
+                    <div class="shrink-0 text-gray-400">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+                            <span class="material-symbols-outlined">help</span>
+                        </div>
+                        <p class="text-base font-medium leading-normal flex-1 truncate">Help & Support</p>
+                    </div>
+                    <div class="shrink-0 text-gray-400">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </div>
+                </div>
+
+                <button onclick="logoutUser()" class="w-full flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4 text-left">
+                    <div class="flex items-center gap-4">
+                        <div class="text-red-500 flex items-center justify-center rounded-lg bg-red-50 dark:bg-red-900/20 shrink-0 size-10">
+                            <span class="material-symbols-outlined">logout</span>
+                        </div>
+                        <p class="text-red-500 text-base font-medium leading-normal flex-1 truncate">Logout</p>
+                    </div>
+                    <div class="shrink-0 text-red-300">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-gray-200 dark:border-slate-800">
+    <div class="max-w-md mx-auto flex justify-around items-center h-20 px-2 pb-5">
+        <a href="index.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-semibold">Home</span>
+        </a>
+        <a href="guides.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
+            <span class="material-symbols-outlined">person_search</span>
+            <span class="text-[10px] font-semibold">Guides</span>
+        </a>
+        <a href="resort.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
+            <span class="material-symbols-outlined">holiday_village</span>
+            <span class="text-[10px] font-semibold">Resorts</span>
+        </a>
+        <a href="favorites.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
+            <span class="material-symbols-outlined">favorite</span>
+            <span class="text-[10px] font-semibold">Favorites</span>
+        </a>
+        <a href="profile.html" class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_circle</span>
+            <span class="text-[10px] font-semibold">My Profile</span>
+        </a>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // LocalStorage-аас нэвтэрсэн хэрэглэгчийг авах
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (currentUser) {
+            // 1. Зургийг шинэчлэх (Background Image ашиглаж байгаа тул)
+            const profileDiv = document.getElementById('mainProfilePic');
+            if (profileDiv && currentUser.profilePic) {
+                profileDiv.style.backgroundImage = `url('${currentUser.profilePic}')`;
+            }
+
+            // 2. Нэр болон Имэйлийг шинэчлэх
+            const nameDisplay = document.getElementById('userName');
+            const emailDisplay = document.getElementById('userEmail');
+
+            if (nameDisplay && currentUser.name) {
+                nameDisplay.textContent = currentUser.name;
+            }
+            if (emailDisplay && currentUser.email) {
+                emailDisplay.textContent = currentUser.email;
+            }
+        }
+    });
+
+    function logoutUser() {
+        if(confirm("Are you sure you want to logout?")) {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+    }
+</script>
+
+</body>
+</html>
