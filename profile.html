@@ -109,17 +109,17 @@
 <span class="material-symbols-outlined">chevron_right</span>
 </div>
 </div>
-<div class="flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4">
-<div class="flex items-center gap-4">
-<div class="text-red-500 flex items-center justify-center rounded-lg bg-red-50 dark:bg-red-900/20 shrink-0 size-10">
-<span class="material-symbols-outlined">logout</span>
-</div>
-<p class="text-red-500 text-base font-medium leading-normal flex-1 truncate">Logout</p>
-</div>
-<div class="shrink-0 text-red-300">
-<span class="material-symbols-outlined">chevron_right</span>
-</div>
-</div>
+<button onclick="logoutUser()" class="w-full flex items-center gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl justify-between cursor-pointer hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4">
+    <div class="flex items-center gap-4">
+        <div class="text-red-500 flex items-center justify-center rounded-lg bg-red-50 dark:bg-red-900/20 shrink-0 size-10">
+            <span class="material-symbols-outlined">logout</span>
+        </div>
+        <p class="text-red-500 text-base font-medium leading-normal flex-1 truncate">Logout</p>
+    </div>
+    <div class="shrink-0 text-red-300">
+        <span class="material-symbols-outlined">chevron_right</span>
+    </div>
+</button>
 </div>
 </main>
 <footer class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-gray-200 dark:border-slate-800">
@@ -146,5 +146,6 @@
         </a>
     </div>
 </footer>
-
-</body></html>
+<script src="app.js"></script>
+</body>
+</html>
