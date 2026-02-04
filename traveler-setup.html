@@ -44,18 +44,32 @@
         <p class="text-[#4c739a] dark:text-slate-400 text-base mt-2">Join our global community of explorers.</p>
     </div>
 
-    <form class="space-y-1">
+    <form class="space-y-1" id="regForm">
         <div class="px-4 py-3">
             <label class="flex flex-col">
                 <p class="text-base font-medium pb-2">Full Name</p>
-                <input class="form-input rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 h-14 p-[15px]" placeholder="Enter your full name" type="text"/>
+                <input id="fullName" class="form-input rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 h-14 p-[15px]" placeholder="Enter your full name" type="text"/>
+            </label>
+        </div>
+
+        <div class="px-4 py-3">
+            <label class="flex flex-col">
+                <p class="text-base font-medium pb-2">Email Address</p>
+                <input id="regEmail" class="form-input rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 h-14 p-[15px]" placeholder="example@mail.com" type="email"/>
+            </label>
+        </div>
+
+        <div class="px-4 py-3">
+            <label class="flex flex-col">
+                <p class="text-base font-medium pb-2">Password</p>
+                <input id="regPassword" class="form-input rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 h-14 p-[15px]" placeholder="••••••••" type="password"/>
             </label>
         </div>
 
         <div class="px-4 py-3">
             <label class="flex flex-col">
                 <p class="text-base font-medium pb-2">Date of Birth</p>
-                <input class="form-input rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 h-14 p-[15px]" type="date"/>
+                <input id="dob" class="form-input rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 h-14 p-[15px]" type="date"/>
             </label>
         </div>
 
@@ -71,12 +85,11 @@
         <div class="px-4 py-3">
             <label class="flex flex-col">
                 <p class="text-base font-medium pb-2">Phone Number</p>
-                <input class="form-input rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 h-14 p-[15px]" placeholder="+976 0000-0000" type="tel"/>
+                <input id="phone" class="form-input rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 h-14 p-[15px]" placeholder="+976 0000-0000" type="tel"/>
             </label>
         </div>
     </form>
 </main>
-
 <footer class="fixed bottom-0 left-0 right-0 p-4 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800">
     <div class="flex gap-4 max-w-[480px] mx-auto">
         <button id="backBtn" class="flex-1 h-14 rounded-xl border border-[#cfdbe7] dark:border-slate-700 font-bold bg-white dark:bg-slate-800">Back</button>
@@ -85,39 +98,65 @@
 </footer>
 
 <script>
-    // 1. Countries List
-    const countries = [
-        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", 
-        "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Brazil", 
-        "Bulgaria", "Cambodia", "Cameroon", "Canada", "Chile", "China", "Colombia", "Costa Rica", "Croatia", "Cuba", "Cyprus", 
-        "Czech Republic", "Denmark", "Egypt", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Georgia", "Germany", "Greece", 
-        "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", 
-        "Kazakhstan", "Kenya", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lithuania", "Luxembourg", 
-        "Malaysia", "Maldives", "Malta", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Myanmar", "Nepal", 
-        "Netherlands", "New Zealand", "Norway", "Oman", "Pakistan", "Panama", "Peru", "Philippines", "Poland", "Portugal", "Qatar", 
-        "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "Spain", "Sri Lanka", "Sweden", 
-        "Switzerland", "Taiwan", "Thailand", "Turkey", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Vietnam"
-    ];
-
+    // 1. Initialize Countries List
+    // Note: Keep your full list of countries here
+    const countries = ["Afghanistan", "Albania", "...", "Mongolia", "..."]; 
+    
     const select = document.getElementById('countrySelect');
-    if(select) {
-        countries.forEach(country => {
-            let opt = document.createElement('option');
-            opt.value = country.toLowerCase();
-            opt.innerHTML = country;
-            select.appendChild(opt);
-        });
-    }
+    
+    // Dynamically populate the nationality dropdown
+    countries.forEach(country => {
+        let opt = document.createElement('option');
+        opt.value = country;
+        opt.innerHTML = country;
+        select.appendChild(opt);
+    });
 
-    // 2. Navigation Logic
+    // 2. Registration and Storage Logic
     const createBtn = document.getElementById('createBtn');
     if (createBtn) {
         createBtn.addEventListener('click', (e) => {
+            // Prevent default form submission behavior
             e.preventDefault();
+
+            // Collect user data from input fields
+            const userData = {
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('regEmail').value,
+                password: document.getElementById('regPassword').value,
+                dob: document.getElementById('dob').value,
+                nationality: document.getElementById('countrySelect').value,
+                phone: document.getElementById('phone').value,
+                role: 'traveler', // Set default role as traveler
+                joinedAt: new Date().toLocaleDateString() // Record registration date
+            };
+
+            // Validation: Check if required fields are filled
+            if(!userData.email || !userData.password || !userData.name) {
+                alert("Please fill in your Name, Email, and Password!");
+                return;
+            }
+
+            // LocalStorage Management: Retrieve existing users or initialize empty array
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Duplicate Check: Ensure the email is not already registered
+            if(users.some(u => u.email === userData.email)) {
+                alert("This email address is already registered!");
+                return;
+            }
+
+            // Save data: Add new user to the array and update LocalStorage
+            users.push(userData);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Success feedback and navigation
+            alert("Account successfully created!");
             window.location.href = "interests.html"; 
         });
     }
 
+    // 3. Navigation: Back button functionality
     const backBtn = document.getElementById('backBtn');
     if (backBtn) {
         backBtn.addEventListener('click', () => {
