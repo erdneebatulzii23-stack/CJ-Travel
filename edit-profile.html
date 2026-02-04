@@ -1,138 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Edit Profile - CJ Travel</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    
-    <script>
-        /** 1. Нэвтрээгүй бол Profile засахыг зөвшөөрөхгүй шууд буцаана */
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (!currentUser) {
-            window.location.replace('login.html');
-        }
-    </script>
-
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
-        .material-symbols-outlined { font-size: 24px; display: inline-block; line-height: 1; }
-        /* Хуудас бэлэн болтол контентыг нуух */
-        #edit-main-content { visibility: hidden; }
-    </style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
+        .material-symbols-outlined { font-size: 24px; display: inline-block; line-height: 1; }
+        .glass-effect { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    </style>
 </head>
 <body class="bg-[#f3f4f6] text-[#111827]">
 
-    <div id="edit-main-content" class="max-w-[480px] mx-auto min-h-screen bg-white shadow-2xl flex flex-col relative">
-        
-        <header class="flex items-center px-6 py-5 sticky top-0 bg-white/90 backdrop-blur-md z-10 border-b border-gray-100">
-            <button onclick="window.location.href='profile.html'" class="w-11 h-11 flex items-center justify-center rounded-2xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-all active:scale-90">
-                <span class="material-symbols-outlined">arrow_back</span>
-            </button>
-            <h1 class="flex-1 text-center text-xl font-extrabold tracking-tight mr-11">Edit Profile</h1>
-        </header>
+    <div class="max-w-[480px] mx-auto min-h-screen bg-white shadow-2xl flex flex-col relative">
+        
+        <header class="flex items-center px-6 py-5 sticky top-0 bg-white/90 backdrop-blur-md z-10 border-b border-gray-100">
+            <button onclick="window.history.back()" class="w-11 h-11 flex items-center justify-center rounded-2xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-all active:scale-90">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="flex-1 text-center text-xl font-extrabold tracking-tight mr-11">Edit Profile</h1>
+        </header>
 
-        <main class="flex-1 px-8">
-            <div class="flex flex-col items-center py-10">
-                <div class="relative">
-                    <div id="imagePreview" 
-                         class="w-36 h-36 rounded-[40px] border-[6px] border-white shadow-2xl bg-cover bg-center bg-gray-100 rotate-3 hover:rotate-0 transition-transform duration-300"
-                         style="background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');">
-                    </div>
-                    <label for="fileInput" class="absolute -bottom-2 -right-2 bg-[#2b8cee] text-white w-12 h-12 rounded-2xl flex items-center justify-center border-4 border-white shadow-xl cursor-pointer hover:bg-[#1a76d2] hover:scale-110 transition-all active:scale-95">
-                        <span class="material-symbols-outlined text-[22px]">photo_camera</span>
-                        <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="previewImage(event)">
-                    </label>
-                </div>
-                <p class="mt-6 text-gray-400 text-sm font-medium">Profile Picture</p>
-            </div>
+        <main class="flex-1 px-8">
+            <div class="flex flex-col items-center py-10">
+                <div class="relative">
+                    <div id="imagePreview" 
+                         class="w-36 h-36 rounded-[40px] border-[6px] border-white shadow-2xl bg-cover bg-center bg-gray-100 rotate-3 hover:rotate-0 transition-transform duration-300"
+                         style="background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');">
+                    </div>
+                    <label for="fileInput" class="absolute -bottom-2 -right-2 bg-[#2b8cee] text-white w-12 h-12 rounded-2xl flex items-center justify-center border-4 border-white shadow-xl cursor-pointer hover:bg-[#1a76d2] hover:scale-110 transition-all active:scale-95">
+                        <span class="material-symbols-outlined text-[22px]">photo_camera</span>
+                        <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="previewImage(event)">
+                    </label>
+                </div>
+                <p class="mt-6 text-gray-400 text-sm font-medium">Profile Picture</p>
+            </div>
 
-            <div class="space-y-7">
-                <div class="group">
-                    <label class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2 block ml-1 group-focus-within:text-[#2b8cee] transition-colors">Full Name</label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">person</span>
-                        <input id="edit-name" type="text" class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border-2 border-transparent focus:border-[#2b8cee] focus:bg-white outline-none transition-all shadow-sm" placeholder="Your full name">
-                    </div>
-                </div>
+            <div class="space-y-7">
+                <div class="group">
+                    <label class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2 block ml-1 group-focus-within:text-[#2b8cee] transition-colors">Full Name</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">person</span>
+                        <input id="edit-name" type="text" class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border-2 border-transparent focus:border-[#2b8cee] focus:bg-white outline-none transition-all shadow-sm" placeholder="Your full name">
+                    </div>
+                </div>
 
-                <div class="group">
-                    <label class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2 block ml-1">Email Address</label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">mail</span>
-                        <input id="edit-email" type="email" readonly class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-100 border-2 border-transparent text-gray-500 cursor-not-allowed outline-none" placeholder="example@mail.com">
-                    </div>
-                </div>
+                <div class="group">
+                    <label class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2 block ml-1">Email Address</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">mail</span>
+                        <input id="edit-email" type="email" readonly class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-100 border-2 border-transparent text-gray-500 cursor-not-allowed outline-none" placeholder="example@mail.com">
+                    </div>
+                </div>
 
-                <div class="group">
-                    <label class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2 block ml-1 group-focus-within:text-[#2b8cee] transition-colors">Phone Number</label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">call</span>
-                        <input id="edit-phone" type="tel" class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border-2 border-transparent focus:border-[#2b8cee] focus:bg-white outline-none transition-all shadow-sm" placeholder="+976 0000 0000">
-                    </div>
-                </div>
-            </div>
-        </main>
+                <div class="group">
+                    <label class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2 block ml-1 group-focus-within:text-[#2b8cee] transition-colors">Phone Number</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">call</span>
+                        <input id="edit-phone" type="tel" class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border-2 border-transparent focus:border-[#2b8cee] focus:bg-white outline-none transition-all shadow-sm" placeholder="+976 0000 0000">
+                    </div>
+                </div>
+            </div>
+        </main>
 
-        <div class="p-8 mt-6">
-            <button onclick="saveProfileChanges()" class="w-full bg-[#2b8cee] text-white py-5 rounded-[24px] font-bold text-[17px] shadow-xl shadow-blue-200 hover:bg-[#1a76d2] hover:shadow-2xl hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-200">
-                Save Changes
-            </button>
-        </div>
-    </div>
+        <div class="p-8 mt-6">
+            <button onclick="saveProfileChanges()" class="w-full bg-[#2b8cee] text-white py-5 rounded-[24px] font-bold text-[17px] shadow-xl shadow-blue-200 hover:bg-[#1a76d2] hover:shadow-2xl hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-200">
+                Save Changes
+            </button>
+        </div>
+    </div>
 
-    <script>
-        function previewImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imagePreview').style.backgroundImage = `url('${e.target.result}')`;
-                    // Түр зуур зураг хадгалах
-                    localStorage.setItem('tempProfilePic', e.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').style.backgroundImage = `url('${e.target.result}')`;
+                    localStorage.setItem('tempProfilePic', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
-        function saveProfileChanges() {
-            const name = document.getElementById('edit-name').value;
-            const phone = document.getElementById('edit-phone').value;
-            const newPic = localStorage.getItem('tempProfilePic');
+        function saveProfileChanges() {
+            const name = document.getElementById('edit-name').value;
+            const phone = document.getElementById('edit-phone').value;
+            const newPic = localStorage.getItem('tempProfilePic');
 
-            if(!name) { 
-                alert("Please enter your name"); 
-                return; 
-            }
+            if(!name) { 
+                alert("Please enter your name"); 
+                return; 
+            }
 
-            // Шинэчилсэн мэдээллийг хадгалах
-            let user = JSON.parse(localStorage.getItem('currentUser'));
-            user.name = name;
-            user.phone = phone;
-            if(newPic) user.profilePic = newPic;
+            let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+            currentUser.name = name;
+            currentUser.phone = phone;
+            if(newPic) currentUser.profilePic = newPic;
 
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.removeItem('tempProfilePic'); // Түр хадгалах санг цэвэрлэх
-            
-            alert("Changes saved successfully!");
-            window.location.replace('profile.html');
-        }
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            localStorage.removeItem('tempProfilePic');
+            
+            alert("Changes saved successfully!");
+            window.location.href = 'profile.html';
+        }
 
-        window.onload = function() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            if(user) {
-                document.getElementById('edit-name').value = user.name || '';
-                document.getElementById('edit-email').value = user.email || '';
-                document.getElementById('edit-phone').value = user.phone || '';
-                if(user.profilePic) {
-                    document.getElementById('imagePreview').style.backgroundImage = `url('${user.profilePic}')`;
-                }
-                // Бүх мэдээлэл бэлэн болоход контентыг харуулна
-                document.getElementById('edit-main-content').style.visibility = 'visible';
-            }
-        }
-    </script>
+        window.onload = function() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if(user) {
+                document.getElementById('edit-name').value = user.name || '';
+                document.getElementById('edit-email').value = user.email || '';
+                document.getElementById('edit-phone').value = user.phone || '';
+                if(user.profilePic) {
+                    document.getElementById('imagePreview').style.backgroundImage = `url('${user.profilePic}')`;
+                }
+            }
+        }
+    </script>
 </body>
 </html>
