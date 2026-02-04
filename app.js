@@ -41,23 +41,23 @@ function logoutUser() {
  */
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Password Visibility Toggle (for login.html)
-    const passwordInput = document.querySelector('input[type="password"]');
-    const toggleBtn = passwordInput ? passwordInput.nextElementSibling : null;
+    // 1. Password Visibility Toggle Logic
+    const passwordInput = document.getElementById('login-password');
+    const toggleBtn = document.getElementById('toggle-password');
 
-    if (passwordInput && toggleBtn && toggleBtn.querySelector('.material-symbols-outlined')) {
+    if (passwordInput && toggleBtn) {
         toggleBtn.addEventListener('click', () => {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleBtn.innerHTML = '<span class="material-symbols-outlined">visibility_off</span>';
-            } else {
-                passwordInput.type = 'password';
-                toggleBtn.innerHTML = '<span class="material-symbols-outlined">visibility</span>';
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            
+            const icon = toggleBtn.querySelector('.material-symbols-outlined');
+            if (icon) {
+                icon.textContent = isPassword ? 'visibility_off' : 'visibility';
             }
         });
     }
 
-    // Protection for profile page
+    // 2. Profile Page Protection
     if (window.location.pathname.includes('profile.html')) {
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'login.html';
