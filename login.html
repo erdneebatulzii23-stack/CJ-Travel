@@ -1,43 +1,122 @@
-<body class="bg-slate-50 dark:bg-slate-950 font-display min-h-screen">
-    <div class="max-w-[420px] mx-auto min-h-screen flex flex-col bg-white dark:bg-slate-900 shadow-xl">
-        <header class="flex items-center p-4 border-b border-slate-100 dark:border-slate-800">
-            <a href="index.html" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all">
-                <span class="material-symbols-outlined text-2xl">arrow_back</span>
-            </a>
-            <h1 class="flex-1 text-center font-bold text-lg pr-10">CJ Travel</h1>
-        </header>
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CJ Travel - Multi-Role Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        .segment-tab:checked + label {
+            @apply bg-white dark:bg-gray-600 text-primary shadow-sm;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="sticky top-0 z-50 flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 border-b border-transparent">
+<h2 class="text-[#0d141b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] w-full text-center">CJ Travel</h2>
+</div>
+<div class="flex flex-col flex-1 px-4 max-w-[480px] mx-auto w-full">
+<div class="pt-8 pb-6 text-center">
+<h1 class="text-[#0d141b] dark:text-white tracking-tight text-[32px] font-bold leading-tight pb-2">Welcome Back</h1>
+<p class="text-[#4c739a] dark:text-gray-400 text-base font-normal leading-normal">Log in to your account</p>
+</div>
+<div class="p-1 bg-gray-200/50 dark:bg-gray-800 rounded-xl flex items-center mb-8 relative">
+<input checked="" class="segment-tab hidden" id="traveler" name="role" type="radio"/>
+<label class="flex-1 py-2.5 text-center text-sm font-bold cursor-pointer rounded-lg transition-all text-[#4c739a] dark:text-gray-400" for="traveler">
+                    Traveler
+                </label>
+<input class="segment-tab hidden" id="guide" name="role" type="radio"/>
+<label class="flex-1 py-2.5 text-center text-sm font-bold cursor-pointer rounded-lg transition-all text-[#4c739a] dark:text-gray-400" for="guide">
+                    Guide
+                </label>
+<input class="segment-tab hidden" id="company" name="role" type="radio"/>
+<label class="flex-1 py-2.5 text-center text-sm font-bold cursor-pointer rounded-lg transition-all text-[#4c739a] dark:text-gray-400" for="company">
+                    Company
+                </label>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col w-full">
+<label class="flex flex-col w-full">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2">Email or Username</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#cfdbe7] dark:border-gray-700 bg-surface-light dark:bg-surface-dark h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="Enter your email or username" type="email"/>
+</label>
+</div>
+<div class="flex flex-col w-full">
+<label class="flex flex-col w-full">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2">Password</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#cfdbe7] dark:border-gray-700 bg-surface-light dark:bg-surface-dark h-14 placeholder:text-[#4c739a] p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" placeholder="Enter your password" type="password"/>
+<div class="text-[#4c739a] flex border border-[#cfdbe7] dark:border-gray-700 bg-surface-light dark:bg-surface-dark items-center justify-center pr-[15px] rounded-r-lg border-l-0 cursor-pointer">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+</div>
+</label>
+</div>
+<div class="flex justify-end pt-1">
+<a class="text-primary text-sm font-semibold hover:underline" href="#">Forgot Password?</a>
+</div>
+<div class="pt-6 pb-2">
+<button class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-xl transition-colors shadow-md">
+                        Login
+                    </button>
+</div>
+</div>
+<div class="flex items-center gap-4 py-8">
+<div class="h-[1px] flex-1 bg-[#cfdbe7] dark:bg-gray-700"></div>
+<p class="text-[#4c739a] text-sm font-medium">Or continue with</p>
+<div class="h-[1px] flex-1 bg-[#cfdbe7] dark:bg-gray-700"></div>
+</div>
+<div class="flex flex-col gap-3">
+<button class="flex items-center justify-center gap-3 w-full h-14 border border-[#cfdbe7] dark:border-gray-700 rounded-xl bg-surface-light dark:bg-surface-dark text-[#0d141b] dark:text-white font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<img alt="" class="w-6 h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5Ul7BwSzYnIbN_CYCVxmmZZm8jav-omBc9i0U84_cJNUDvEfFl3VgVgP4I7lHkWPPOBvcPbClstI84rd441BFe1hqOmq4oulhVtSEgReIZ2SRmZIlB4Zcp1XWAYYOm4w1QWrVykM-VaHTb_Iq5uxDtlWeqZy3mGzZIVNW5K6WCpGFv8iMTyxefJxxr1gcvtN5ONEG84Usc9uHuZvUA_qhUfHGPa9RnGCAko63h2tzn5Vf1lOGDhswpyQzolhoLkOh3lxqfA_1I_3Q"/>
+<span>Google</span>
+</button>
+<button class="flex items-center justify-center gap-3 w-full h-14 border border-[#cfdbe7] dark:border-gray-700 rounded-xl bg-surface-light dark:bg-surface-dark text-[#0d141b] dark:text-white font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<img alt="" class="w-6 h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB53PHpFo0KfbejW6eYTyoo1ZyIYxMV2_R7SynGL2hRXx7P20AarSoM6yI7HZ6QAoBC1xEc0hxivB5XxkzzcIt9_iJN185Dcp-1RMBZsB2QTRz8NIxX_AlejcKjZ9cUPF7MQjUYrwD_pgiW-X4mvEEFaZvDhWSJ-Cz1Yd5xQGoMZc06KQ_97AFll5rBVipdtT1i1cdeORB6WsBXbH_zym_X4YahsxS64Egy4GtNH_64_e4oDti6NbqBymMT8QKmyrqMvLBoAwN8jaLu"/>
+<span>Facebook</span>
+</button>
+</div>
+<div class="mt-auto py-10 flex flex-col items-center gap-4 text-center">
+<p class="text-[#4c739a] dark:text-gray-400 text-base">
+                    Don't have an account?
+                    <a class="text-primary font-bold hover:underline" href="#">Sign Up</a>
+</p>
+<a class="flex items-center gap-1 text-[#4c739a] dark:text-gray-400 font-medium hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+<span>Back</span>
+</a>
+</div>
+</div>
+</div>
 
-        <main class="flex-1 px-6 pt-10 pb-6">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">Welcome Back</h2>
-                <p class="text-slate-500 mt-2">Log in to your account to continue</p>
-            </div>
-
-            <div class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl mb-8">
-                <button class="flex-1 py-2 text-sm font-bold bg-white dark:bg-slate-700 shadow-sm rounded-lg text-primary">Traveler</button>
-                <button class="flex-1 py-2 text-sm font-bold text-slate-500">Guide</button>
-                <button class="flex-1 py-2 text-sm font-bold text-slate-500">Company</button>
-            </div>
-
-            <div class="space-y-5">
-                <div>
-                    <label class="block text-sm font-semibold mb-2">Email or Username</label>
-                    <input type="email" class="w-full h-12 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-primary outline-none" placeholder="name@example.com">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold mb-2">Password</label>
-                    <input type="password" class="w-full h-12 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-primary outline-none" placeholder="••••••••">
-                </div>
-                <button class="w-full h-12 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all">
-                    Login
-                </button>
-            </div>
-
-            <div class="mt-8 text-center">
-                <p class="text-slate-500 text-sm">Don't have an account? 
-                    <a href="role-selection.html" class="text-primary font-bold hover:underline">Sign Up</a>
-                </p>
-            </div>
-        </main>
-    </div>
-</body>
+</body></html>
