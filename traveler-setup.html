@@ -112,32 +112,49 @@
 </div>
 </footer>
 <script>
-    // Get the buttons by their order in the footer
-    const backBtn = document.querySelectorAll('footer button')[0];
-    const createAccountBtn = document.querySelectorAll('footer button')[1];
+    // Automatically populate the country dropdown list
+    const countries = [
+        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", 
+        "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Brazil", 
+        "Bulgaria", "Cambodia", "Cameroon", "Canada", "Chile", "China", "Colombia", "Costa Rica", "Croatia", "Cuba", "Cyprus", 
+        "Czech Republic", "Denmark", "Egypt", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Georgia", "Germany", "Greece", 
+        "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", 
+        "Kazakhstan", "Kenya", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lithuania", "Luxembourg", 
+        "Malaysia", "Maldives", "Malta", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Myanmar", "Nepal", 
+        "Netherlands", "New Zealand", "Norway", "Oman", "Pakistan", "Panama", "Peru", "Philippines", "Poland", "Portugal", "Qatar", 
+        "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "Spain", "Sri Lanka", "Sweden", 
+        "Switzerland", "Taiwan", "Thailand", "Turkey", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Vietnam"
+    ];
 
-    // Back button: Go back to role selection
-    if (backBtn) {
-        backBtn.addEventListener('click', () => {
-            window.location.href = "role-selection.html";
+    const select = document.getElementById('countrySelect');
+    
+    // Loop through the countries array and create option elements
+    countries.forEach(country => {
+        let opt = document.createElement('option');
+        opt.value = country.toLowerCase();
+        opt.innerHTML = country;
+        select.appendChild(opt);
+    });
+
+    // Button Logic & Navigation
+    
+    // Selecting the 'Create Account' button (second button in the footer)
+    const createAccountBtn = document.querySelectorAll('footer button')[1];
+    if (createAccountBtn) {
+        createAccountBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent the form from submitting normally
+            
+            // Redirect to the interests selection page
+            window.location.href = "interests.html"; 
         });
     }
 
-    // Create Account button: Form submission and redirect
-    if (createAccountBtn) {
-        createAccountBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent page reload
-
-            // Basic Validation Check
-            const nameInput = document.querySelector('input[placeholder="Enter your full name"]');
-            if (nameInput && nameInput.value.trim() === "") {
-                alert("Please enter your full name to continue.");
-                return;
-            }
-
-            // In a real app, you would save data here.
-            // For now, redirect to the home dashboard or interest selection page
-            window.location.href = "index.html"; 
+    // Selecting the 'Back' button (first button in the footer)
+    const backBtn = document.querySelectorAll('footer button')[0];
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            // Navigate back to the role selection page
+            window.location.href = "role-selection.html";
         });
     }
 </script>
