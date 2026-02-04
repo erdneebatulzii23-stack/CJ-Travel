@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Traveler Registration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    min-height: max(884px, 100dvh)
+    }
+.form-input:focus {
+    border-color: #2b8cee !important;
+    @apply ring-0;
+    }
+.custom-select {
+    appearance: none;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAvdmyJHuQvo0uz7poWWbrg_DSkZnx6OYCGW329RYFnBro-tJuXHG7K5iE0iKkhNjhTIPA3GEzdrzVNb-tL0bwmKqO9aSKzC4a6l1WwShQmOYMdUtfr4sKfjCxDCR4k1f0FqRjPFkf19iIQdvS_uXaksGIQlW6Pe1izamYJyFNs6HzEP-ZzDI69JrCdfUVingjwxUC6-wkGLu97BZVLgTL6zwflu47_nF_ONOnSz1JtYv0h_99AXLUoN1uCwzaoo77rzfzWXzkLjkxX);
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.5rem
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-slate-100 min-h-screen flex flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center p-4 justify-center">
+<h2 class="text-[#0d141b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">CJ Travel</h2>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto pb-24">
+<div class="px-4 pt-6 pb-2">
+<h1 class="text-[#0d141b] dark:text-white tracking-tight text-[32px] font-bold leading-tight">Traveler Registration</h1>
+<p class="text-[#4c739a] dark:text-slate-400 text-base mt-2">Join our global community of explorers.</p>
+</div>
+<form class="space-y-1">
+<div class="flex flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2">Full Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-0 border border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 focus:border-primary h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="Enter your full name" type="text"/>
+</label>
+</div>
+<div class="flex flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2">Date of Birth</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-r-none border-r-0 text-[#0d141b] dark:text-white focus:outline-0 focus:ring-0 border border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 focus:border-primary h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="DD/MM/YYYY" type="text"/>
+<div class="text-[#4c739a] flex border border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 items-center justify-center pr-[15px] rounded-r-lg border-l-0">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+</div>
+</label>
+</div>
+<div class="flex flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2">Nationality</p>
+<select class="custom-select form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-0 border border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 focus:border-primary h-14 p-[15px] text-base font-normal leading-normal">
+<option disabled="" selected="" value="">Select nationality</option>
+<option value="us">United States</option>
+<option value="uk">United Kingdom</option>
+<option value="ca">Canada</option>
+<option value="au">Australia</option>
+<option value="other">Other</option>
+</select>
+</label>
+</div>
+<div class="flex flex-wrap items-end gap-4 px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2">Phone Number</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-0 border border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 focus:border-primary h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="+1 (555) 000-0000" type="tel"/>
+</label>
+</div>
+<div class="flex flex-wrap items-end gap-4 px-4 py-3 pb-8">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2">Emergency Contact</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-0 border border-[#cfdbe7] dark:border-slate-700 bg-background-light dark:bg-slate-900 focus:border-primary h-14 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal" placeholder="Emergency phone number" type="tel"/>
+</label>
+</div>
+</form>
+</main>
+<footer class="fixed bottom-0 left-0 right-0 p-4 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800">
+<div class="flex gap-4 max-w-[480px] mx-auto">
+<button class="flex-1 h-14 rounded-xl border border-[#cfdbe7] dark:border-slate-700 text-[#0d141b] dark:text-white font-bold text-base bg-white dark:bg-slate-800 active:bg-slate-100 dark:active:bg-slate-700">
+                Back
+            </button>
+<button class="flex-1 h-14 rounded-xl bg-primary text-white font-bold text-base shadow-sm active:opacity-90">
+                Create Account
+            </button>
+</div>
+</footer>
+
+</body></html>
