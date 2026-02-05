@@ -106,10 +106,50 @@
 <button class="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#e7edf3] dark:bg-gray-800 text-[#0d141b] dark:text-white font-bold font-display">
                 Back
             </button>
-<button class="flex-1 h-12 flex items-center justify-center rounded-xl bg-primary text-white font-bold font-display">
-                Submit for Review
-            </button>
+<button onclick="handleGuideSignup()" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-primary text-white font-bold font-display">
+    Submit for Review
+</button>
 </div>
 </div>
+<script>
+function handleGuideSignup() {
+    // Input-үүдээс утгыг нь авна
+    const fullName = document.getElementById('guide-name').value;
+    const email = document.getElementById('guide-email').value;
+    const password = document.getElementById('guide-password').value;
+    const nationality = document.getElementById('guide-nationality').value;
+    const experience = document.getElementById('guide-experience').value;
+    const phone = document.getElementById('guide-phone').value;
 
+    // Хоосон байгаа эсэхийг шалгах
+    if (!email || !password || !fullName) {
+        alert("Нэр, имэйл болон нууц үгээ заавал бөглөнө үү!");
+        return;
+    }
+
+    // Хадгалагдсан хэрэглэгчдийг авах
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Шинэ Гид объект үүсгэх
+    const newGuide = {
+        fullName: fullName,
+        email: email,
+        password: password,
+        businessDetails: {
+            type: 'guide',
+            status: 'pending', // Шалгагдаж байна
+            nationality: nationality,
+            experience: experience,
+            phone: phone
+        }
+    };
+
+    // Хадгалах
+    users.push(newGuide);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    alert("Бүртгэл амжилттай илгээгдлээ!");
+    window.location.href = "login.html"; 
+}
+</script>
 </body></html>
