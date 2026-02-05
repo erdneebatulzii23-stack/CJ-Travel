@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Company Verification Pending</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100dvh;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<div class="sticky top-0 z-10 flex items-center bg-background-light dark:bg-background-dark p-4 pb-4 justify-center border-b border-slate-200 dark:border-slate-800">
+<h2 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] font-display">CJ Travel</h2>
+</div>
+<div class="flex flex-col flex-1 items-center justify-center px-6 text-center">
+<div class="relative flex items-center justify-center mb-8">
+<div class="absolute w-40 h-40 bg-primary/10 rounded-full animate-pulse"></div>
+<div class="relative bg-white dark:bg-slate-800 p-8 rounded-full shadow-xl">
+<span class="material-symbols-outlined text-primary text-[80px] leading-none">
+                        manage_search
+                    </span>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-primary text-white p-3 rounded-full shadow-lg border-4 border-background-light dark:border-background-dark">
+<span class="material-symbols-outlined text-2xl leading-none">
+                        schedule
+                    </span>
+</div>
+</div>
+<h1 class="text-[#0d141b] dark:text-slate-100 text-3xl font-bold mb-4 font-display">Under Review</h1>
+<p class="text-[#4c739a] dark:text-slate-400 text-base font-medium leading-relaxed max-w-xs font-display">
+                Your business details are currently being verified by our team. Please wait while we process your application.
+            </p>
+<div class="mt-8 flex items-center gap-2 bg-white dark:bg-slate-800/50 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary text-xl">info</span>
+<span class="text-sm font-semibold text-[#0d141b] dark:text-slate-200">This usually takes 24-48 hours.</span>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-3">
+<button class="w-full h-14 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[#0d141b] dark:text-slate-100 font-bold text-base shadow-sm hover:bg-slate-50 transition-colors font-display">
+                Back to Home
+            </button>
+<button class="w-full h-14 rounded-xl bg-transparent text-[#4c739a] dark:text-slate-400 font-semibold text-base hover:text-primary transition-colors font-display">
+                Contact Support
+            </button>
+</div>
+</div>
+
+</body></html>
