@@ -227,33 +227,108 @@ function loadPendingUsers() {
                     </button>
                 </div>
             </div>
- <script>     
-        `;
-        container.innerHTML += userHTML;
+ <script>
+    let currentFilter = 'Guide'; // Анх нээгдэхэд Guides-ийг харуулна
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setupTabs();
+        loadPendingUsers();
     });
 
-    // Дээд талын "New Requests" тоог шинэчлэх
-    document.querySelector('.text-green-600.text-2xl').textContent = pendingUsers.length;
-}
+    // Табууд дээр дарахад солигдох логик
+    function setupTabs() {
+        const tabs = document.querySelectorAll('.px-4 .flex.border-b a');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Идэвхтэй табын загварыг солих
+                tabs.forEach(t => {
+                    t.classList.remove('border-primary', 'text-primary');
+                    t.classList.add('border-transparent', 'text-slate-500');
+                });
+                tab.classList.remove('border-transparent', 'text-slate-500');
+                tab.classList.add('border-primary', 'text-primary');
 
-function updateStatus(email, newStatus) {
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    const index = users.findIndex(u => u.email === email);
+                // Шүүлтүүрээ солиод дахин ачаалах
+                currentFilter = tab.textContent.trim().includes('Guides') ? 'Guide' : 'Company';
+                loadPendingUsers();
+            });
+        });
+    }
 
-    if (index !== -1) {
-        users[index].businessDetails.status = newStatus;
-        localStorage.setItem('users', JSON.stringify(users));
+    function loadPendingUsers() {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const container = document.querySelector('.flex.flex-col.divide-y');
         
-        // Хэрэв админ өөрөө тухайн хэрэглэгчээр нэвтэрсэн байгаа бол currentUser-ийг бас шинэчилнэ
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.email === email) {
-            currentUser.businessDetails.status = newStatus;
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        container.innerHTML = '';
+
+        // Тухайн сонгогдсон роль болон "pending" статустай хэрэглэгчдийг шүүнэ
+        const pendingUsers = users.filter(user => 
+            user.role === currentFilter && 
+            user.businessDetails && 
+            user.businessDetails.status === 'pending'
+        );
+
+        // Нийт хүлээгдэж буй бүх хүсэлтийн тоог харуулах (Guides + Companies)
+        const totalPending = users.filter(u => u.businessDetails?.status === 'pending').length;
+        document.querySelector('.text-green-600.text-2xl').textContent = totalPending;
+
+        if (pendingUsers.length === 0) {
+            container.innerHTML = `<p class="text-center py-10 text-slate-500">Одоогоор хүлээгдэж буй ${currentFilter} байхгүй байна.</p>`;
+            return;
         }
 
-        alert(`Хэрэглэгчийг амжилттай ${newStatus === 'approved' ? 'зөвшөөрлөө' : 'татгалзлаа'}.`);
-        loadPendingUsers(); // Жагсаалтыг дахин ачаалах
+        pendingUsers.forEach(user => {
+            const userHTML = `
+                <div class="flex flex-col gap-3 py-5">
+                    <div class="flex items-center gap-4 justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 border border-slate-200" 
+                                 style="background-image: url('${user.profilePic || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}');">
+                            </div>
+                            <div class="flex flex-col">
+                                <p class="text-[#0d141b] dark:text-white text-base font-bold">${user.name}</p>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs">${user.email}</p>
+                                <p class="text-primary text-xs font-medium">${user.businessDetails.businessName || 'Мэдээлэл байхгүй'}</p>
+                            </div>
+                        </div>
+                        <button class="flex items-center justify-center rounded-lg h-9 px-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold border border-slate-200 dark:border-slate-700">
+                            Дэлгэрэнгүй
+                        </button>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="updateStatus('${user.email}', 'approved')" class="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-lg h-10 font-bold text-sm flex items-center justify-center gap-2 transition-colors">
+                            <span class="material-symbols-outlined text-base">check_circle</span> Зөвшөөрөх
+                        </button>
+                        <button onclick="updateStatus('${user.email}', 'rejected')" class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-lg h-10 font-bold text-sm flex items-center justify-center gap-2 transition-colors">
+                            <span class="material-symbols-outlined text-base">cancel</span> Татгалзах
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', userHTML);
+        });
     }
-}  
+
+    function updateStatus(email, newStatus) {
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        const index = users.findIndex(u => u.email === email);
+
+        if (index !== -1) {
+            users[index].businessDetails.status = newStatus;
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Хэрэв тухайн хэрэглэгч одоо системд нэвтэрсэн байвал currentUser-ийг шинэчилнэ
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser && currentUser.email === email) {
+                currentUser.businessDetails.status = newStatus;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+
+            alert(`Хэрэглэгчийг амжилттай ${newStatus === 'approved' ? 'баталгаажууллаа' : 'цуцаллаа'}.`);
+            loadPendingUsers();
+        }
+    }
 </script>
-</body></html>
+</body>
+</html>
