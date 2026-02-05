@@ -101,84 +101,98 @@
     </div>
     
     <script>
-    // Нууц үг харах/нуух функц (Энийг хэвээр үлдээв)
-    document.getElementById('toggle-password').addEventListener('click', function() {
-        const passwordInput = document.getElementById('login-password');
-        const icon = this.querySelector('span');
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            icon.textContent = 'visibility_off';
-        } else {
-            passwordInput.type = 'password';
-            icon.textContent = 'visibility';
-        }
-    });
-
-    function handleLogin() {
-        const emailInput = document.getElementById('login-email').value;
-        const passwordInput = document.getElementById('login-password').value;
-        
-        // --- ШИНЭ: Сонгосон Ролийг авах (traveler, guide, эсвэл company) ---
-        const selectedRoleElement = document.querySelector('input[name="role"]:checked');
-        const selectedRole = selectedRoleElement ? selectedRoleElement.id : null;
-
-        // --- АДМИН ШАЛГАХ ---
-        if (emailInput === "admin@travel.mn" && passwordInput === "1234") {
-            // Админыг currentUser гэж хадгална
-            localStorage.setItem('currentUser', JSON.stringify({ email: emailInput, role: 'admin' }));
-            window.location.href = "admin-dashboard.html";
-            return; 
-        }
-
-        // --- ХЭРЭГЛЭГЧ ШАЛГАХ ---
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const user = users.find(u => u.email === emailInput && u.password === passwordInput);
-
-        if (user) {
-            // --- ШИНЭ: Роль болон Сонгосон төрөл таарч байгааг шалгах ---
-            
-            // 1. Хэрэв Provider сонгосон бол businessDetails байх ёстой
-            if (selectedRole === "company") {
-                if (user.businessDetails) {
-                    localStorage.setItem('currentUser', JSON.stringify(user)); // Session хадгалах
-                    if (user.businessDetails.status === 'pending') {
-                        window.location.href = "under-review.html";
-                    } else if (user.businessDetails.status === 'approved') {
-                        window.location.href = "provider-home.html";
-                    }
-                } else {
-                    alert("Та Аялагчийн бүртгэлтэй байна. Провайдер табыг сонгох боломжгүй.");
-                    return;
-                }
-            } 
-            
-            // 2. Хэрэв Traveler сонгосон бол businessDetails байх ёсгүй
-            else if (selectedRole === "traveler") {
-                if (!user.businessDetails) {
-                    localStorage.setItem('currentUser', JSON.stringify(user)); // Session хадгалах
-                    window.location.href = "index.html";
-                } else {
-                    alert("Та Провайдер бүртгэлтэй байна. Аялагч табыг сонгох боломжгүй.");
-                    return;
-                }
-            }
-            
-            // 3. Хэрэв Guide сонгосон бол (Энд чиний Guide-ийн дата яаж хадгалагддагаас хамаарна)
-            else if (selectedRole === "guide") {
-                // Guide-ийг одоохондоо businessDetails-тэй гэж үзвэл:
-                if (user.businessDetails && user.businessDetails.type === 'guide') {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    window.location.href = "guide-home.html";
-                } else {
-                    alert("Та Гидийн бүртгэлгүй байна.");
-                    return;
-                }
-            }
-            
-        } else {
-            alert("Имэйл эсвэл нууц үг буруу байна!");
-        }
+    // Password visibility toggle function
+document.getElementById('toggle-password').addEventListener('click', function() {
+    const passwordInput = document.getElementById('login-password');
+    const icon = this.querySelector('span');
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.textContent = 'visibility_off';
+    } else {
+        passwordInput.type = 'password';
+        icon.textContent = 'visibility';
     }
+});
+
+function handleLogin() {
+    const emailInput = document.getElementById('login-email').value.trim();
+    const passwordInput = document.getElementById('login-password').value;
+    const selectedRoleElement = document.querySelector('input[name="role"]:checked');
+    const selectedRole = selectedRoleElement ? selectedRoleElement.id : null;
+
+    // Validate if inputs are empty
+    if (!emailInput || !passwordInput) {
+        alert("Please enter both email and password!");
+        return;
+    }
+
+    // --- ADMIN CHECK ---
+    if (emailInput === "admin@travel.mn" && passwordInput === "1234") {
+        localStorage.setItem('currentUser', JSON.stringify({ email: emailInput, role: 'admin' }));
+        window.location.href = "admin-dashboard.html";
+        return; 
+    }
+
+    // --- GET USER LIST FROM LOCALSTORAGE ---
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === emailInput && u.password === passwordInput);
+
+    if (user) {
+        // --- ROLE VALIDATION LOGIC ---
+        
+        // 1. PROVIDER (COMPANY) CHECK
+        if (selectedRole === "company") {
+            if (user.businessDetails && user.businessDetails.type === 'provider') {
+                loginSuccess(user);
+            } else {
+                alert("You do not have a Provider account!");
+            }
+        } 
+        
+        // 2. TRAVELER CHECK
+        else if (selectedRole === "traveler") {
+            if (!user.businessDetails) {
+                loginSuccess(user, "index.html");
+            } else {
+                alert("This is a Business account. Please select the Provider or Guide tab.");
+            }
+        }
+        
+        // 3. GUIDE CHECK
+        else if (selectedRole === "guide") {
+            if (user.businessDetails && user.businessDetails.type === 'guide') {
+                loginSuccess(user);
+            } else {
+                alert("You do not have a Guide account!");
+            }
+        }
+        
+    } else {
+        alert("Invalid email or password!");
+    }
+}
+
+/**
+ * Handles successful login and redirection
+ * @param {Object} user - The user object from database
+ * @param {string} defaultPage - Default redirect URL
+ */
+function loginSuccess(user, defaultPage) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    // Check status and type for business accounts
+    if (user.businessDetails) {
+        if (user.businessDetails.status === 'pending') {
+            window.location.href = "under-review.html";
+        } else if (user.businessDetails.type === 'guide') {
+            window.location.href = "guide-home.html";
+        } else if (user.businessDetails.type === 'provider') {
+            window.location.href = "provider-home.html";
+        }
+    } else {
+        window.location.href = defaultPage || "index.html";
+    }
+}
 </script>
 </body>
 </html>
