@@ -40,75 +40,76 @@
   </style>
   </head>
 <body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white transition-colors duration-200">
-<div class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+    <div class="relative flex h-screen w-full flex-col max-w-[430px] mx-auto bg-background-light dark:bg-background-dark shadow-xl overflow-hidden">
 
-<header class="flex items-center bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 p-4 justify-between h-16">
-    <div class="w-full text-center">
-        <h2 class="text-[#0d141b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] font-display">CJ Travel</h2>
+        <header class="sticky top-0 z-50 flex items-center bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 p-4 justify-between h-16 shrink-0">
+            <div class="w-full text-center">
+                <h2 class="text-[#0d141b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] font-display">CJ Travel</h2>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto pb-32">
+            <div class="px-4 pt-6 pb-2">
+                <h2 class="text-[#0d141b] dark:text-white tracking-tight text-[28px] font-bold leading-tight font-display">Guide Registration</h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">Join our platform and share your local expertise with travelers.</p>
+            </div>
+            
+            <div class="space-y-4 pt-2">
+                <div class="px-4">
+                    <label class="flex flex-col w-full">
+                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Full Name</p>
+                        <input id="guide-name" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Enter your full name" type="text"/>
+                    </label>
+                </div>
+
+                <div class="px-4">
+                    <label class="flex flex-col w-full">
+                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Email</p>
+                        <input id="guide-email" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="example@email.com" type="email"/>
+                    </label>
+                </div>
+
+                <div class="px-4">
+                    <label class="flex flex-col w-full">
+                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Password</p>
+                        <input id="guide-password" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Create a password" type="password"/>
+                    </label>
+                </div>
+
+                <div class="px-4">
+                    <label class="flex flex-col w-full">
+                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Nationality</p>
+                        <select id="guide-nationality" class="form-select flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 p-4 text-base font-normal leading-normal">
+                            <option value="">Select nationality</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="px-4">
+                    <label class="flex flex-col w-full">
+                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Years of Experience</p>
+                        <input id="guide-experience" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="How many years?" type="number"/>
+                    </label>
+                </div>
+
+                <div class="px-4">
+                    <label class="flex flex-col w-full">
+                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Phone Number</p>
+                        <input id="guide-phone" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="(555) 000-0000" type="tel"/>
+                    </label>
+                </div>
+            </div>
+        </main>
+
+        <div class="absolute bottom-0 left-0 right-0 p-4 bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 flex gap-3 z-50">
+            <button onclick="window.history.back()" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#e7edf3] dark:bg-gray-800 text-[#0d141b] dark:text-white font-bold font-display">
+                Back
+            </button>
+            <button onclick="handleGuideSignup()" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-primary text-white font-bold font-display">
+                Submit for Review
+            </button>
+        </div>
     </div>
-</header>
-
-<main class="flex-1 pb-32">
-    <div class="px-4 pt-6 pb-2">
-        <h2 class="text-[#0d141b] dark:text-white tracking-tight text-[28px] font-bold leading-tight font-display">Guide Registration</h2>
-        <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">Join our platform and share your local expertise with travelers.</p>
-    </div>
-    
-    <div class="space-y-4 pt-2">
-        <div class="px-4">
-            <label class="flex flex-col w-full">
-                <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Full Name</p>
-                <input id="guide-name" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Enter your full name" type="text"/>
-            </label>
-        </div>
-
-        <div class="px-4">
-            <label class="flex flex-col w-full">
-                <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Email</p>
-                <input id="guide-email" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="example@email.com" type="email"/>
-            </label>
-        </div>
-
-        <div class="px-4">
-            <label class="flex flex-col w-full">
-                <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Password</p>
-                <input id="guide-password" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Create a password" type="password"/>
-            </label>
-        </div>
-
-        <div class="px-4">
-            <label class="flex flex-col w-full">
-                <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Nationality</p>
-                <select id="guide-nationality" class="form-select flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 p-4 text-base font-normal leading-normal">
-    <option value="">Select nationality</option>
-    </select>
-            </label>
-        </div>
-
-        <div class="px-4">
-            <label class="flex flex-col w-full">
-                <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Years of Experience</p>
-                <input id="guide-experience" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="How many years?" type="number"/>
-            </label>
-        </div>
-
-        <div class="px-4">
-            <label class="flex flex-col w-full">
-                <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Phone Number</p>
-                <input id="guide-phone" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="(555) 000-0000" type="tel"/>
-            </label>
-        </div>
-    </div>
-</main>
-<div class="absolute bottom-0 left-0 right-0 p-4 bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 flex gap-3">
-<button onclick="window.history.back()" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#e7edf3] dark:bg-gray-800 text-[#0d141b] dark:text-white font-bold font-display">
-    Back
-</button>
-<button onclick="handleGuideSignup()" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-primary text-white font-bold font-display">
-    Submit for Review
-</button>
-</div>
-</div>
 <script>
 // Дэлхийн улсуудын жагсаалт (Жишээ болгож заримыг нь оруулав)
 const countries = [
