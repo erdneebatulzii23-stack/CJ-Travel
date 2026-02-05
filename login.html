@@ -101,7 +101,7 @@
     </div>
     
     <script>
-    // Нууц үг харах/нуух функц
+    // Нууц үг харах/нуух функц (Энийг хэвээр үлдээв)
     document.getElementById('toggle-password').addEventListener('click', function() {
         const passwordInput = document.getElementById('login-password');
         const icon = this.querySelector('span');
@@ -117,9 +117,15 @@
     function handleLogin() {
         const emailInput = document.getElementById('login-email').value;
         const passwordInput = document.getElementById('login-password').value;
+        
+        // --- ШИНЭ: Сонгосон Ролийг авах (traveler, guide, эсвэл company) ---
+        const selectedRoleElement = document.querySelector('input[name="role"]:checked');
+        const selectedRole = selectedRoleElement ? selectedRoleElement.id : null;
 
         // --- АДМИН ШАЛГАХ ---
         if (emailInput === "admin@travel.mn" && passwordInput === "1234") {
+            // Админыг currentUser гэж хадгална
+            localStorage.setItem('currentUser', JSON.stringify({ email: emailInput, role: 'admin' }));
             window.location.href = "admin-dashboard.html";
             return; 
         }
@@ -129,21 +135,50 @@
         const user = users.find(u => u.email === emailInput && u.password === passwordInput);
 
         if (user) {
-            // Провайдер эсвэл Гид мөн эсэхийг шалгах (businessDetails-тэй бол)
-            if (user.businessDetails) {
-                if (user.businessDetails.status === 'pending') {
-                    window.location.href = "under-review.html";
-                } else if (user.businessDetails.status === 'approved') {
-                    window.location.href = "provider-home.html";
+            // --- ШИНЭ: Роль болон Сонгосон төрөл таарч байгааг шалгах ---
+            
+            // 1. Хэрэв Provider сонгосон бол businessDetails байх ёстой
+            if (selectedRole === "company") {
+                if (user.businessDetails) {
+                    localStorage.setItem('currentUser', JSON.stringify(user)); // Session хадгалах
+                    if (user.businessDetails.status === 'pending') {
+                        window.location.href = "under-review.html";
+                    } else if (user.businessDetails.status === 'approved') {
+                        window.location.href = "provider-home.html";
+                    }
+                } else {
+                    alert("Та Аялагчийн бүртгэлтэй байна. Провайдер табыг сонгох боломжгүй.");
+                    return;
                 }
-            } else {
-                // Энгийн хэрэглэгч бол
-                window.location.href = "index.html";
+            } 
+            
+            // 2. Хэрэв Traveler сонгосон бол businessDetails байх ёсгүй
+            else if (selectedRole === "traveler") {
+                if (!user.businessDetails) {
+                    localStorage.setItem('currentUser', JSON.stringify(user)); // Session хадгалах
+                    window.location.href = "index.html";
+                } else {
+                    alert("Та Провайдер бүртгэлтэй байна. Аялагч табыг сонгох боломжгүй.");
+                    return;
+                }
             }
+            
+            // 3. Хэрэв Guide сонгосон бол (Энд чиний Guide-ийн дата яаж хадгалагддагаас хамаарна)
+            else if (selectedRole === "guide") {
+                // Guide-ийг одоохондоо businessDetails-тэй гэж үзвэл:
+                if (user.businessDetails && user.businessDetails.type === 'guide') {
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    window.location.href = "guide-home.html";
+                } else {
+                    alert("Та Гидийн бүртгэлгүй байна.");
+                    return;
+                }
+            }
+            
         } else {
             alert("Имэйл эсвэл нууц үг буруу байна!");
         }
     }
-    </script>
+</script>
 </body>
 </html>
