@@ -98,5 +98,37 @@
         </div>
     </div>
     <script src="app.js"></script>
+    <script>
+function handleLogin() {
+    // 1. Оролтын утгуудыг авах
+    const emailInput = document.querySelector('input[type="email"]').value;
+    const passwordInput = document.querySelector('input[type="password"]').value;
+
+    // --- АДМИН ШАЛГАХ ХЭСЭГ ---
+    // Хэрэв имэйл нь admin@travel.mn бол шууд админ руу үсэрнэ
+    if (emailInput === "admin@travel.mn" && passwordInput === "1234") {
+        window.location.href = "admin-dashboard.html";
+        return; 
+    }
+
+    // --- PROVIDER ШАЛГАХ ХЭСЭГ ---
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === emailInput && u.password === passwordInput);
+
+    if (user) {
+        // Статусаас хамаарч хаашаа шилжихийг шийднэ
+        if (user.businessDetails.status === 'pending') {
+            window.location.href = "under-review.html";
+        } else if (user.businessDetails.status === 'approved') {
+            window.location.href = "provider-home.html";
+        }
+    } else {
+        alert("Имэйл эсвэл нууц үг буруу байна!");
+    }
+}
+
+// "Login" товчлуур дээр энэ функцийг холбох
+document.querySelector('button.bg-blue-600').addEventListener('click', handleLogin);
+</script>
 </body>
 </html>
