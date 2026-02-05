@@ -46,8 +46,7 @@
                 <input class="segment-tab hidden" id="guide" name="role" type="radio"/>
                 <label class="flex-1 py-2.5 text-center text-sm font-bold cursor-pointer rounded-lg transition-all text-[#4c739a]" for="guide">Guide</label>
                 <input class="segment-tab hidden" id="company" name="role" type="radio"/>
-                <label class="flex-1 py-2.5 text-center text-sm font-bold cursor-pointer rounded-lg transition-all text-[#4c739a]" for="company">Company</label>
-
+                <label class="flex-1 py-2.5 text-center text-sm font-bold cursor-pointer rounded-lg transition-all text-[#4c739a]" for="company">Provider</label>
             </div>
             <div class="space-y-4">
                 <div class="flex flex-col">
@@ -100,35 +99,40 @@
     <script src="app.js"></script>
     <script>
     function handleLogin() {
-        // 1. Утгуудыг id-гаар нь авах (хамгийн баталгаатай арга)
-        const emailInput = document.getElementById('login-email').value;
-        const passwordInput = document.getElementById('login-password').value;
+    const emailInput = document.getElementById('login-email').value;
+    const passwordInput = document.getElementById('login-password').value;
 
-        // --- АДМИН ШАЛГАХ ---
-        if (emailInput === "admin@travel.mn" && passwordInput === "1234") {
-            window.location.href = "admin-dashboard.html";
-            return; 
-        }
-
-        // --- PROVIDER ШАЛГАХ ---
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const user = users.find(u => u.email === emailInput && u.password === passwordInput);
-
-        if (user) {
-            // Провайдер мөн эсэхийг шалгах
-            if (user.businessDetails) {
-                if (user.businessDetails.status === 'pending') {
-                    window.location.href = "under-review.html";
-                } else if (user.businessDetails.status === 'approved') {
-                    window.location.href = "provider-home.html";
-                }
-            } else {
-                alert("Энэ хэрэглэгч Провайдер биш байна.");
-            }
-        } else {
-            alert("Имэйл эсвэл нууц үг буруу байна!");
-        }
+    // 1. АДМИН ШАЛГАХ
+    if (emailInput === "admin@travel.mn" && passwordInput === "1234") {
+        window.location.href = "admin-dashboard.html";
+        return; 
     }
+
+    // 2. ХЭРЭГЛЭГЧИЙГ localStorage-аас ХАЙХ
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === emailInput && u.password === passwordInput);
+
+    if (user) {
+        // --- PROVIDER (COMPANY) БОЛ ---
+        if (user.role === 'provider' || user.businessDetails) {
+            if (user.businessDetails.status === 'pending') {
+                window.location.href = "under-review.html";
+            } else if (user.businessDetails.status === 'approved') {
+                window.location.href = "provider-home.html";
+            }
+        } 
+        // --- TRAVELER БОЛ ---
+        else if (user.role === 'traveler') {
+            window.location.href = "index.html"; // Эсвэл хэрэглэгчийн нүүр хуудас
+        }
+        // --- GUIDE БОЛ ---
+        else if (user.role === 'guide') {
+            window.location.href = "guide-dashboard.html"; 
+        }
+    } else {
+        alert("Имэйл эсвэл нууц үг буруу байна!");
+    }
+}
     </script>
 </body>
 </html>
