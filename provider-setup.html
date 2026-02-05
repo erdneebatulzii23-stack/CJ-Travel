@@ -47,7 +47,7 @@
             background-color: #101922;
         }
         .scroll-content {
-            padding-bottom: 150px; /* Товчлуур харагдах зай */
+            padding-bottom: 150px; /* Space for buttons */
         }
         /* Custom scrollbar */
         main::-webkit-scrollbar {
@@ -71,7 +71,7 @@
         <main class="flex-1 overflow-y-auto scroll-content">
             <div class="px-4 pt-6 pb-2">
                 <h3 class="text-[#0d141b] dark:text-slate-100 text-2xl font-bold font-display">Create Account</h3>
-                <p class="text-[#4c739a] dark:text-slate-400 text-base mt-1 font-display">Байгууллагын мэдээлэл болон нэвтрэх нууц үгээ тохируулна уу.</p>
+                <p class="text-[#4c739a] dark:text-slate-400 text-base mt-1 font-display">Please provide company details and set up your login password.</p>
             </div>
 
             <form id="registrationForm" class="p-4 flex flex-col gap-4">
@@ -99,6 +99,15 @@
                     <input required type="email" class="form-input w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 h-12" placeholder="business@mail.com" />
                 </label>
 
+                <div class="flex flex-col gap-2 mt-2">
+                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold font-display">Business License</p>
+                    <input type="file" id="license-upload" class="hidden" accept="image/*,.pdf">
+                    <div id="drop-zone" class="flex flex-col items-center justify-center border-2 border-dashed border-[#cfdbe7] dark:border-slate-700 rounded-xl p-6 bg-white dark:bg-slate-800/20 cursor-pointer">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-1">cloud_upload</span>
+                        <p id="file-name" class="text-[#4c739a] text-xs text-center font-display">Upload Certificate</p>
+                    </div>
+                </div>
+
                 <div class="mt-2 p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col gap-4">
                     <label class="flex flex-col relative">
                         <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-1.5 font-display">Create Password</p>
@@ -115,15 +124,6 @@
                             <span class="material-symbols-outlined">visibility</span>
                         </button>
                     </label>
-                </div>
-
-                <div class="flex flex-col gap-2 mt-2">
-                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold font-display">Business License</p>
-                    <input type="file" id="license-upload" class="hidden" accept="image/*,.pdf">
-                    <div id="drop-zone" class="flex flex-col items-center justify-center border-2 border-dashed border-[#cfdbe7] dark:border-slate-700 rounded-xl p-6 bg-white dark:bg-slate-800/20 cursor-pointer">
-                        <span class="material-symbols-outlined text-primary text-3xl mb-1">cloud_upload</span>
-                        <p id="file-name" class="text-[#4c739a] text-xs text-center font-display">Upload Certificate</p>
-                    </div>
                 </div>
             </form>
         </main>
@@ -174,11 +174,11 @@
             const confirm = document.getElementById('confirm_password').value;
 
             if (pass !== confirm) {
-                alert("Нууц үг зөрүүтэй байна!");
+                alert("Passwords do not match!");
                 return;
             }
             if (pass.length < 6) {
-                alert("Нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой.");
+                alert("Password must be at least 6 characters long.");
                 return;
             }
             
