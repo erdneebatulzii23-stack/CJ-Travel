@@ -179,64 +179,69 @@
 </nav>
 </div>
    <script>
+document.addEventListener('DOMContentLoaded', function() {
     // 1. Өгөгдөл ачаалах функц
-    function loadApplicants() {
+    function renderApplicants() {
         const users = JSON.parse(localStorage.getItem('users')) || [];
-        const container = document.querySelector('.flex.flex-col.divide-y'); // Чиний жагсаалт байрладаг div
-        
-        if (!container) return;
-
-        // Зөвхөн хүлээгдэж буй (pending) хүмүүсийг шүүх
+        // Pending төлөвтэй хэрэглэгчдийг шүүх
         const pendingUsers = users.filter(u => u.businessDetails && u.businessDetails.status === 'pending');
+        
+        // Чиний жагсаалт байрлаж буй хэсгийг олох (John Doe, Sarah Jenkins байгаа хэсэг)
+        // Анхаар: Энэ хэсэгт байгаа хуучин статик хүмүүсийг түр арилгаж, шинэ өгөгдлийг харуулна
+        const listContainer = document.querySelector('.flex.flex-col.gap-6.mt-6') || document.querySelector('.flex.flex-col.divide-y');
 
-        // Хэрэв шинэ өгөгдөл байвал жагсаалтыг шинэчилнэ (Статик өгөгдлийг устгахгүй байж болно, эсвэл container.innerHTML = '' хийж болно)
-        if (pendingUsers.length > 0) {
-            // container.innerHTML = ''; // Хэрэв хуучин жишээ хүмүүсийг устгая гэвэл үүнийг идэвхжүүл
-            
-            pendingUsers.forEach(user => {
-                const html = `
-                <div class="flex flex-col gap-3 py-5">
-                    <div class="flex items-center gap-4 justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14" 
-                                 style="background-image: url('${user.profilePic || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDYuk36Z4dzB_mhCunMnUuZLTKXkhE7i3WW1bn0bhsJW5P3izcpv1EksCkGfjYiROvta2fs9EYeX6S6p9Itbbgw4IpBKe3s_iT5MXAIlctKFmn2r4WBzLqc8Vv2cf__NfHgbRqNPw9INSzAlePC1LZvCpya8ZTsf2wKI_rHgTgac6FzN8oh0idNDR-4dPNA9sR6mEEIKtNfUrD6Ek_KO0EQgqxyKS27E1GTI4-6VzOXvfAk38KWTxATzSyF6T9YS1uLKpmci_NRHrIA'}');"></div>
-                            <div class="flex flex-col">
-                                <p class="text-[#0d141b] dark:text-white text-base font-bold">${user.name}</p>
-                                <p class="text-slate-500 dark:text-slate-400 text-xs">Applied: Recently</p>
-                                <p class="text-primary text-xs font-medium">${user.role} - ${user.businessDetails.location || 'Global'}</p>
-                            </div>
+        if (pendingUsers.length === 0) {
+            // Хэрэв шинэ хүсэлт байхгүй бол статик өгөгдөл чинь харагдсаар байна
+            console.log("Одоогоор шинэ хүсэлт байхгүй байна.");
+            return;
+        }
+
+        // Жагсаалтыг шинэчлэх
+        let htmlContent = '';
+        pendingUsers.forEach(user => {
+            htmlContent += `
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <img src="${user.profilePic || 'https://via.placeholder.com/150'}" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white">${user.name}</h3>
+                            <p class="text-xs text-slate-500">Applied: Recently • ${user.role}</p>
                         </div>
-                        <button class="flex items-center justify-center rounded-lg h-9 px-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold border border-slate-200 dark:border-slate-700">
-                            View Details
-                        </button>
                     </div>
-                    <div class="flex gap-2">
-                        <button onclick="updateStatus('${user.email}', 'approved')" class="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-lg h-10 font-bold text-sm flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-base">check_circle</span> Approve
-                        </button>
-                        <button onclick="updateStatus('${user.email}', 'rejected')" class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-lg h-10 font-bold text-sm flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-base">cancel</span> Reject
-                        </button>
-                    </div>
-                </div>`;
-                container.insertAdjacentHTML('afterbegin', html);
-            });
-        }
+                    <button class="text-xs font-semibold px-3 py-1 bg-slate-100 rounded-lg">View Details</button>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="handleAction('${user.email}', 'approved')" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-bold text-sm flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-sm">check_circle</span> Approve
+                    </button>
+                    <button onclick="handleAction('${user.email}', 'rejected')" class="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-bold text-sm flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-sm">cancel</span> Reject
+                    </button>
+                </div>
+            </div>`;
+        });
+        
+        if(listContainer) listContainer.innerHTML = htmlContent;
     }
 
-    // 2. Төлөв шинэчлэх функц
-    function updateStatus(email, status) {
+    // 2. Approve/Reject товчлуур дарах үед ажиллах функц
+    window.handleAction = function(email, newStatus) {
         let users = JSON.parse(localStorage.getItem('users')) || [];
-        const index = users.findIndex(u => u.email === email);
-        if (index !== -1) {
-            users[index].businessDetails.status = status;
+        const userIndex = users.findIndex(u => u.email === email);
+        
+        if (userIndex !== -1) {
+            users[userIndex].businessDetails.status = newStatus;
             localStorage.setItem('users', JSON.stringify(users));
-            alert('Амжилттай шинэчлэгдлээ');
-            location.reload(); // Хуудсаа дахин ачаалж жагсаалтыг шинэчилнэ
+            
+            // Амжилттай болсныг мэдэгдээд хуудсыг шинэчлэх
+            alert(newStatus === 'approved' ? 'Бүртгэл баталгаажлаа!' : 'Бүртгэлээс татгалзлаа.');
+            renderApplicants(); // Жагсаалтыг дахин зурах
         }
-    }
+    };
 
-    // Хуудас ачаалагдахад ажиллуулна
-    document.addEventListener('DOMContentLoaded', loadApplicants);
-</script> 
+    // Хуудас нээгдэхэд ажиллуулна
+    renderApplicants();
+});
+</script>
 </body></html>
