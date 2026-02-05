@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guide Registration - CJ Travel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: max(884px, 100dvh);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white transition-colors duration-200">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+<header class="sticky top-0 z-50 flex items-center bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 p-4 justify-between h-16">
+<div class="w-full text-center">
+<h2 class="text-[#0d141b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] font-display">CJ Travel</h2>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto pb-32">
+<div class="px-4 pt-6 pb-2">
+<h2 class="text-[#0d141b] dark:text-white tracking-tight text-[28px] font-bold leading-tight font-display">Guide Registration</h2>
+<p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">Join our platform and share your local expertise with travelers.</p>
+</div>
+<div class="space-y-4 pt-2">
+<div class="px-4">
+<label class="flex flex-col w-full">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Full Name</p>
+<input class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Enter your full name" type="text"/>
+</label>
+</div>
+<div class="px-4">
+<label class="flex flex-col w-full">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Email</p>
+<input class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="example@email.com" type="email"/>
+</label>
+</div>
+<div class="px-4">
+<label class="flex flex-col w-full">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Password</p>
+<input class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Create a password" type="password"/>
+</label>
+</div>
+<div class="px-4">
+<label class="flex flex-col w-full">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Date of Birth</p>
+<input class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" type="date"/>
+</label>
+</div>
+<div class="px-4">
+<label class="flex flex-col w-full">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Nationality</p>
+<select class="form-select flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 p-4 text-base font-normal leading-normal">
+<option value="">Select nationality</option>
+<option value="US">United States</option>
+<option value="UK">United Kingdom</option>
+<option value="FR">France</option>
+<option value="ES">Spain</option>
+<option value="DE">Germany</option>
+<option value="IT">Italy</option>
+</select>
+</label>
+</div>
+<div class="px-4">
+<label class="flex flex-col w-full">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Years of Experience</p>
+<input class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="How many years have you been a guide?" type="number"/>
+</label>
+</div>
+<div class="px-4">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Languages Spoken</p>
+<div class="flex gap-2 flex-wrap mb-2">
+<div class="flex h-9 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-4">
+<p class="text-sm font-medium">English</p>
+<span class="material-symbols-outlined text-sm">close</span>
+</div>
+<div class="flex h-9 items-center justify-center gap-x-2 rounded-full bg-[#e7edf3] dark:bg-gray-800 text-[#0d141b] dark:text-gray-200 px-4">
+<p class="text-sm font-medium">Spanish</p>
+</div>
+<div class="flex h-9 items-center justify-center gap-x-2 rounded-full bg-primary/10 border border-primary/30 text-primary px-4">
+<span class="material-symbols-outlined text-sm font-bold">add</span>
+<p class="text-sm font-bold">Add Language</p>
+</div>
+</div>
+</div>
+<div class="px-4">
+<label class="flex flex-col w-full">
+<p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Phone Number</p>
+<div class="flex gap-2">
+<div class="flex items-center justify-center w-16 rounded-lg border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 text-[#0d141b] dark:text-white text-sm font-display">+1</div>
+<input class="form-input flex-1 rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="(555) 000-0000" type="tel"/>
+</div>
+</label>
+</div>
+</div>
+</main>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 flex gap-3">
+<button class="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#e7edf3] dark:bg-gray-800 text-[#0d141b] dark:text-white font-bold font-display">
+                Back
+            </button>
+<button class="flex-1 h-12 flex items-center justify-center rounded-xl bg-primary text-white font-bold font-display">
+                Submit for Review
+            </button>
+</div>
+</div>
+
+</body></html>
