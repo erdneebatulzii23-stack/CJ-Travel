@@ -30,7 +30,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Body-г гүйлгэхгүй */
+            overflow: hidden;
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -64,9 +64,20 @@
                     <input id="guide-email" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="example@email.com" type="email"/>
                 </label>
 
-                <label class="flex flex-col w-full">
+                <label class="flex flex-col w-full relative">
                     <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Password</p>
-                    <input id="guide-password" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Create a password" type="password"/>
+                    <input id="guide-password" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 pr-12 text-base font-normal leading-normal" placeholder="Create a password" type="password"/>
+                    <button type="button" onclick="togglePass('guide-password', this)" class="absolute right-4 top-[50px] text-gray-400">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                </label>
+
+                <label class="flex flex-col w-full relative">
+                    <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Confirm Password</p>
+                    <input id="confirm-password" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 pr-12 text-base font-normal leading-normal" placeholder="Confirm your password" type="password"/>
+                    <button type="button" onclick="togglePass('confirm-password', this)" class="absolute right-4 top-[50px] text-gray-400">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
                 </label>
 
                 <label class="flex flex-col w-full">
@@ -112,16 +123,39 @@ window.onload = function() {
     });
 };
 
+function togglePass(id, btn) {
+    const input = document.getElementById(id);
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerText = 'visibility_off';
+    } else {
+        input.type = 'password';
+        icon.innerText = 'visibility';
+    }
+}
+
 function handleGuideSignup() {
     const fullName = document.getElementById('guide-name').value;
     const email = document.getElementById('guide-email').value;
     const password = document.getElementById('guide-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
     const nationality = document.getElementById('guide-nationality').value;
     const experience = document.getElementById('guide-experience').value;
     const phone = document.getElementById('guide-phone').value;
 
-    if (!email || !password || !fullName) {
-        alert("Нэр, имэйл болон нууц үгээ заавал бөглөнө үү!");
+    if (!fullName || !email || !password) {
+        alert("Please fill in your name, email, and password!");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters long.");
         return;
     }
 
@@ -141,7 +175,7 @@ function handleGuideSignup() {
 
     users.push(newGuide);
     localStorage.setItem('users', JSON.stringify(users));
-    alert("Бүртгэл амжилттай илгээгдлээ!");
+    alert("Registration submitted successfully for review!");
     window.location.href = "login.html"; 
 }
 </script>
