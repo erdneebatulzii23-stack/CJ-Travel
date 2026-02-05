@@ -148,39 +148,46 @@
     }
 
     function handleFinish() {
-        if (selectedInterests.size < MIN_SELECTION) {
-            alert(`Please select at least ${MIN_SELECTION} interests.`);
-            return;
-        }
+    if (selectedInterests.size < MIN_SELECTION) {
+        alert(`Please select at least ${MIN_SELECTION} interests.`);
+        return;
+    }
 
-        // 1. Get current user from storage
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    try {
+        // 1. Get user data from LocalStorage
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         let users = JSON.parse(localStorage.getItem('users')) || [];
+        const interestsArray = Array.from(selectedInterests);
 
         if (currentUser) {
-            const interestsArray = Array.from(selectedInterests);
-            
-            // 2. Update master list
+            // Create businessDetails if it doesn't exist to prevent errors
+            if (!currentUser.businessDetails) {
+                currentUser.businessDetails = {};
+            }
+            currentUser.businessDetails.interests = interestsArray;
+
+            // 2. Update the user in the master users list
             users = users.map(u => {
                 if (u.email === currentUser.email) {
+                    if (!u.businessDetails) u.businessDetails = {};
                     u.businessDetails.interests = interestsArray;
                 }
                 return u;
             });
 
-            // 3. Update current session
-            currentUser.businessDetails.interests = interestsArray;
-
+            // 3. Save back to LocalStorage
             localStorage.setItem('users', JSON.stringify(users));
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
         }
-
-        // 4. Redirect
-        window.location.href = "guides-under-review.html";
+    } catch (error) {
+        console.error("Data save error:", error);
+        // Even if saving fails, we proceed to redirect the user
     }
 
-    // Initialize button state on load
-    updateUI();
+    // 4. Perform Redirection
+    console.log("Redirecting to under-review page...");
+    window.location.href = "guides-under-review.html";
+}
 </script>
 
 </body>
