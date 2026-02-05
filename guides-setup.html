@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Guide Registration - CJ Travel</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Guide Registration - CJ Travel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -24,135 +25,94 @@
             },
         }
     </script>
-<style>
+    <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: max(884px, 100dvh);
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Body-г гүйлгэхгүй */
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white transition-colors duration-200">
-    <div class="relative flex h-[100dvh] w-full flex-col max-w-[430px] mx-auto bg-background-light dark:bg-background-dark shadow-xl overflow-hidden">
-        <header class="sticky top-0 z-50 flex items-center bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 p-4 justify-between h-16 shrink-0">
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white transition-colors duration-200 fixed inset-0">
+    
+    <div class="relative flex h-[100dvh] w-full flex-col max-w-[430px] mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+        
+        <header class="flex items-center bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 p-4 justify-between h-16 shrink-0 z-10">
             <div class="w-full text-center">
                 <h2 class="text-[#0d141b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] font-display">CJ Travel</h2>
             </div>
         </header>
 
-        <main class="flex-1 overflow-y-auto pb-32">
-            <div class="px-4 pt-6 pb-2">
+        <main class="flex-1 overflow-y-auto px-4">
+            <div class="pt-6 pb-2">
                 <h2 class="text-[#0d141b] dark:text-white tracking-tight text-[28px] font-bold leading-tight font-display">Guide Registration</h2>
                 <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">Join our platform and share your local expertise with travelers.</p>
             </div>
             
-            <div class="space-y-4 pt-2">
-                <div class="px-4">
-                    <label class="flex flex-col w-full">
-                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Full Name</p>
-                        <input id="guide-name" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Enter your full name" type="text"/>
-                    </label>
-                </div>
+            <div class="space-y-4 pt-2 pb-10">
+                <label class="flex flex-col w-full">
+                    <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Full Name</p>
+                    <input id="guide-name" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Enter your full name" type="text"/>
+                </label>
 
-                <div class="px-4">
-                    <label class="flex flex-col w-full">
-                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Email</p>
-                        <input id="guide-email" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="example@email.com" type="email"/>
-                    </label>
-                </div>
+                <label class="flex flex-col w-full">
+                    <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Email</p>
+                    <input id="guide-email" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="example@email.com" type="email"/>
+                </label>
 
-                <div class="px-4">
-                    <label class="flex flex-col w-full">
-                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Password</p>
-                        <input id="guide-password" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Create a password" type="password"/>
-                    </label>
-                </div>
+                <label class="flex flex-col w-full">
+                    <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Password</p>
+                    <input id="guide-password" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="Create a password" type="password"/>
+                </label>
 
-                <div class="px-4">
-                    <label class="flex flex-col w-full">
-                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Nationality</p>
-                        <select id="guide-nationality" class="form-select flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 p-4 text-base font-normal leading-normal">
-                            <option value="">Select nationality</option>
-                        </select>
-                    </label>
-                </div>
+                <label class="flex flex-col w-full">
+                    <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Nationality</p>
+                    <select id="guide-nationality" class="form-select flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 p-4 text-base font-normal leading-normal">
+                        <option value="">Select nationality</option>
+                    </select>
+                </label>
 
-                <div class="px-4">
-                    <label class="flex flex-col w-full">
-                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Years of Experience</p>
-                        <input id="guide-experience" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="How many years?" type="number"/>
-                    </label>
-                </div>
+                <label class="flex flex-col w-full">
+                    <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Years of Experience</p>
+                    <input id="guide-experience" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="How many years?" type="number"/>
+                </label>
 
-                <div class="px-4">
-                    <label class="flex flex-col w-full">
-                        <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Phone Number</p>
-                        <input id="guide-phone" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="(555) 000-0000" type="tel"/>
-                    </label>
-                </div>
+                <label class="flex flex-col w-full">
+                    <p class="text-[#0d141b] dark:text-white text-base font-medium leading-normal pb-2 font-display">Phone Number</p>
+                    <input id="guide-phone" class="form-input flex w-full rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#4c739a] p-4 text-base font-normal leading-normal" placeholder="(555) 000-0000" type="tel"/>
+                </label>
             </div>
         </main>
 
-        <div class="absolute bottom-0 left-0 right-0 p-4 bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 flex gap-3 z-50">
+        <footer class="p-4 bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 flex gap-3 shrink-0">
             <button onclick="window.history.back()" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#e7edf3] dark:bg-gray-800 text-[#0d141b] dark:text-white font-bold font-display">
                 Back
             </button>
             <button onclick="handleGuideSignup()" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-primary text-white font-bold font-display">
                 Submit for Review
             </button>
-        </div>
+        </footer>
     </div>
-<script>
-// Дэлхийн улсуудын жагсаалт (Жишээ болгож заримыг нь оруулав)
-const countries = [
-    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
-    "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
-    "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic",
-    "Denmark", "Djibouti", "Dominica", "Dominican Republic",
-    "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
-    "Fiji", "Finland", "France",
-    "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guyana",
-    "Haiti", "Honduras", "Hungary",
-    "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy",
-    "Jamaica", "Japan", "Jordan",
-    "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan",
-    "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-    "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
-    "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway",
-    "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
-    "Qatar", "Romania", "Russia", "Rwanda",
-    "Saint Kitts and Nevis", "Saint Lucia", "Samoa", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
-    "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
-    "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan",
-    "Vanuatu", "Vatican City", "Venezuela", "Vietnam",
-    "Yemen", "Zambia", "Zimbabwe"
-];
 
-// Хуудас ачаалагдахад select-ийг дүүргэх функц
+<script>
+const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Samoa", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
+
 window.onload = function() {
     const select = document.getElementById('guide-nationality');
-    
-    // Жагсаалтыг цагаан толгойн дарааллаар эрэмбэлэх
     countries.sort().forEach(country => {
         const option = document.createElement('option');
         option.value = country;
         option.textContent = country;
-        
-        // Монголыг default-оор сонгосон байлгахыг хүсвэл:
         if(country === "Mongolia") option.selected = true;
-        
         select.appendChild(option);
     });
-};       
+};
+
 function handleGuideSignup() {
-    // Input-үүдээс утгыг нь авна
     const fullName = document.getElementById('guide-name').value;
     const email = document.getElementById('guide-email').value;
     const password = document.getElementById('guide-password').value;
@@ -160,35 +120,30 @@ function handleGuideSignup() {
     const experience = document.getElementById('guide-experience').value;
     const phone = document.getElementById('guide-phone').value;
 
-    // Хоосон байгаа эсэхийг шалгах
     if (!email || !password || !fullName) {
         alert("Нэр, имэйл болон нууц үгээ заавал бөглөнө үү!");
         return;
     }
 
-    // Хадгалагдсан хэрэглэгчдийг авах
     let users = JSON.parse(localStorage.getItem('users')) || [];
-
-    // Шинэ Гид объект үүсгэх
     const newGuide = {
         fullName: fullName,
         email: email,
         password: password,
         businessDetails: {
             type: 'guide',
-            status: 'pending', // Шалгагдаж байна
+            status: 'pending',
             nationality: nationality,
             experience: experience,
             phone: phone
         }
     };
 
-    // Хадгалах
     users.push(newGuide);
     localStorage.setItem('users', JSON.stringify(users));
-
     alert("Бүртгэл амжилттай илгээгдлээ!");
     window.location.href = "login.html"; 
 }
 </script>
-</body></html>
+</body>
+</html>
