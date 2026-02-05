@@ -52,7 +52,7 @@
             <div class="space-y-4">
                 <div class="flex flex-col">
                     <p class="text-[#0d141b] dark:text-white font-medium pb-2">Email or Username</p>
-                  <input id="login-email" class="w-full rounded-lg border-[#cfdbe7] dark:border-gray-700 bg-surface-light dark:bg-surface-dark h-14 p-4 focus:ring-1 focus:ring-primary" placeholder="Enter your email" type="email"/>
+                    <input id="login-email" class="w-full rounded-lg border-[#cfdbe7] dark:border-gray-700 bg-surface-light dark:bg-surface-dark h-14 p-4 focus:ring-1 focus:ring-primary" placeholder="Enter your email" type="email"/>
                  </div>
                 <div class="flex flex-col">
                     <p class="text-[#0d141b] dark:text-white font-medium pb-2">Password</p>
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="pt-6">
-                    <button onclick="loginUser()" class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-xl shadow-md transition-all">
+                    <button onclick="handleLogin()" class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-xl shadow-md transition-all">
                         Login
                     </button>
                 </div>
@@ -99,36 +99,36 @@
     </div>
     <script src="app.js"></script>
     <script>
-function handleLogin() {
-    // 1. Оролтын утгуудыг авах
-    const emailInput = document.querySelector('input[type="email"]').value;
-    const passwordInput = document.querySelector('input[type="password"]').value;
+    function handleLogin() {
+        // 1. Утгуудыг id-гаар нь авах (хамгийн баталгаатай арга)
+        const emailInput = document.getElementById('login-email').value;
+        const passwordInput = document.getElementById('login-password').value;
 
-    // --- АДМИН ШАЛГАХ ХЭСЭГ ---
-    // Хэрэв имэйл нь admin@travel.mn бол шууд админ руу үсэрнэ
-    if (emailInput === "admin@travel.mn" && passwordInput === "1234") {
-        window.location.href = "admin-dashboard.html";
-        return; 
-    }
-
-    // --- PROVIDER ШАЛГАХ ХЭСЭГ ---
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(u => u.email === emailInput && u.password === passwordInput);
-
-    if (user) {
-        // Статусаас хамаарч хаашаа шилжихийг шийднэ
-        if (user.businessDetails.status === 'pending') {
-            window.location.href = "under-review.html";
-        } else if (user.businessDetails.status === 'approved') {
-            window.location.href = "provider-home.html";
+        // --- АДМИН ШАЛГАХ ---
+        if (emailInput === "admin@travel.mn" && passwordInput === "1234") {
+            window.location.href = "admin-dashboard.html";
+            return; 
         }
-    } else {
-        alert("Имэйл эсвэл нууц үг буруу байна!");
-    }
-}
 
-// "Login" товчлуур дээр энэ функцийг холбох
-document.querySelector('button.bg-blue-600').addEventListener('click', handleLogin);
-</script>
+        // --- PROVIDER ШАЛГАХ ---
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find(u => u.email === emailInput && u.password === passwordInput);
+
+        if (user) {
+            // Провайдер мөн эсэхийг шалгах
+            if (user.businessDetails) {
+                if (user.businessDetails.status === 'pending') {
+                    window.location.href = "under-review.html";
+                } else if (user.businessDetails.status === 'approved') {
+                    window.location.href = "provider-home.html";
+                }
+            } else {
+                alert("Энэ хэрэглэгч Провайдер биш байна.");
+            }
+        } else {
+            alert("Имэйл эсвэл нууц үг буруу байна!");
+        }
+    }
+    </script>
 </body>
 </html>
