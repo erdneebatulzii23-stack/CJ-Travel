@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Account Type Selection</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Account Type Selection</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -29,108 +30,112 @@
             },
         }
     </script>
-<style>
+    <style>
         body {
+            /* Чиний анхны код дээрх утгуудыг хэвээр үлдээв */
             min-height: max(884px, 100dvh);
+            /* Гэхдээ дэлгэцийг хальж харагдуулахгүйн тулд body-г түгжив */
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-slate-100 min-h-screen flex flex-col">
-<header class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 border-b border-slate-200 dark:border-slate-800">
-    <a href="index.html" class="w-full text-center">
-        <h2 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em]">CJ Travel</h2>
-    </a>
-</header>
-<main class="flex-1 flex flex-col px-4 pb-32">
-<div class="pt-8 pb-6">
-<h3 class="text-[#0d141b] dark:text-slate-100 tracking-tight text-2xl font-bold leading-tight text-center">Choose Your Account Type</h3>
-<p class="text-[#4c739a] dark:text-slate-400 text-center text-sm mt-2">Select how you want to use the platform</p>
-</div>
-<div class="flex flex-col gap-4">
-<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-transparent hover:border-primary transition-colors cursor-pointer group">
-<div class="flex flex-[2_2_0px] flex-col justify-between gap-4">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2 mb-1">
-<span class="material-symbols-outlined text-primary">backpack</span>
-<p class="text-[#0d141b] dark:text-slate-100 text-base font-bold leading-tight">Traveler</p>
-</div>
-<p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal leading-normal">Plan your trips, book stays, and explore new destinations.</p>
-</div>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 group-hover:bg-primary text-primary group-hover:text-white text-sm font-medium transition-all w-fit">
-<span class="truncate">Select</span>
-</button>
-</div>
-<div class="w-32 h-32 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 overflow-hidden" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZ2KBdfbLlWMjQwiTBpiJaDW-0Qi2bfuUouTlEe-4uNhFBpxjsRKKmhHcTweqvdBp1HKqfq_LuH3LQE5wN07y1gATpD-m6i7yU8HwQd4tzp8z354n4wbzVF2xGAqUQ8M6l4rc1EiLDOXflm3DifE4B1XMGzp65qeju1E7sEQwJWlh2y0l6s46EeUSRGldF62RcF4sDLSAUDvnAl_PnDjYdlLT1i3gkYWDdp90ooyI2ZFzUGqG864kh4pzux3ZggoGfWQtgVA7lfeJn");'>
-</div>
-</div>
-<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-transparent hover:border-primary transition-colors cursor-pointer group">
-<div class="flex flex-[2_2_0px] flex-col justify-between gap-4">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2 mb-1">
-<span class="material-symbols-outlined text-primary">map</span>
-<p class="text-[#0d141b] dark:text-slate-100 text-base font-bold leading-tight">Tour Guide</p>
-</div>
-<p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal leading-normal">Share your expertise and lead amazing tours for travelers.</p>
-</div>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 group-hover:bg-primary text-primary group-hover:text-white text-sm font-medium transition-all w-fit">
-<span class="truncate">Select</span>
-</button>
-</div>
-<div class="w-32 h-32 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 overflow-hidden" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7xZbjZlagD-ktCuUkc4fRNIHNvDZidObxOayg6eW_84_2PVLWxqm43qazYhYE5L0FK-wXEemegTKWDLHcWy-Z4gEIbxW_AzKbN4G66i17Jo0VZEoM_ohsMjKICbnwe3UH6fv5wSrm-IBfU-iQ_UFtSkDtizAzmFJf38PEQtwN2LjMiXTx2UO9f1TIeVTC93CtHgOSO5tmSQuSDFdbIJbX6iqM08pWQ9rMFLSKbxvjnnebvtP3ZnT7RcIWt16KyxpEF3iYZFSGnnOq");'>
-</div>
-</div>
-<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-transparent hover:border-primary transition-colors cursor-pointer group">
-<div class="flex flex-[2_2_0px] flex-col justify-between gap-4">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2 mb-1">
-<span class="material-symbols-outlined text-primary">apartment</span>
-<p class="text-[#0d141b] dark:text-slate-100 text-base font-bold leading-tight">Provider</p>
-</div>
-<p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal leading-normal">Manage your travel business, hotels, and rentals effectively.</p>
-</div>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 group-hover:bg-primary text-primary group-hover:text-white text-sm font-medium transition-all w-fit">
-<span class="truncate">Select</span>
-</button>
-</div>
-<div class="w-32 h-32 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 overflow-hidden" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCYJbgSIGr-hSCzM-vxEXWjZvg0QfZmumEqFTdzvA_0Px4c0jzrObCGPF6Osngiz1GceT-WKcwqgSlCcdBpzAIzlxEHuMD1Hp6OZS5wxsuYc-5B3UxqfWGiMoBg3HDvcFb69S1-qv41QQSTpKyemHVQv9i3qRz_0O6jgcQiLcJEmbpcKnPsdHoD-DkUY5AVQaNyicygK8OJ_WuLwYFec4vIELFXl3Zs3n9Sg_jLRkjxVCpZBVx_7ELoEH_0lJ7KuKMK4Hj68RtKieJA");'>
-</div>
-</div>
-</div>
-</main>
-<div class="fixed bottom-0 left-0 right-0 p-4 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pb-10">
-<div class="flex gap-3 max-w-full">
-<a href="login.html" class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 border border-slate-300 dark:border-slate-700 text-[#0d141b] dark:text-slate-100 text-base font-bold leading-normal tracking-[0.015em] bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-    <span class="truncate">Back</span>
-</a>
-<button class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary/20">
-<span class="truncate">Next</span>
-</button>
-</div>
-</div>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-slate-100 flex flex-col items-center">
+    
+    <div class="flex flex-col h-[100dvh] w-full max-w-[430px] bg-background-light dark:bg-background-dark relative overflow-hidden shadow-2xl">
+        
+        <header class="flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 border-b border-slate-200 dark:border-slate-800 shrink-0 z-10">
+            <a href="index.html" class="w-full text-center">
+                <h2 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em]">CJ Travel</h2>
+            </a>
+        </header>
+
+        <main class="flex-1 overflow-y-auto px-4 pb-40">
+            <div class="pt-8 pb-6">
+                <h3 class="text-[#0d141b] dark:text-slate-100 tracking-tight text-2xl font-bold leading-tight text-center">Choose Your Account Type</h3>
+                <p class="text-[#4c739a] dark:text-slate-400 text-center text-sm mt-2">Select how you want to use the platform</p>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-transparent hover:border-primary transition-colors cursor-pointer group">
+                    <div class="flex flex-[2_2_0px] flex-col justify-between gap-4">
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="material-symbols-outlined text-primary">backpack</span>
+                                <p class="text-[#0d141b] dark:text-slate-100 text-base font-bold leading-tight">Traveler</p>
+                            </div>
+                            <p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal leading-normal">Plan your trips, book stays, and explore new destinations.</p>
+                        </div>
+                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 group-hover:bg-primary text-primary group-hover:text-white text-sm font-medium transition-all w-fit">
+                            <span class="truncate">Select</span>
+                        </button>
+                    </div>
+                    <div class="w-32 h-32 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 overflow-hidden" style='background-image: url("https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=256&h=256&auto=format&fit=crop");'></div>
+                </div>
+
+                <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-transparent hover:border-primary transition-colors cursor-pointer group">
+                    <div class="flex flex-[2_2_0px] flex-col justify-between gap-4">
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="material-symbols-outlined text-primary">map</span>
+                                <p class="text-[#0d141b] dark:text-slate-100 text-base font-bold leading-tight">Tour Guide</p>
+                            </div>
+                            <p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal leading-normal">Share your expertise and lead amazing tours for travelers.</p>
+                        </div>
+                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 group-hover:bg-primary text-primary group-hover:text-white text-sm font-medium transition-all w-fit">
+                            <span class="truncate">Select</span>
+                        </button>
+                    </div>
+                    <div class="w-32 h-32 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 overflow-hidden" style='background-image: url("https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=256&h=256&auto=format&fit=crop");'></div>
+                </div>
+
+                <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-slate-900 p-4 shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-transparent hover:border-primary transition-colors cursor-pointer group">
+                    <div class="flex flex-[2_2_0px] flex-col justify-between gap-4">
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="material-symbols-outlined text-primary">apartment</span>
+                                <p class="text-[#0d141b] dark:text-slate-100 text-base font-bold leading-tight">Provider</p>
+                            </div>
+                            <p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal leading-normal">Manage your travel business, hotels, and rentals effectively.</p>
+                        </div>
+                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 group-hover:bg-primary text-primary group-hover:text-white text-sm font-medium transition-all w-fit">
+                            <span class="truncate">Select</span>
+                        </button>
+                    </div>
+                    <div class="w-32 h-32 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 overflow-hidden" style='background-image: url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=256&h=256&auto=format&fit=crop");'></div>
+                </div>
+            </div>
+        </main>
+
+        <div class="absolute bottom-0 left-0 right-0 p-4 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pb-10 z-20">
+            <div class="flex gap-3 max-w-full">
+                <a href="login.html" class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 border border-slate-300 dark:border-slate-700 text-[#0d141b] dark:text-slate-100 text-base font-bold leading-normal tracking-[0.015em] bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                    <span class="truncate">Back</span>
+                </a>
+                <button class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary/20 next-button">
+                    <span class="truncate">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
 <script>
     let selectedType = "";
-
     const cards = document.querySelectorAll('.group.cursor-pointer');
-    const nextButton = document.querySelector('button.bg-primary');
+    const nextButton = document.querySelector('.next-button');
 
     cards.forEach((card, index) => {
         card.addEventListener('click', () => {
-            // Remove active styles from all cards
             cards.forEach(c => {
-                c.classList.remove('border-primary', 'bg-blue-50/50');
+                c.classList.remove('border-primary', 'bg-blue-50/50', 'dark:bg-blue-900/20');
                 c.classList.add('border-transparent');
             });
 
-            // Add active styles to selected card
             card.classList.remove('border-transparent');
-            card.classList.add('border-primary', 'bg-blue-50/50');
+            card.classList.add('border-primary', 'bg-blue-50/50', 'dark:bg-blue-900/20');
 
-            // Set the selected type based on index
             if (index === 0) selectedType = "traveler";
             else if (index === 1) selectedType = "guide";
             else if (index === 2) selectedType = "provider";
@@ -139,11 +144,9 @@
 
     nextButton.addEventListener('click', (e) => {
         e.preventDefault();
-
         if (selectedType === "provider") {
             window.location.href = "provider-setup.html";
-        } else if (selectedType === "traveler") {
-            // Now this redirects to your new page instead of showing alert
+        } else if (selectedType =="traveler") {
             window.location.href = "traveler-setup.html";
         } else if (selectedType === "guide") {
             window.location.href = "guides-setup.html";
@@ -152,4 +155,5 @@
         }
     });
 </script>
-</body></html>
+</body>
+</html>
