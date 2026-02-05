@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-    <title>Company Information Registration</title>
+    <title>Company Registration - Password Setup</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
@@ -19,13 +19,7 @@
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
+                    }
                 },
             },
         }
@@ -39,7 +33,6 @@
             justify-content: center;
             background-color: #f6f7f8;
         }
-        /* Утасны дэлгэц шиг харагдуулах контейнер */
         .app-container {
             width: 100%;
             max-width: 480px;
@@ -50,142 +43,145 @@
             position: relative;
             overflow: hidden;
         }
-        /* Dark mode дэмжлэг */
         .dark .app-container {
             background-color: #101922;
+        }
+        .scroll-content {
+            padding-bottom: 150px; /* Товчлуур харагдах зай */
+        }
+        /* Custom scrollbar */
+        main::-webkit-scrollbar {
+            width: 4px;
+        }
+        main::-webkit-scrollbar-thumb {
+            background: #cfdbe7;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100">
 
     <div class="app-container shadow-2xl">
-        <header class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
+        <header class="sticky top-0 z-50 flex items-center bg-white dark:bg-background-dark p-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
             <a href="index.html" class="w-full text-center">
-                <h2 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] font-display">CJ Travel</h2>
+                <h2 class="text-[#0d141b] dark:text-slate-100 text-lg font-bold font-display">CJ Travel</h2>
             </a>
         </header>
 
-        <main class="flex-1 overflow-y-auto">
+        <main class="flex-1 overflow-y-auto scroll-content">
             <div class="px-4 pt-6 pb-2">
-                <h3 class="text-[#0d141b] dark:text-slate-100 tracking-tight text-2xl font-bold leading-tight font-display">Provider Information</h3>
-                <p class="text-[#4c739a] dark:text-slate-400 text-base font-normal leading-normal mt-2 font-display">Please provide your business details for verification to start offering your services.</p>
+                <h3 class="text-[#0d141b] dark:text-slate-100 text-2xl font-bold font-display">Create Account</h3>
+                <p class="text-[#4c739a] dark:text-slate-400 text-base mt-1 font-display">Байгууллагын мэдээлэл болон нэвтрэх нууц үгээ тохируулна уу.</p>
             </div>
 
-            <form id="registrationForm" class="flex flex-col pb-32">
-                <div class="p-4 flex flex-col gap-4">
-                    <label class="flex flex-col">
-                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-2 font-display">Business Name</p>
-                        <input required class="form-input w-full rounded-lg text-[#0d141b] dark:text-white border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-12 px-4 text-base" placeholder="Enter legal company name" />
-                    </label>
+            <form id="registrationForm" class="p-4 flex flex-col gap-4">
+                <label class="flex flex-col">
+                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-1.5 font-display">Business Name</p>
+                    <input required class="form-input w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-12" placeholder="Legal company name" />
+                </label>
 
+                <div class="grid grid-cols-2 gap-3">
                     <label class="flex flex-col">
-                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-2 font-display">Tax ID / Registration Number</p>
-                        <input required class="form-input w-full rounded-lg text-[#0d141b] dark:text-white border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-12 px-4 text-base" placeholder="Enter registration number" />
+                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-1.5 font-display">Tax ID</p>
+                        <input required class="form-input w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 h-12" placeholder="1234567" />
                     </label>
-
                     <label class="flex flex-col">
-                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-2 font-display">Business Category</p>
-                        <select required class="form-select w-full rounded-lg text-[#0d141b] dark:text-white border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-12 px-4 text-base font-display">
-                            <option disabled selected value="">Select category</option>
+                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-1.5 font-display">Category</p>
+                        <select class="form-select w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 h-12">
                             <option value="resort">Resort</option>
-                            <option value="agency">Travel Agency</option>
                             <option value="camp">Camp</option>
                         </select>
                     </label>
+                </div>
 
-                    <label class="flex flex-col">
-                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-2 font-display">Official Address</p>
-                        <input required class="form-input w-full rounded-lg text-[#0d141b] dark:text-white border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-12 px-4 text-base" placeholder="Enter registered business address" />
+                <label class="flex flex-col">
+                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-1.5 font-display">Email Address</p>
+                    <input required type="email" class="form-input w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 h-12" placeholder="business@mail.com" />
+                </label>
+
+                <div class="mt-2 p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col gap-4">
+                    <label class="flex flex-col relative">
+                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-1.5 font-display">Create Password</p>
+                        <input id="password" required type="password" class="form-input w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 h-12 pr-12" placeholder="••••••••" />
+                        <button type="button" onclick="togglePass('password', this)" class="absolute right-3 top-[38px] text-slate-400">
+                            <span class="material-symbols-outlined">visibility</span>
+                        </button>
                     </label>
 
-                    <label class="flex flex-col">
-                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-2 font-display">Contact Email</p>
-                        <input required type="email" class="form-input w-full rounded-lg text-[#0d141b] dark:text-white border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-12 px-4 text-base" placeholder="business@company.com" />
+                    <label class="flex flex-col relative">
+                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-1.5 font-display">Confirm Password</p>
+                        <input id="confirm_password" required type="password" class="form-input w-full rounded-lg border-[#cfdbe7] dark:border-slate-700 h-12 pr-12" placeholder="••••••••" />
+                        <button type="button" onclick="togglePass('confirm_password', this)" class="absolute right-3 top-[38px] text-slate-400">
+                            <span class="material-symbols-outlined">visibility</span>
+                        </button>
                     </label>
+                </div>
 
-                    <label class="flex flex-col">
-                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold pb-2 font-display">Phone Number</p>
-                        <input required type="tel" class="form-input w-full rounded-lg text-[#0d141b] dark:text-white border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 h-12 px-4 text-base" placeholder="+1 (555) 000-0000" />
-                    </label>
-
-                    <div class="flex flex-col gap-2 mt-2">
-                        <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold font-display">Business License</p>
-                        <input type="file" id="license-upload" class="hidden" accept=".pdf,.jpg,.jpeg,.png">
-                        
-                        <div id="drop-zone" class="flex flex-col items-center justify-center border-2 border-dashed border-[#cfdbe7] dark:border-slate-700 rounded-xl p-6 bg-white dark:bg-slate-800/50 transition-all cursor-pointer hover:border-primary">
-                            <span class="material-symbols-outlined text-primary text-3xl mb-2">cloud_upload</span>
-                            <p id="file-name" class="text-[#4c739a] dark:text-slate-400 text-xs text-center font-display px-2">
-                                Upload your business license or registration document (PDF, JPG, PNG)
-                            </p>
-                            <div id="preview-container" class="hidden mt-3">
-                                <img id="preview-img" class="w-24 h-24 object-cover rounded-lg border border-slate-200">
-                            </div>
-                        </div>
+                <div class="flex flex-col gap-2 mt-2">
+                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-semibold font-display">Business License</p>
+                    <input type="file" id="license-upload" class="hidden" accept="image/*,.pdf">
+                    <div id="drop-zone" class="flex flex-col items-center justify-center border-2 border-dashed border-[#cfdbe7] dark:border-slate-700 rounded-xl p-6 bg-white dark:bg-slate-800/20 cursor-pointer">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-1">cloud_upload</span>
+                        <p id="file-name" class="text-[#4c739a] text-xs text-center font-display">Upload Certificate</p>
                     </div>
                 </div>
             </form>
         </main>
 
-        <div class="absolute bottom-0 left-0 right-0 p-4 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm border-t border-slate-200 dark:border-slate-800 pb-8 shrink-0">
-            <div class="flex gap-3">
-                <button onclick="window.history.back()" class="flex-1 border border-slate-300 dark:border-slate-700 text-[#0d141b] dark:text-white text-base font-bold h-12 rounded-xl hover:bg-black/5 transition-colors font-display">
+        <footer class="absolute bottom-0 left-0 right-0 p-4 bg-slate-100 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 z-50 pb-8">
+            <div class="flex gap-3 max-w-[480px] mx-auto">
+                <button onclick="window.history.back()" class="flex-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-[#0d141b] dark:text-white text-base font-bold h-12 rounded-xl active:scale-95 transition-all font-display">
                     Back
                 </button>
-                <button form="registrationForm" type="submit" class="flex-1 bg-primary text-white text-base font-bold h-12 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors font-display">
+                <button form="registrationForm" type="submit" class="flex-1 bg-primary text-white text-base font-bold h-12 rounded-xl shadow-lg shadow-primary/20 active:scale-95 transition-all font-display">
                     Submit
                 </button>
             </div>
-        </div>
+        </footer>
     </div>
 
     <script>
+        // Toggle Password Visibility
+        function togglePass(id, btn) {
+            const input = document.getElementById(id);
+            const icon = btn.querySelector('.material-symbols-outlined');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.innerText = 'visibility_off';
+            } else {
+                input.type = 'password';
+                icon.innerText = 'visibility';
+            }
+        }
+
+        // File Upload Logic
         const fileInput = document.getElementById('license-upload');
-        const fileNameDisplay = document.getElementById('file-name');
         const dropZone = document.getElementById('drop-zone');
-        const previewImg = document.getElementById('preview-img');
-        const previewContainer = document.getElementById('preview-container');
+        const fileNameDisplay = document.getElementById('file-name');
 
         dropZone.addEventListener('click', () => fileInput.click());
-
         fileInput.addEventListener('change', function() {
-            if (this.files && this.files.length > 0) {
-                const file = this.files[0];
-                const fileSize = (file.size / 1024).toFixed(1);
-
-                fileNameDisplay.innerHTML = `<b class="text-primary">${file.name}</b> (${fileSize} KB)`;
+            if (this.files[0]) {
+                fileNameDisplay.innerText = this.files[0].name;
                 dropZone.classList.add('border-primary', 'bg-primary/5');
-
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        previewImg.src = e.target.result;
-                        previewContainer.classList.remove('hidden');
-                        dropZone.querySelector('.material-symbols-outlined').classList.add('hidden');
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    previewContainer.classList.add('hidden');
-                    dropZone.querySelector('.material-symbols-outlined').classList.remove('hidden');
-                }
             }
         });
 
-        // Drag and Drop
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-primary'); });
-        dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('border-primary'); });
-        dropZone.addEventListener('drop', (e) => {
+        // Validation logic
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            fileInput.files = e.dataTransfer.files;
-            fileInput.dispatchEvent(new Event('change'));
-        });
+            const pass = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm_password').value;
 
-        // Form Submit
-        document.getElementById('registrationForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (!fileInput.files || fileInput.files.length === 0) {
-                alert("Please upload your business license document.");
+            if (pass !== confirm) {
+                alert("Нууц үг зөрүүтэй байна!");
                 return;
             }
+            if (pass.length < 6) {
+                alert("Нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой.");
+                return;
+            }
+            
             window.location.href = "under-review.html";
         });
     </script>
