@@ -165,4 +165,87 @@
 
         <footer class="absolute bottom-0 left-0 right-0 p-4 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-50">
             <div class="flex gap-4 max-w-[480px] mx-auto pb-6">
-                <button type="button" onclick="window.history.back()" class="flex-1 bg-white dark:bg-slate-800 border border
+                <button type="button" onclick="window.history.back()" class="flex-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-[#0d141b] dark:text-white font-bold h-14 rounded-2xl active:scale-95 transition-transform font-display">
+                    Буцах
+                </button>
+                <button form="registrationForm" type="submit" class="flex-1 bg-primary text-white font-bold h-14 rounded-2xl shadow-xl shadow-primary/20 active:scale-95 transition-transform font-display">
+                    Бүртгүүлэх
+                </button>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        /**
+         * Toggles the visibility of password inputs
+         */
+        function togglePass(inputId, btn) {
+            const field = document.getElementById(inputId);
+            const icon = btn.querySelector('.material-symbols-outlined');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.innerText = 'visibility_off';
+            } else {
+                field.type = 'password';
+                icon.innerText = 'visibility';
+            }
+        }
+
+        /**
+         * Handling File Selection and Preview
+         */
+        const fileInput = document.getElementById('license-input');
+        const uploadBox = document.getElementById('upload-box');
+        const fileStatus = document.getElementById('file-status');
+        const previewImg = document.getElementById('img-preview');
+        const previewBox = document.getElementById('img-preview-container');
+
+        uploadBox.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                fileStatus.innerHTML = `<span class="text-primary font-bold">${file.name}</span> сонгогдлоо`;
+                
+                // Show preview if it's an image
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        previewBox.classList.remove('hidden');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        /**
+         * Form Submission Logic
+         */
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const p1 = document.getElementById('pass-main').value;
+            const p2 = document.getElementById('pass-confirm').value;
+
+            // Password match validation
+            if (p1 !== p2) {
+                alert("Нууц үг зөрүүтэй байна. Дахин шалгана уу.");
+                return;
+            }
+
+            // File upload validation
+            if (!fileInput.files.length) {
+                alert("Лицензийн зургаа оруулна уу.");
+                return;
+            }
+
+            // If everything is okay, proceed
+            console.log("Form submitted successfully!");
+            window.location.href = "success.html";
+        });
+    </script>
+</body>
+</html>
