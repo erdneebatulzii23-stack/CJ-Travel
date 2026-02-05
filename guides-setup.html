@@ -136,61 +136,61 @@ function togglePass(id, btn) {
 }
 
 function handleGuideSignup() {
+    // 1. Get input values by matching HTML IDs
     const fullName = document.getElementById('guide-name').value;
-    const email = document.getElementById('login-email').value; // Using your login-email ID
+    const email = document.getElementById('guide-email').value;
     const password = document.getElementById('guide-password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
     const nationality = document.getElementById('guide-nationality').value;
     const experience = document.getElementById('guide-experience').value;
     const phone = document.getElementById('guide-phone').value;
 
-    // Validate if all required fields are filled
+    // 2. Comprehensive validation
     if (!fullName || !email || !password || !experience || !phone) {
-        alert("Please fill in all fields!");
+        alert("Please fill in all fields before submitting!");
         return;
     }
 
-    // Check if passwords match
     if (password !== confirmPassword) {
         alert("Passwords do not match!");
         return;
     }
 
-    // Ensure password meets minimum length requirement
     if (password.length < 6) {
         alert("Password must be at least 6 characters long.");
         return;
     }
 
-    // Retrieve existing users list from localStorage
-    let users = JSON.parse(localStorage.getItem('users')) || [];
+    // 3. Save to LocalStorage
+    try {
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        
+        const newGuide = {
+            fullName: fullName,
+            email: email,
+            password: password,
+            businessDetails: {
+                type: 'guide',
+                status: 'pending',
+                nationality: nationality,
+                experience: experience,
+                phone: phone,
+                interests: []
+            }
+        };
 
-    // Create a new guide object with initial data
-    const newGuide = {
-        fullName: fullName,
-        email: email,
-        password: password,
-        businessDetails: {
-            type: 'guide',
-            status: 'pending',
-            nationality: nationality,
-            experience: experience,
-            phone: phone,
-            interests: [] // Interests will be populated on the next page
-        }
-    };
+        users.push(newGuide);
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify(newGuide));
 
-    // Add new user to the list and save back to localStorage
-    users.push(newGuide);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    // Set current session user to identify who is adding interests
-    localStorage.setItem('currentUser', JSON.stringify(newGuide));
-
-    alert("Account created! Now, please tell us about your guiding interests.");
-    
-    // Redirect to interests selection page
-    window.location.href = "guides-interests.html"; 
+        alert("Registration successful! Redirecting to interests page...");
+        
+        // 4. Redirect
+        window.location.href = "guides-interests.html";
+    } catch (error) {
+        console.error("Error saving data:", error);
+        alert("Something went wrong. Please try again.");
+    }
 }
 </script>
 </body>
