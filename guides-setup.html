@@ -137,29 +137,35 @@ function togglePass(id, btn) {
 
 function handleGuideSignup() {
     const fullName = document.getElementById('guide-name').value;
-    const email = document.getElementById('guide-email').value;
+    const email = document.getElementById('login-email').value; // Using your login-email ID
     const password = document.getElementById('guide-password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
     const nationality = document.getElementById('guide-nationality').value;
     const experience = document.getElementById('guide-experience').value;
     const phone = document.getElementById('guide-phone').value;
 
-    if (!fullName || !email || !password) {
-        alert("Please fill in your name, email, and password!");
+    // Validate if all required fields are filled
+    if (!fullName || !email || !password || !experience || !phone) {
+        alert("Please fill in all fields!");
         return;
     }
 
+    // Check if passwords match
     if (password !== confirmPassword) {
         alert("Passwords do not match!");
         return;
     }
 
+    // Ensure password meets minimum length requirement
     if (password.length < 6) {
         alert("Password must be at least 6 characters long.");
         return;
     }
 
+    // Retrieve existing users list from localStorage
     let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Create a new guide object with initial data
     const newGuide = {
         fullName: fullName,
         email: email,
@@ -169,14 +175,22 @@ function handleGuideSignup() {
             status: 'pending',
             nationality: nationality,
             experience: experience,
-            phone: phone
+            phone: phone,
+            interests: [] // Interests will be populated on the next page
         }
     };
 
+    // Add new user to the list and save back to localStorage
     users.push(newGuide);
     localStorage.setItem('users', JSON.stringify(users));
-    alert("Registration submitted successfully for review!");
-    window.location.href = "login.html"; 
+
+    // Set current session user to identify who is adding interests
+    localStorage.setItem('currentUser', JSON.stringify(newGuide));
+
+    alert("Account created! Now, please tell us about your guiding interests.");
+    
+    // Redirect to interests selection page
+    window.location.href = "guides.interests.html"; 
 }
 </script>
 </body>
