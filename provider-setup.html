@@ -172,67 +172,83 @@
         });
     }
 
-    // 3. ФОРМ ИЛГЭЭХ (Vercel & MongoDB холболт)
-    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
+    // 3. ФОРМ ИЛГЭЭХ (Vercel & MongoDB холболт) - ШИНЭЧИЛСЭН
+document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-        // ТОГТЛОО: Товчлуур формын гадна байгаа учраас document-оос хайх хэрэгтэй
-        const submitBtn = document.querySelector('button[form="registrationForm"]');
-        const form = e.target;
-        
-        const password = document.getElementById('password').value;
-        const confirm_password = document.getElementById('confirm_password').value;
+    const submitBtn = document.querySelector('button[form="registrationForm"]');
+    const form = e.target;
+    const fileInput = document.getElementById('license-upload'); // Файл оруулах input
+    
+    const password = document.getElementById('password').value;
+    const confirm_password = document.getElementById('confirm_password').value;
 
-        if (password !== confirm_password) {
-            alert("Passwords do not match!");
-            return;
+    if (password !== confirm_password) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    try {
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Processing Image...";
         }
 
-        try {
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerText = "Processing...";
-            }
-
-            // Бүх input-үүдийг нэг бүрчлэн авах (Алдаа гарахгүй хамгийн найдвартай арга)
-            const inputs = form.querySelectorAll('input');
-            const providerData = {
-                name: inputs[0].value,      // Business Name
-                taxId: inputs[1].value,     // Tax ID
-                category: form.querySelector('select').value,
-                email: inputs[2].value,     // Email Address
-                password: password,
-                role: 'provider',
-                status: 'pending',
-                createdAt: new Date().toISOString()
-            };
-
-            const response = await fetch('/api/save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(providerData),
+        // --- ЗУРГИЙГ БОЛОВСРУУЛАХ ХЭСЭГ (ШИНЭ) ---
+        let base64Image = "";
+        if (fileInput.files && fileInput.files[0]) {
+            const file = fileInput.files[0];
+            // Зургийг Base64 текст болгож хөрвүүлэх
+            base64Image = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (error) => reject(error);
+                reader.readAsDataURL(file);
             });
+        }
+        // ---------------------------------------
 
-            if (response.ok) {
-                localStorage.setItem('currentUser', JSON.stringify(providerData));
-                alert("Success! Your business profile is sent for review.");
-                window.location.href = "under-review.html";
-            } else {
-                const result = await response.json().catch(() => ({}));
-                alert("Server Error: " + (result.message || "Failed to save data"));
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = "Submit";
-                }
-            }
-        } catch (error) {
-            alert("Connection error: " + error.message);
+        if (submitBtn) submitBtn.innerText = "Saving Data...";
+
+        const inputs = form.querySelectorAll('input');
+        const providerData = {
+            name: inputs[0].value,      
+            taxId: inputs[1].value,     
+            category: form.querySelector('select').value,
+            email: inputs[2].value,     
+            password: password,
+            role: 'provider',
+            status: 'pending',
+            licenseImage: base64Image, // ОДОО ЗУРАГ ТЕКСТ БОЛООД ОРЖ БАЙНА
+            createdAt: new Date().toISOString()
+        };
+
+        const response = await fetch('/api/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(providerData),
+        });
+
+        if (response.ok) {
+            localStorage.setItem('currentUser', JSON.stringify(providerData));
+            alert("Success! Your business profile is sent for review.");
+            window.location.href = "under-review.html";
+        } else {
+            const result = await response.json().catch(() => ({}));
+            alert("Server Error: " + (result.message || "Failed to save data"));
             if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Submit";
             }
         }
-    });
+    } catch (error) {
+        alert("Error: " + error.message);
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit";
+        }
+    }
+});
     </script>
 </body>
 </html>
