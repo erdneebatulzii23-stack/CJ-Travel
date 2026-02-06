@@ -182,53 +182,75 @@
 </div>
 </footer>
 <script>
-    /**
-     * Interests Selection Logic (Enhanced with LocalStorage)
-     */
-
     const cards = document.querySelectorAll('.grid > div');
     const finishBtn = document.querySelector('button.bg-primary');
     const backBtn = document.querySelector('button.bg-gray-200, button.dark\\:bg-gray-700');
 
-    // 1. Handle Selection: Toggle visual state
+    // 1. Сонголт хийх: Карт дээр дарахад сонгогдсон төлөвт шилжүүлэх
     cards.forEach(card => {
         card.addEventListener('click', () => {
             card.classList.toggle('interest-card-selected');
         });
     });
 
-    // 2. Back Button: Return to setup page
+    // 2. Буцах товчлуур
     if (backBtn) {
         backBtn.addEventListener('click', () => {
             window.location.href = "traveler-setup.html";
         });
     }
 
-    // 3. Finish Button: Save and Redirect
+    // 3. Дуусгах (Finish) товчлуур: Мэдээллийг нэгтгэж хадгалах
     if (finishBtn) {
-        finishBtn.addEventListener('click', () => {
+        finishBtn.addEventListener('click', async () => {
             const selectedCards = document.querySelectorAll('.interest-card-selected');
             
+            // Сонирхлын тоог шалгах
             if (selectedCards.length < 3) {
                 alert("Please select at least 3 interests to continue!");
                 return;
             }
 
-            // Extract text from selected cards
+            // Сонгосон сонирхлуудыг жагсаалт болгож авах
             const selectedInterests = Array.from(selectedCards).map(card => 
                 card.querySelector('p').textContent
             );
 
-            // Update LocalStorage for the last registered user
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-            if (users.length > 0) {
-                // Add interests to the latest user
-                users[users.length - 1].interests = selectedInterests;
-                localStorage.setItem('users', JSON.stringify(users));
+            // ӨМНӨХ ХУУДАСНААС ДАМЖИЖ ИРСЭН МЭДЭЭЛЛИЙГ АВАХ
+            const pendingUser = JSON.parse(localStorage.getItem('pending_user'));
+
+            if (!pendingUser) {
+                alert("Registration session expired. Please start again.");
+                window.location.href = "traveler-setup.html";
+                return;
             }
 
-            // Move to final success page
-            window.location.href = "completed-profile.html";
+            // ШИНЭ ХЭРЭГЛЭГЧИЙН ЭЦСИЙН ОБЪЕКТ
+            const finalUserData = {
+                ...pendingUser,
+                interests: selectedInterests
+            };
+
+            // --- LOCAL STORAGE-Д ЖИНХЭНЭ УТГААР НЬ ХАДГАЛАХ ---
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Имэйл давхардаж байгаа эсэхийг дахин нэг шалгах (Баталгаажуулалт)
+            if(users.some(u => u.email === finalUserData.email)) {
+                alert("This email is already registered!");
+                return;
+            }
+
+            users.push(finalUserData);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Түр хадгалсан датаг устгах
+            localStorage.removeItem('pending_user');
+
+            // --- БҮРТГЭЛ ДУУССАНЫГ МЭДЭГДЭХ ---
+            alert("Congratulations! Your explorer profile is ready.");
+            
+            // Амжилттай болсон хуудас руу шилжих
+            window.location.href = "completed-profile.html"; 
         });
     }
 </script>
