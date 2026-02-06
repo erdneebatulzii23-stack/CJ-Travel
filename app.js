@@ -24,11 +24,11 @@ async function registerUser() {
     };
 
     try {
-        const response = await fetch('/api/save.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData)
-        });
+        const response = await fetch('https://cj-travel.vercel.app/api/save', { // Бүтэн хаягийг нь бичээд үз
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData)
+});
 
         if (response.ok) {
             const users = JSON.parse(localStorage.getItem('users')) || [];
