@@ -100,9 +100,9 @@
         </main>
 
         <footer class="p-4 bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 flex gap-3 shrink-0">
-            <button onclick="window.history.back()" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#e7edf3] dark:bg-gray-800 text-[#0d141b] dark:text-white font-bold font-display">
-                Back
-            </button>
+            <button id="backBtn" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#e7edf3] dark:bg-gray-800 text-[#0d141b] dark:text-white font-bold font-display">
+    Back
+</button>
             <button onclick="handleGuideSignup()" class="flex-1 h-12 flex items-center justify-center rounded-xl bg-primary text-white font-bold font-display">
                 Submit for Review
             </button>
@@ -113,14 +113,25 @@
 const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Samoa", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
 
 window.onload = function() {
+    // 1. Улсын жагсаалт бөглөх
     const select = document.getElementById('guide-nationality');
-    countries.sort().forEach(country => {
-        const option = document.createElement('option');
-        option.value = country;
-        option.textContent = country;
-        if(country === "Mongolia") option.selected = true;
-        select.appendChild(option);
-    });
+    if (select) {
+        countries.sort().forEach(country => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            if(country === "Mongolia") option.selected = true;
+            select.appendChild(option);
+        });
+    }
+
+    // 2. Буцах товчлуур (Submit функцээс тусад нь байх ёстой)
+    const backBtn = document.getElementById('backBtn');
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            window.location.href = "role-selection.html";
+        });
+    }
 };
 
 function togglePass(id, btn) {
@@ -136,61 +147,36 @@ function togglePass(id, btn) {
 }
 
 function handleGuideSignup() {
-    // 1. Get input values by matching HTML IDs
-    const fullName = document.getElementById('guide-name').value;
-    const email = document.getElementById('guide-email').value;
-    const password = document.getElementById('guide-password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
-    const nationality = document.getElementById('guide-nationality').value;
-    const experience = document.getElementById('guide-experience').value;
-    const phone = document.getElementById('guide-phone').value;
+    const pass = document.getElementById('guide-password').value;
+    const confirmPass = document.getElementById('confirm-password').value;
 
-    // 2. Comprehensive validation
-    if (!fullName || !email || !password || !experience || !phone) {
-        alert("Please fill in all fields before submitting!");
+    const userData = {
+        name: document.getElementById('guide-name').value,
+        email: document.getElementById('guide-email').value,
+        password: pass,
+        nationality: document.getElementById('guide-nationality').value,
+        phone: document.getElementById('guide-phone').value,
+        experience: document.getElementById('guide-experience').value,
+        role: 'guide',
+        joinedAt: new Date().toISOString()
+    };
+
+    // Шалгалт
+    if (!userData.name || !userData.email || !userData.password) {
+        alert("Please fill in all required fields!");
         return;
     }
 
-    if (password !== confirmPassword) {
+    if (pass !== confirmPass) {
         alert("Passwords do not match!");
         return;
     }
 
-    if (password.length < 6) {
-        alert("Password must be at least 6 characters long.");
-        return;
-    }
+    // Түр хадгалах
+    localStorage.setItem('pending_user', JSON.stringify(userData));
 
-    // 3. Save to LocalStorage
-    try {
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-        
-        const newGuide = {
-            fullName: fullName,
-            email: email,
-            password: password,
-            businessDetails: {
-                type: 'guide',
-                status: 'pending',
-                nationality: nationality,
-                experience: experience,
-                phone: phone,
-                interests: []
-            }
-        };
-
-        users.push(newGuide);
-        localStorage.setItem('users', JSON.stringify(users));
-        localStorage.setItem('currentUser', JSON.stringify(newGuide));
-
-        alert("Registration successful! Redirecting to interests page...");
-        
-        // 4. Redirect
-        window.location.href = "guides-interests.html";
-    } catch (error) {
-        console.error("Error saving data:", error);
-        alert("Something went wrong. Please try again.");
-    }
+    // Дараагийн хуудас руу шилжих
+    window.location.href = "guides-interests.html";
 }
 </script>
 </body>
