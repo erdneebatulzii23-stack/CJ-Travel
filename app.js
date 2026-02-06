@@ -1,58 +1,54 @@
 /**
- * CJ Travel - Main Application Script
- * Managing global navigation, authentication, and UI interactions.
+ * CJ Travel - Main Application Script (Full Version)
  */
 
-// --- 1. Authentication Functions ---
+// --- 1. Authentication & Database Functions ---
 
-/**
- * Saves new user data including their specific ROLE to LocalStorage.
- */
-function registerUser() {
-    // Get values from input fields
+async function registerUser() {
     const nameInput = document.getElementById('name')?.value;
     const emailInput = document.getElementById('email')?.value;
     const passwordInput = document.getElementById('password')?.value;
-    
-    // Get the selected role from radio buttons (traveler, guide, or company)
     const roleInput = document.querySelector('input[name="role"]:checked')?.id;
 
-    // Basic validation
     if (!nameInput || !emailInput || !passwordInput || !roleInput) {
         alert("Please fill in all fields and select your account type.");
         return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-
-    // Check if email already exists
-    if (users.some(user => user.email === emailInput)) {
-        alert("This email is already registered. Please login.");
-        return;
-    }
-
-    // Add new user with the assigned role
-    users.push({ 
-        name: nameInput, 
-        email: emailInput, 
+    const userData = {
+        name: nameInput,
+        email: emailInput,
         password: passwordInput,
-        role: roleInput 
-    });
+        role: roleInput,
+        createdAt: new Date().toISOString()
+    };
 
-    localStorage.setItem('users', JSON.stringify(users));
+    try {
+        const response = await fetch('/api/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
+        });
 
-    alert("Registration successful as a " + roleInput + "! Redirecting to login...");
-    window.location.href = 'login.html';
+        if (response.ok) {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            users.push(userData);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert("Registration successful! Your data has been saved to the database.");
+            window.location.href = 'login.html';
+        } else {
+            alert("Error saving data to the server.");
+        }
+    } catch (error) {
+        console.error("Connection Error:", error);
+        alert("Connection failed. Please check your internet.");
+    }
 }
 
-/**
- * Validates credentials AND checks if the selected role matches the database.
- */
 function loginUser() {
     const emailInput = document.getElementById('login-email')?.value;
     const passwordInput = document.getElementById('login-password')?.value;
-    
-    // Get the role selected on the login page
     const selectedRole = document.querySelector('input[name="role"]:checked')?.id;
 
     if (!emailInput || !passwordInput || !selectedRole) {
@@ -61,29 +57,20 @@ function loginUser() {
     }
 
     const users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    // Find user matching Email, Password, AND Role
     const authenticatedUser = users.find(u => 
-        u.email === emailInput && 
-        u.password === passwordInput && 
-        u.role === selectedRole
+        u.email === emailInput && u.password === passwordInput && u.role === selectedRole
     );
 
     if (authenticatedUser) {
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('currentUser', JSON.stringify(authenticatedUser));
-        
-        alert("Login successful! Welcome, " + authenticatedUser.name);
+        alert("Welcome back, " + authenticatedUser.name + "!");
         window.location.href = 'index.html';
     } else {
-        // If credentials match but role is wrong, or if credentials don't match at all
-        alert("Login failed! Please check your email, password, and ensure you selected the correct role.");
+        alert("Login failed! Invalid credentials or role.");
     }
 }
 
-/**
- * Clears session data and redirects to the landing page.
- */
 function logoutUser() {
     if (confirm("Are you sure you want to log out?")) {
         localStorage.removeItem('isLoggedIn');
@@ -92,75 +79,26 @@ function logoutUser() {
     }
 }
 
-/**
- * Handles profile access based on authentication state.
- */
 function handleProfileClick() {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     window.location.href = (isLoggedIn === 'true') ? 'profile.html' : 'login.html';
 }
 
-// --- 2. Page Initialization & UI Logic ---
+// --- 2. Profile Management Functions (Previously missing part) ---
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // A. Password Visibility Toggle
-    const passwordField = document.getElementById('login-password');
-    const toggleBtn = document.getElementById('toggle-password');
-
-    if (passwordField && toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            const isTypePassword = passwordField.type === 'password';
-            passwordField.type = isTypePassword ? 'text' : 'password';
-            
-            const icon = toggleBtn.querySelector('.material-symbols-outlined');
-            if (icon) {
-                icon.textContent = isTypePassword ? 'visibility_off' : 'visibility';
-            }
-        });
-    }
-
-    // B. Profile Page Data Rendering
-    if (window.location.pathname.includes('profile.html')) {
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.href = 'login.html';
-            return;
-        }
-
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-        if (currentUser) {
-            const nameDisplay = document.getElementById('userName');
-            const emailDisplay = document.getElementById('userEmail');
-            const roleDisplay = document.getElementById('userRole'); // Optional: Add an element with this ID in profile.html
-
-            if (nameDisplay) nameDisplay.textContent = currentUser.name;
-            if (emailDisplay) emailDisplay.textContent = currentUser.email;
-            if (roleDisplay) roleDisplay.textContent = "Account Type: " + currentUser.role;
-        }
-    }
-});
-/**
- * Loads the current user's data from LocalStorage and fills the edit form.
- */
 function loadUserProfileForEditing() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    
     if (!currentUser) {
         window.location.href = 'login.html';
         return;
     }
 
-    // Assign values to input fields
     if (document.getElementById('edit-name')) document.getElementById('edit-name').value = currentUser.name || '';
     if (document.getElementById('edit-email')) document.getElementById('edit-email').value = currentUser.email || '';
     if (document.getElementById('edit-phone')) document.getElementById('edit-phone').value = currentUser.phone || '';
     if (document.getElementById('edit-bio')) document.getElementById('edit-bio').value = currentUser.bio || '';
 }
 
-/**
- * Saves the edited values back to both 'currentUser' and the main 'users' array.
- */
 function saveProfileChanges() {
     const nameValue = document.getElementById('edit-name')?.value;
     const phoneValue = document.getElementById('edit-phone')?.value;
@@ -171,21 +109,54 @@ function saveProfileChanges() {
 
     if (!currentUser) return;
 
-    // 1. Update the Current User object
     currentUser.name = nameValue;
     currentUser.phone = phoneValue;
     currentUser.bio = bioValue;
 
-    // 2. Update the user in the main database array (users)
     const userIndex = users.findIndex(u => u.email === currentUser.email);
     if (userIndex !== -1) {
         users[userIndex] = { ...users[userIndex], ...currentUser };
     }
 
-    // 3. Save everything back to LocalStorage
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
     localStorage.setItem('users', JSON.stringify(users));
 
     alert("Profile updated successfully!");
     window.location.href = 'profile.html';
 }
+
+// --- 3. UI Logic & Event Listeners ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Password Toggle
+    const passwordField = document.getElementById('login-password');
+    const toggleBtn = document.getElementById('toggle-password');
+
+    if (passwordField && toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const isTypePassword = passwordField.type === 'password';
+            passwordField.type = isTypePassword ? 'text' : 'password';
+            const icon = toggleBtn.querySelector('.material-symbols-outlined');
+            if (icon) icon.textContent = isTypePassword ? 'visibility_off' : 'visibility';
+        });
+    }
+
+    // Profile Page Data Rendering
+    if (window.location.pathname.includes('profile.html')) {
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            const nameDisplay = document.getElementById('userName');
+            const emailDisplay = document.getElementById('userEmail');
+            const roleDisplay = document.getElementById('userRole');
+
+            if (nameDisplay) nameDisplay.textContent = currentUser.name;
+            if (emailDisplay) emailDisplay.textContent = currentUser.email;
+            if (roleDisplay) roleDisplay.textContent = "Account Type: " + currentUser.role;
+        }
+    }
+});
