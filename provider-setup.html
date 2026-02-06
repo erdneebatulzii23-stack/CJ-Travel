@@ -176,68 +176,58 @@
     document.getElementById('registrationForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        // Товчлуур болон утгуудыг авах
         const submitBtn = e.target.querySelector('button[type="submit"]');
+        const form = e.target;
+        
+        // Validation - Шалгалт
         const password = document.getElementById('password').value;
         const confirm_password = document.getElementById('confirm_password').value;
 
-        // Validation - Шалгалт
         if (password !== confirm_password) {
             alert("Passwords do not match!");
             return;
         }
-        if (password.length < 6) {
-            alert("Password must be at least 6 characters.");
-            return;
-        }
-
-        // Дата цуглуулах
-        // Анхаар: input-үүд чинь id-тай байх ёстой, эсвэл selector-оо зөв заах хэрэгтэй
-        const businessName = document.querySelector('input[placeholder="Legal company name"]').value;
-        const taxId = document.querySelector('input[placeholder="1234567"]').value;
-        const category = document.querySelector('select').value;
-        const email = document.querySelector('input[type="email"]').value;
-
-        const providerData = {
-            name: businessName,
-            taxId: taxId,
-            category: category,
-            email: email,
-            password: password, // Бодит байдал дээр Backend дээр hash хийгдэнэ
-            role: 'provider',
-            status: 'pending',
-            createdAt: new Date().toISOString()
-        };
 
         try {
-            // UI-г "Processing" төлөвт шилжүүлэх
             submitBtn.disabled = true;
             submitBtn.innerText = "Processing...";
 
-            // --- VERCEL API ХОЛБОЛТ (Чиний ажилладаг кодын бүтэц) ---
+            // ДИЗАЙН ӨӨРЧЛӨХГҮЙГЭЭР ДАТАГ АВАХ:
+            // Placeholder-оор биш, формын дарааллаар нь найдвартай авах
+            const inputs = form.querySelectorAll('input');
+            const providerData = {
+                name: inputs[0].value,      // Legal company name
+                taxId: inputs[1].value,     // Tax ID
+                category: form.querySelector('select').value,
+                email: inputs[2].value,     // Email Address
+                password: password,
+                role: 'provider',
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+
             const response = await fetch('/api/save', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(providerData),
             });
 
-            const result = await response.json();
+            // Серверээс ирсэн хариуг шалгах
+            const result = await response.json().catch(() => ({})); 
 
             if (response.ok) {
-                // Амжилттай болсон бол мэдээллээ хадгалаад шилжих
                 localStorage.setItem('currentUser', JSON.stringify(providerData));
                 alert("Success! Your business profile is sent for review.");
                 window.location.href = "under-review.html";
             } else {
-                alert("Error: " + (result.message || "Something went wrong"));
+                alert("Server Error: " + (result.message || "Failed to save data"));
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Submit";
             }
         } catch (error) {
-            console.error("Submission error:", error);
-            alert("Connection failed. Check your internet.");
+            console.error("Fetch Error:", error);
+            // Хэрэв энд "TypeError: Failed to fetch" гэж байвал чи файлаа Local-оор нээсэн байна гэсэн үг.
+            alert("Connection error: " + error.message);
             submitBtn.disabled = false;
             submitBtn.innerText = "Submit";
         }
