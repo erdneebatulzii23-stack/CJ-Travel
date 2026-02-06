@@ -143,17 +143,24 @@
     });
 
     nextButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (selectedType === "provider") {
-            window.location.href = "provider-setup.html";
-        } else if (selectedType =="traveler") {
-            window.location.href = "traveler-setup.html";
-        } else if (selectedType === "guide") {
-            window.location.href = "guides-setup.html";
-        } else {
-            alert("Please select an account type to continue.");
-        }
-    });
+    e.preventDefault();
+    if (!selectedType) {
+        alert("Please select an account type to continue.");
+        return;
+    }
+
+    // СОНГОСОН ROLE-Г ХАДГАЛАХ (Энэ маш чухал)
+    localStorage.setItem('user_role', selectedType);
+
+    // Дараагийн хуудас руу шилжих
+    if (selectedType === "provider") {
+        window.location.href = "provider-setup.html";
+    } else if (selectedType === "traveler") {
+        window.location.href = "traveler-setup.html";
+    } else if (selectedType === "guide") {
+        window.location.href = "guides-setup.html";
+    }
+});
 </script>
 </body>
 </html>
