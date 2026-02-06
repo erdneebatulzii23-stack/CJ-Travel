@@ -141,49 +141,100 @@
     </div>
 
     <script>
-        // Toggle Password Visibility
-        function togglePass(id, btn) {
-            const input = document.getElementById(id);
-            const icon = btn.querySelector('.material-symbols-outlined');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.innerText = 'visibility_off';
-            } else {
-                input.type = 'password';
-                icon.innerText = 'visibility';
-            }
+        // 1. Нууц үг харах/нуух логик
+    function togglePass(id, btn) {
+        const input = document.getElementById(id);
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.innerText = 'visibility_off';
+        } else {
+            input.type = 'password';
+            icon.innerText = 'visibility';
+        }
+    }
+
+    // 2. Файл хуулах (UI тал)
+    const fileInput = document.getElementById('license-upload');
+    const dropZone = document.getElementById('drop-zone');
+    const fileNameDisplay = document.getElementById('file-name');
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', function() {
+        if (this.files[0]) {
+            fileNameDisplay.innerText = this.files[0].name;
+            dropZone.classList.add('border-primary', 'bg-primary/5');
+        }
+    });
+
+    // 3. ФОРМ ИЛГЭЭХ (Vercel & MongoDB холболт)
+    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Товчлуур болон утгуудыг авах
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const password = document.getElementById('password').value;
+        const confirm_password = document.getElementById('confirm_password').value;
+
+        // Validation - Шалгалт
+        if (password !== confirm_password) {
+            alert("Passwords do not match!");
+            return;
+        }
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters.");
+            return;
         }
 
-        // File Upload Logic
-        const fileInput = document.getElementById('license-upload');
-        const dropZone = document.getElementById('drop-zone');
-        const fileNameDisplay = document.getElementById('file-name');
+        // Дата цуглуулах (Input-үүдэд id заавал байх ёстой)
+        const businessName = document.querySelector('input[placeholder="Legal company name"]').value;
+        const taxId = document.querySelector('input[placeholder="1234567"]').value;
+        const category = document.querySelector('select').value;
+        const email = document.querySelector('input[type="email"]').value;
 
-        dropZone.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', function() {
-            if (this.files[0]) {
-                fileNameDisplay.innerText = this.files[0].name;
-                dropZone.classList.add('border-primary', 'bg-primary/5');
-            }
-        });
+        const providerData = {
+            name: businessName,
+            taxId: taxId,
+            category: category,
+            email: email,
+            password: password, // Жич: Бодит апп дээр нууц үгийг Backend дээр hash хийх ёстой
+            role: 'provider',
+            status: 'pending',
+            createdAt: new Date()
+        };
 
-        // Validation logic
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const pass = document.getElementById('password').value;
-            const confirm = document.getElementById('confirm_password').value;
+        try {
+            // UI-г "Processing" төлөвт шилжүүлэх
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Processing...";
 
-            if (pass !== confirm) {
-                alert("Passwords do not match!");
-                return;
+            // --- VERCEL API ХОЛБОЛТ ---
+            const response = await fetch('/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(providerData),
+            });
+
+            if (response.ok) {
+                // Амжилттай болсон бол мэдээллээ хадгалаад шилжих
+                localStorage.setItem('currentUser', JSON.stringify(providerData));
+                alert("Success! Your business profile is sent for review.");
+                window.location.href = "under-review.html";
+            } else {
+                const result = await response.json();
+                alert("Error: " + (result.message || "Something went wrong"));
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Submit";
             }
-            if (pass.length < 6) {
-                alert("Password must be at least 6 characters long.");
-                return;
-            }
-            
-            window.location.href = "under-review.html";
-        });
+        } catch (error) {
+            console.error("Submission error:", error);
+            alert("Connection failed. Check your internet.");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit";
+        }
+    });
     </script>
 </body>
 </html>
