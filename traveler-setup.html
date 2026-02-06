@@ -173,53 +173,56 @@
         });
     }
 
-    const createBtn = document.getElementById('createBtn');
-    if (createBtn) {
-        createBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const pass = document.getElementById('regPassword').value;
-            const confirmPass = document.getElementById('confirmPassword').value;
+    // ... (дээрх функцүүд хэвээрээ)
 
-            const userData = {
-                name: document.getElementById('fullName').value,
-                email: document.getElementById('regEmail').value,
-                password: pass,
-                dob: document.getElementById('dob').value,
-                nationality: document.getElementById('countrySelect').value,
-                phone: document.getElementById('phone').value,
-                role: 'traveler',
-                joinedAt: new Date().toLocaleDateString()
-            };
+const createBtn = document.getElementById('createBtn');
+if (createBtn) {
+    createBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        const pass = document.getElementById('regPassword').value;
+        const confirmPass = document.getElementById('confirmPassword').value;
 
-            if(!userData.email || !userData.password || !userData.name) {
-                alert("Please fill in your Name, Email, and Password!");
-                return;
-            }
+        // Мэдээллүүдийг цуглуулах
+        const userData = {
+            name: document.getElementById('fullName').value,
+            email: document.getElementById('regEmail').value,
+            password: pass,
+            dob: document.getElementById('dob').value,
+            nationality: document.getElementById('countrySelect').value,
+            phone: document.getElementById('phone').value,
+            role: 'traveler', // Энд traveler гэдгийг нь хатуу зааж өгч байна
+            joinedAt: new Date().toISOString()
+        };
 
-            if(pass !== confirmPass) {
-                alert("Passwords do not match!");
-                return;
-            }
+        // 1. Шалгалт
+        if(!userData.email || !userData.password || !userData.name) {
+            alert("Please fill in your Name, Email, and Password!");
+            return;
+        }
 
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-            if(users.some(u => u.email === userData.email)) {
-                alert("This email address is already registered!");
-                return;
-            }
+        if(pass !== confirmPass) {
+            alert("Passwords do not match!");
+            return;
+        }
 
-            users.push(userData);
-            localStorage.setItem('users', JSON.stringify(users));
-            alert("Account successfully created!");
-            window.location.href = "interests.html"; 
-        });
-    }
+        // 2. ДАТАГ ТҮР ХАДГАЛАХ (Local Storage-д нэг объект болгож хадгална)
+        // Ингэснээр interests.html хуудсанд энэ датаг дуудаж ашиглаж болно
+        localStorage.setItem('pending_user', JSON.stringify(userData));
 
-    const backBtn = document.getElementById('backBtn');
-    if (backBtn) {
-        backBtn.addEventListener('click', () => {
-            window.location.href = "role-selection.html";
-        });
-    }
+        // 3. ДАРААГИЙН ШАТ РУУ ШИЛЖИХ
+        // Одоохондоо alert өгөх хэрэггүй, шууд сонирхол сонгох руу нь явуулъя
+        window.location.href = "interests.html"; 
+    });
+}
+
+// Back товчлуур
+const backBtn = document.getElementById('backBtn');
+if (backBtn) {
+    backBtn.addEventListener('click', () => {
+        window.location.href = "role-selection.html";
+    });
+}
 </script>
 </body>
 </html>
