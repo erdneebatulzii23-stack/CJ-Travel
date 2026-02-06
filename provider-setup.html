@@ -176,10 +176,10 @@
     document.getElementById('registrationForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        const submitBtn = e.target.querySelector('button[type="submit"]');
+        // ТОГТЛОО: Товчлуур формын гадна байгаа учраас document-оос хайх хэрэгтэй
+        const submitBtn = document.querySelector('button[form="registrationForm"]');
         const form = e.target;
         
-        // Validation - Шалгалт
         const password = document.getElementById('password').value;
         const confirm_password = document.getElementById('confirm_password').value;
 
@@ -189,14 +189,15 @@
         }
 
         try {
-            submitBtn.disabled = true;
-            submitBtn.innerText = "Processing...";
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerText = "Processing...";
+            }
 
-            // ДИЗАЙН ӨӨРЧЛӨХГҮЙГЭЭР ДАТАГ АВАХ:
-            // Placeholder-оор биш, формын дарааллаар нь найдвартай авах
+            // Бүх input-үүдийг нэг бүрчлэн авах (Алдаа гарахгүй хамгийн найдвартай арга)
             const inputs = form.querySelectorAll('input');
             const providerData = {
-                name: inputs[0].value,      // Legal company name
+                name: inputs[0].value,      // Business Name
                 taxId: inputs[1].value,     // Tax ID
                 category: form.querySelector('select').value,
                 email: inputs[2].value,     // Email Address
@@ -212,24 +213,24 @@
                 body: JSON.stringify(providerData),
             });
 
-            // Серверээс ирсэн хариуг шалгах
-            const result = await response.json().catch(() => ({})); 
-
             if (response.ok) {
                 localStorage.setItem('currentUser', JSON.stringify(providerData));
                 alert("Success! Your business profile is sent for review.");
                 window.location.href = "under-review.html";
             } else {
+                const result = await response.json().catch(() => ({}));
                 alert("Server Error: " + (result.message || "Failed to save data"));
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Submit";
+                }
+            }
+        } catch (error) {
+            alert("Connection error: " + error.message);
+            if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Submit";
             }
-        } catch (error) {
-            console.error("Fetch Error:", error);
-            // Хэрэв энд "TypeError: Failed to fetch" гэж байвал чи файлаа Local-оор нээсэн байна гэсэн үг.
-            alert("Connection error: " + error.message);
-            submitBtn.disabled = false;
-            submitBtn.innerText = "Submit";
         }
     });
     </script>
