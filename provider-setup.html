@@ -141,7 +141,7 @@
     </div>
 
     <script>
-        // 1. Нууц үг харах/нуух логик
+    // 1. Нууц үг харах/нуух логик
     function togglePass(id, btn) {
         const input = document.getElementById(id);
         const icon = btn.querySelector('.material-symbols-outlined');
@@ -159,13 +159,18 @@
     const dropZone = document.getElementById('drop-zone');
     const fileNameDisplay = document.getElementById('file-name');
 
-    dropZone.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', function() {
-        if (this.files[0]) {
-            fileNameDisplay.innerText = this.files[0].name;
-            dropZone.classList.add('border-primary', 'bg-primary/5');
-        }
-    });
+    if (dropZone) {
+        dropZone.addEventListener('click', () => fileInput.click());
+    }
+    
+    if (fileInput) {
+        fileInput.addEventListener('change', function() {
+            if (this.files[0]) {
+                fileNameDisplay.innerText = this.files[0].name;
+                dropZone.classList.add('border-primary', 'bg-primary/5');
+            }
+        });
+    }
 
     // 3. ФОРМ ИЛГЭЭХ (Vercel & MongoDB холболт)
     document.getElementById('registrationForm').addEventListener('submit', async function(e) {
@@ -186,7 +191,8 @@
             return;
         }
 
-        // Дата цуглуулах (Input-үүдэд id заавал байх ёстой)
+        // Дата цуглуулах
+        // Анхаар: input-үүд чинь id-тай байх ёстой, эсвэл selector-оо зөв заах хэрэгтэй
         const businessName = document.querySelector('input[placeholder="Legal company name"]').value;
         const taxId = document.querySelector('input[placeholder="1234567"]').value;
         const category = document.querySelector('select').value;
@@ -197,10 +203,10 @@
             taxId: taxId,
             category: category,
             email: email,
-            password: password, // Жич: Бодит апп дээр нууц үгийг Backend дээр hash хийх ёстой
+            password: password, // Бодит байдал дээр Backend дээр hash хийгдэнэ
             role: 'provider',
             status: 'pending',
-            createdAt: new Date()
+            createdAt: new Date().toISOString()
         };
 
         try {
@@ -208,7 +214,7 @@
             submitBtn.disabled = true;
             submitBtn.innerText = "Processing...";
 
-            // --- VERCEL API ХОЛБОЛТ ---
+            // --- VERCEL API ХОЛБОЛТ (Чиний ажилладаг кодын бүтэц) ---
             const response = await fetch('/api/save', {
                 method: 'POST',
                 headers: {
@@ -217,13 +223,14 @@
                 body: JSON.stringify(providerData),
             });
 
+            const result = await response.json();
+
             if (response.ok) {
                 // Амжилттай болсон бол мэдээллээ хадгалаад шилжих
                 localStorage.setItem('currentUser', JSON.stringify(providerData));
                 alert("Success! Your business profile is sent for review.");
                 window.location.href = "under-review.html";
             } else {
-                const result = await response.json();
                 alert("Error: " + (result.message || "Something went wrong"));
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Submit";
