@@ -24,25 +24,32 @@ async function registerUser() {
     };
 
     try {
+        // 1. СЕРВЕР РҮҮ ДАТА ЯВУУЛАХ (Энд хаягийг '/api/save' болгож зассан)
         const response = await fetch('/api/save', { 
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData)
-});
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
+        });
 
+        // 2. ХАРИУГ ХҮЛЭЭЖ АВАХ
         if (response.ok) {
+            // LocalStorage-д хадгалах чиний үндсэн логик хэвээрээ
             const users = JSON.parse(localStorage.getItem('users')) || [];
             users.push(userData);
             localStorage.setItem('users', JSON.stringify(users));
 
-            alert("Registration successful! Your data has been saved to the database.");
-            window.location.href = 'login.html';
+            alert("Registration successful! Your data has been saved.");
+            
+            // 3. АМЖИЛТТАЙ БОЛСОН ТУЛ ШИЛЖИНЭ
+            // Хэрэв чи 'under-review.html' рүү явуулмаар байгаа бол энийг өөрчилж болно
+            window.location.href = 'login.html'; 
         } else {
-            alert("Error saving data to the server.");
+            const errorData = await response.json();
+            alert("Server Error: " + (errorData.error || "Could not save data."));
         }
     } catch (error) {
         console.error("Connection Error:", error);
-        alert("Connection failed. Please check your internet.");
+        alert("Connection failed. Please check your internet or server logs.");
     }
 }
 
