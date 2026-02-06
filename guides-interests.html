@@ -116,78 +116,105 @@
 </footer>
 
 <script>
-    let selectedInterests = new Set();
-    const MIN_SELECTION = 3;
-
+    // 1. Сонголт хийх логик (UI тал)
     function toggleSelection(element, interestName) {
-        if (selectedInterests.has(interestName)) {
-            selectedInterests.delete(interestName);
-            element.classList.remove('interest-card-selected');
-        } else {
-            selectedInterests.add(interestName);
-            element.classList.add('interest-card-selected');
-        }
-        
+        element.classList.toggle('interest-card-selected');
         updateUI();
     }
 
     function updateUI() {
         const finishBtn = document.getElementById('finish-btn');
         const counterText = document.getElementById('counter-text');
-        const count = selectedInterests.size;
+        const selectedCount = document.querySelectorAll('.interest-card-selected').length;
+        const MIN_SELECTION = 3;
 
-        if (count >= MIN_SELECTION) {
+        if (selectedCount >= MIN_SELECTION) {
             finishBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             finishBtn.disabled = false;
-            counterText.innerHTML = `<span class="text-primary font-bold">Great!</span> You've selected ${count} interests.`;
+            counterText.innerHTML = `<span class="text-primary font-bold">Great!</span> You've selected ${selectedCount} interests.`;
         } else {
             finishBtn.classList.add('opacity-50', 'cursor-not-allowed');
             finishBtn.disabled = true;
-            counterText.innerText = `Pick ${MIN_SELECTION - count} more to personalize your travel feed.`;
+            counterText.innerText = `Pick ${MIN_SELECTION - selectedCount} more to personalize your travel feed.`;
         }
     }
 
-    function handleFinish() {
-    if (selectedInterests.size < MIN_SELECTION) {
-        alert(`Please select at least ${MIN_SELECTION} interests.`);
-        return;
+    // 2. Буцах товчлуур
+    const backBtn = document.querySelector('button.bg-gray-200, button.dark\\:bg-gray-700');
+    if (backBtn) {
+        backBtn.onclick = () => {
+            window.location.href = "guides-setup.html";
+        };
     }
 
-    try {
-        // 1. Get user data from LocalStorage
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-        const interestsArray = Array.from(selectedInterests);
+    // 3. Дуусгах (MongoDB рүү илгээх)
+    async function handleFinish() {
+        const selectedCards = document.querySelectorAll('.interest-card-selected');
+        const finishBtn = document.getElementById('finish-btn');
+        
+        if (selectedCards.length < 3) {
+            alert("Please select at least 3 interests!");
+            return;
+        }
 
-        if (currentUser) {
-            // Create businessDetails if it doesn't exist to prevent errors
-            if (!currentUser.businessDetails) {
-                currentUser.businessDetails = {};
-            }
-            currentUser.businessDetails.interests = interestsArray;
+        // Процесс эхэлснийг харуулах
+        finishBtn.disabled = true;
+        finishBtn.innerText = "Processing...";
 
-            // 2. Update the user in the master users list
-            users = users.map(u => {
-                if (u.email === currentUser.email) {
-                    if (!u.businessDetails) u.businessDetails = {};
-                    u.businessDetails.interests = interestsArray;
-                }
-                return u;
+        // Сонгосон сонирхлуудыг жагсаалт болгох
+        const selectedInterests = Array.from(selectedCards).map(card => 
+            card.querySelector('p').textContent
+        );
+
+        // guides-setup.html-ээс хадгалагдсан өгөгдлийг авах
+        const pendingUser = JSON.parse(localStorage.getItem('pending_user'));
+
+        if (!pendingUser) {
+            alert("Session expired. Please fill your details again.");
+            window.location.href = "guides-setup.html";
+            return;
+        }
+
+        // Илгээх эцсийн датаг бэлдэх
+        const finalUserData = {
+            ...pendingUser,
+            interests: selectedInterests,
+            role: 'guide', // Guide гэдгийг баталгаажуулж нэмэх
+            status: 'pending', // Guide учраас хяналтын шатанд байна гэсэн төлөв
+            createdAt: new Date()
+        };
+
+        try {
+            // --- VERCEL API ХОЛБОЛТ ---
+            const response = await fetch('/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(finalUserData),
             });
 
-            // 3. Save back to LocalStorage
-            localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        }
-    } catch (error) {
-        console.error("Data save error:", error);
-        // Even if saving fails, we proceed to redirect the user
-    }
+            const result = await response.json();
 
-    // 4. Perform Redirection
-    console.log("Redirecting to under-review page...");
-    window.location.href = "guides-under-review.html";
-}
+            if (response.ok) {
+                // Амжилттай болсон бол LocalStorage цэвэрлээд шилжинэ
+                localStorage.setItem('currentUser', JSON.stringify(finalUserData));
+                localStorage.removeItem('pending_user');
+                
+                // Guide-ийн хувьд "Under Review" хуудас руу шилжих нь тохиромжтой
+                window.location.href = "guides-under-review.html";
+            } else {
+                alert("Error: " + (result.message || "Failed to save to database."));
+                finishBtn.disabled = false;
+                finishBtn.innerText = "Finish";
+            }
+        } catch (error) {
+            console.error("Submission error:", error);
+            alert("Could not connect to the server. Please check your internet.");
+            finishBtn.disabled = false;
+            finishBtn.innerText = "Finish";
+        }
+    }
 </script>
 
 </body>
