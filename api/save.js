@@ -1,22 +1,25 @@
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
 
-// Таны явуулсан холболтын линк
-const uri = "mongodb+srv://erdneebatulzii23_db_user:iArC3sCUm4OafdYD@cluster0cjtraveler.go9ldfp.mongodb.net/?appName=cluster0CJTraveler";
+// Vercel-ийн Environment Variable-аас линкийг уншина
+const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
-module.exports = async (req, res) => {
-    // Вэб сайтаас мэдээлэл ирэх үед
+export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
             await client.connect();
+            // Чиний баазын нэр: CJ_Travel_Database
             const db = client.db('CJ_Travel_Database'); 
             const collection = db.collection('registrations');
             
-            // Ирсэн мэдээллийг MongoDB рүү хадгалах
-            const result = await collection.insertOne(req.body);
+            // Хэрэв дата string хэлбэрээр ирвэл JSON болгож хувиргах
+            const data = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+            
+            const result = await collection.insertOne(data);
             
             res.status(200).json({ success: true, id: result.insertedId });
         } catch (e) {
+            console.error("Алдаа гарлаа:", e);
             res.status(500).json({ error: e.message });
         } finally {
             await client.close();
@@ -24,4 +27,4 @@ module.exports = async (req, res) => {
     } else {
         res.status(405).send('Зөвхөн POST хүсэлт зөвшөөрөгдөнө');
     }
-};
+}
