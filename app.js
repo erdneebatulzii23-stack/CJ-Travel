@@ -24,7 +24,7 @@ async function registerUser() {
     };
 
     try {
-        const response = await fetch('https://cj-travel.vercel.app/api/save', { // Бүтэн хаягийг нь бичээд үз
+        const response = await fetch('/api/save', { 
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData)
