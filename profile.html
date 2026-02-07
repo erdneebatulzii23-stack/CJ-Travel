@@ -242,14 +242,6 @@ function renderMenu(role) {
         activeMenu.classList.remove('hidden');
     }
 }
-
-// Гарах функц
-function logoutUser() {
-    if(confirm("Та системээс гарахдаа итгэлтэй байна уу?")) {
-        localStorage.removeItem('currentUser'); 
-        window.location.href = 'login.html';
-    }
-}
 </script>
 </body>
 </html>
