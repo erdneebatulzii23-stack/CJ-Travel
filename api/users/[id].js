@@ -16,10 +16,7 @@ export default async function handler(req, res) {
 
     await dbConnect();
     // ... бусад код хэвээрээ ...
-}
     
-    try {
-        await dbConnect();
     } catch (dbError) {
         return res.status(500).json({ message: "Database connection failed" });
     }
