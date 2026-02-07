@@ -1,8 +1,8 @@
 /**
- * CJ Travel - Final Optimized app.js (English UI, Admin 404 Fix)
+ * CJ Travel - Final Optimized app.js (English UI, Admin 404 Fix, Instant Logout)
  */
 
-// --- 1. LOGIN LOGIC (MongoDB + Role Validation + Status Check) ---
+// --- 1. LOGIN LOGIC ---
 async function loginUser() {
     const emailInput = document.getElementById('login-email')?.value.trim();
     const passwordInput = document.getElementById('login-password')?.value;
@@ -26,7 +26,6 @@ async function loginUser() {
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('currentUser', JSON.stringify(adminUser));
         
-        // 404 алдаанаас сэргийлж бүх тохиолдолд index.html рүү шилжүүлнэ
         window.location.replace('index.html');
         return; 
     }
@@ -42,10 +41,8 @@ async function loginUser() {
         if (response.ok) {
             const user = await response.json();
 
-            // Роль шалгах
             if (user.role.toLowerCase() === selectedRole.toLowerCase()) {
                 
-                // Статус шалгах: Хэрэв зөвшөөрөгдөөгүй бол
                 if (user.role !== 'traveler' && user.status === 'pending') {
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('currentUser', JSON.stringify(user));
@@ -53,18 +50,15 @@ async function loginUser() {
                     return; 
                 }
 
-                // Нэвтрэлт амжилттай болсон үед
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('currentUser', JSON.stringify(user));
 
-                // LocalStorage өгөгдөл синхрончлох
                 const localUsers = JSON.parse(localStorage.getItem('users')) || [];
                 const userIndex = localUsers.findIndex(u => u.email === user.email);
                 if (userIndex === -1) localUsers.push(user);
                 else localUsers[userIndex] = user;
                 localStorage.setItem('users', JSON.stringify(localUsers));
 
-                // Үндсэн хуудас руу шилжих
                 window.location.replace('index.html');
 
             } else {
@@ -80,13 +74,11 @@ async function loginUser() {
     }
 }
 
-// --- 2. PROFILE & LOGOUT (Профайл болон Гарах хэсэг) ---
+// --- 2. PROFILE & LOGOUT (Засагдсан: Шууд гардаг хэсэг) ---
 function logoutUser() {
-    if (confirm("Are you sure you want to log out?")) {
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('currentUser');
-        window.location.href = "index.html";
-    }
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUser');
+    window.location.replace('index.html');
 }
 
 function handleProfileClick() {
@@ -141,7 +133,7 @@ function saveProfileChanges() {
     window.location.href = 'profile.html';
 }
 
-// --- 3. UI EVENT LISTENERS (Хуудас ачаалагдах үеийн тохиргоо) ---
+// --- 3. UI EVENT LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('profile.html')) {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
