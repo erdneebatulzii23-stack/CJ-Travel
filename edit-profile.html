@@ -62,8 +62,34 @@
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">call</span>
                         <input id="edit-phone" type="tel" class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border-2 border-transparent focus:border-[#2b8cee] focus:bg-white outline-none transition-all shadow-sm" placeholder="+976 0000 0000">
                     </div>
-                </div>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+    <label class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-4 block ml-1">Privacy Settings</label>
+    
+    <div class="space-y-4">
+        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-gray-500">visibility</span>
+                <span class="text-sm font-semibold text-gray-700">Show Email to public</span>
             </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="privacy-email" class="sr-only peer" checked>
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2b8cee]"></div>
+            </label>
+        </div>
+
+        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-gray-500">call_received</span>
+                <span class="text-sm font-semibold text-gray-700">Show Phone to public</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="privacy-phone" class="sr-only peer" checked>
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2b8cee]"></div>
+            </label>
+        </div>
+    </div>
+</div>
+                </div>
         </main>
 
         <div class="p-8 mt-6">
@@ -74,40 +100,11 @@
     </div>
 
     <script>
-    // 1. Хуудас ачаалагдах үед хэрэглэгчийн мэдээллийг бөглөх
-    document.addEventListener('DOMContentLoaded', () => {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        
-        if (currentUser) {
-            if (currentUser.name) document.getElementById('edit-name').value = currentUser.name;
-            if (currentUser.email) document.getElementById('edit-email').value = currentUser.email;
-            if (currentUser.phone) document.getElementById('edit-phone').value = currentUser.phone;
-            if (currentUser.profilePic) {
-                document.getElementById('imagePreview').style.backgroundImage = `url('${currentUser.profilePic}')`;
-            }
-        }
-    });
-
-    // 2. Зураг сонгох үед шууд харуулах
-    function previewImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64Image = e.target.result;
-                // Зургийг шууд харуулах
-                document.getElementById('imagePreview').style.backgroundImage = `url('${base64Image}')`;
-                // Түр зуур хадгалах (Save дарахад жинхэнэ утга руу шилжинэ)
-                sessionStorage.setItem('tempProfilePic', base64Image);
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    // 3. Мэдээллийг хадгалах
-    function saveProfileChanges() {
+    async function saveProfileChanges() {
     const name = document.getElementById('edit-name').value;
     const phone = document.getElementById('edit-phone').value;
+    const showEmail = document.getElementById('privacy-email').checked;
+    const showPhone = document.getElementById('privacy-phone').checked;
     const newPic = sessionStorage.getItem('tempProfilePic');
 
     if(!name) { 
@@ -115,32 +112,52 @@
         return; 
     }
 
-    // 1. Одоо нэвтэрсэн байгаа хэрэглэгчийг авна
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    // 2. БҮХ бүртгэлтэй хэрэглэгчдийн жагсаалтыг авна
-    let allUsers = JSON.parse(localStorage.getItem('users')) || [];
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser) return alert("Та нэвтрээгүй байна!");
 
-    if (currentUser) {
-        // 3. Нэвтэрсэн хэрэглэгчийн мэдээллийг шинэчилнэ
-        currentUser.name = name;
-        currentUser.phone = phone;
-        if(newPic) {
-            currentUser.profilePic = newPic;
+    // Сервер рүү явуулах өгөгдөл
+    const updatedData = {
+        name: name,
+        phone: phone,
+        privacy: {
+            showEmail: showEmail,
+            showPhone: showPhone
         }
+    };
 
-        // 4. Үндсэн жагсаалт (allUsers) доторх энэ хэрэглэгчийг олж шинэчилнэ
-        const userIndex = allUsers.findIndex(u => u.email === currentUser.email);
-        if (userIndex !== -1) {
-            allUsers[userIndex] = currentUser; // Үндсэн жагсаалтад шинэ мэдээллийг хадгалах
+    // Хэрэв шинэ зураг сонгосон бол нэмэх
+    if (newPic) {
+        updatedData.profilePic = newPic;
+    }
+
+    try {
+        // MongoDB API руу хүсэлт явуулах
+        const response = await fetch(`/api/users/${currentUser.id || currentUser._id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                // Хэрэв чи JWT token ашиглаж байгаа бол энд нэмнэ:
+                // 'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(updatedData)
+        });
+
+        if (response.ok) {
+            const savedUser = await response.json();
+            
+            // 1. LocalStorage-ийг шинэ өгөгдлөөр шинэчлэх (Профайл хуудас руу шилжихэд хэрэгтэй)
+            localStorage.setItem('currentUser', JSON.stringify(savedUser));
+            
+            sessionStorage.removeItem('tempProfilePic');
+            alert("Мэдээлэл MongoDB-д амжилттай хадгалагдлаа!");
+            window.location.href = 'profile.html';
+        } else {
+            const error = await response.json();
+            alert("Алдаа гарлаа: " + error.message);
         }
-
-        // 5. Хоёуланг нь буцааж хадгална
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        localStorage.setItem('users', JSON.stringify(allUsers));
-
-        sessionStorage.removeItem('tempProfilePic');
-        alert("Амжилттай хадгалагдлаа!");
-        window.location.href = 'profile.html';
+    } catch (err) {
+        console.error("Fetch Error:", err);
+        alert("Сервертэй холбогдоход алдаа гарлаа.");
     }
 }
 </script> 
