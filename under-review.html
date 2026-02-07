@@ -77,26 +77,16 @@
 </div>
 </div>
 <script>
-    // Эхний товчлуур (Back to Login)
-    const backBtn = document.querySelectorAll('button')[0];
-    // Хоёр дахь товчлуур (Contact Support)
-    const supportBtn = document.querySelectorAll('button')[1];
-
-    if (backBtn) {
-        backBtn.addEventListener('click', () => {
-            // 1. Одоогийн 'pending' хэрэглэгчийг localStorage-оос устгах
-            localStorage.removeItem('currentUser'); 
-            
-            // 2. Нүүр хуудас биш, шууд Login хуудас руу шилжүүлэх
-            // Ингэснээр хэрэглэгч өөр зөвшөөрөгдсөн аккаунтаар орох боломжтой болно.
-            window.location.href = "login.html";
-        });
+    function backToLogin() {
+        // 1. Сэшнийг цэвэрлэнэ (Энэ хамгийн чухал нь)
+        localStorage.removeItem('currentUser'); 
+        
+        // 2. Логин хуудас руу шилжүүлнэ
+        window.location.href = "login.html";
     }
 
-    if (supportBtn) {
-        supportBtn.addEventListener('click', () => {
-            window.location.href = "mailto:support@cjtravel.com";
-        });
+    function contactSupport() {
+        window.location.href = "mailto:support@cjtravel.com";
     }
 </script>
 </body></html>
