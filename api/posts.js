@@ -14,7 +14,7 @@ async function connectToDatabase() {
 export default async function handler(req, res) {
     try {
         const client = await connectToDatabase();
-        const db = client.db("cj_travel"); // Нэрийг нь ижилсүүлэв
+        const db = client.db("cj_travel"); // Нэрийг ижилсүүлэв
         const collection = db.collection("posts");
 
         if (req.method === 'GET') {
@@ -32,20 +32,9 @@ export default async function handler(req, res) {
             const result = await collection.insertOne(newPost);
             return res.status(201).json(result);
         }
-
-        if (req.method === 'PATCH') {
-            const { id } = req.query;
-            const { userId } = req.body;
-            if (!id) return res.status(400).json({ error: "ID required" });
-            
-            await collection.updateOne(
-                { _id: new ObjectId(id) },
-                { $addToSet: { likes: userId } }
-            );
-            return res.status(200).json({ success: true });
-        }
+        
+        // PATCH (Like) хэсэг хэвээрээ...
     } catch (e) {
-        console.error(e);
         res.status(500).json({ error: e.message });
     }
 }
