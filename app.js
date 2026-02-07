@@ -1,9 +1,9 @@
 /**
- * CJ Travel - Final Optimized app.js
+ * CJ Travel - Final Optimized app.js (Fixed Syntax)
  * Бүх логик (Login, Profile, Post, Like) нэгтгэгдсэн хувилбар
  */
 
-// --- 1. LOGIN & AUTH LOGIC (Хэвээр үлдээв) ---
+// --- 1. LOGIN & AUTH LOGIC ---
 async function loginUser() {
     const emailInput = document.getElementById('login-email')?.value.trim();
     const passwordInput = document.getElementById('login-password')?.value;
@@ -61,9 +61,8 @@ async function loginUser() {
     }
 }
 
-// --- 2. POST & LIKE LOGIC (Янзалсан хэсэг) ---
+// --- 2. POST & LIKE LOGIC ---
 
-// Пост нэмэх
 async function addPost() {
     const postInput = document.getElementById('postInput');
     const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -88,7 +87,6 @@ async function addPost() {
 
         if (response.ok) {
             postInput.value = '';
-            // Хэрэв профайл дээр байгаа бол loadUserPosts, нүүр хуудас бол loadPosts
             if (document.getElementById('user-posts-container')) loadUserPosts();
             if (document.getElementById('post-container')) loadPosts();
         }
@@ -97,7 +95,6 @@ async function addPost() {
     }
 }
 
-// Бүх постуудыг харуулах (Нүүр хуудас)
 async function loadPosts() {
     const container = document.getElementById('post-container');
     if (!container) return;
@@ -105,14 +102,12 @@ async function loadPosts() {
     try {
         const response = await fetch('/api/posts');
         const posts = await response.json();
-        
         container.innerHTML = posts.map(post => renderPostHTML(post)).join('');
     } catch (error) {
         console.error("Load Posts Error:", error);
     }
 }
 
-// Зөвхөн өөрийн постуудыг харуулах (Профайл хуудас)
 async function loadUserPosts() {
     const container = document.getElementById('user-posts-container');
     const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -132,7 +127,6 @@ async function loadUserPosts() {
     }
 }
 
-// Постын HTML бүтэц (Template)
 function renderPostHTML(post) {
     return `
         <div class="post-card" style="border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
@@ -151,7 +145,6 @@ function renderPostHTML(post) {
     `;
 }
 
-// Лайк дарах
 async function likePost(postId) {
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (!user) return alert("Please login to like!");
@@ -162,8 +155,6 @@ async function likePost(postId) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ postId: postId, userId: user.id || user._id })
         });
-        
-        // Дахин ачаалж тоог шинэчлэх
         if (document.getElementById('post-container')) loadPosts();
         if (document.getElementById('user-posts-container')) loadUserPosts();
     } catch (error) {
@@ -171,12 +162,12 @@ async function likePost(postId) {
     }
 }
 
-// --- 3. UI INITIALIZATION ---
+// --- 3. UI INITIALIZATION & UTILS ---
+
 document.addEventListener('DOMContentLoaded', () => {
     const user = JSON.parse(localStorage.getItem('currentUser'));
     const isLoggedIn = localStorage.getItem('isLoggedIn');
 
-    // Профайл хуудасны мэдээлэл бөглөх
     if (window.location.pathname.includes('profile.html')) {
         if (isLoggedIn !== 'true' || !user) {
             window.location.replace('login.html');
@@ -184,37 +175,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (document.getElementById('userName')) document.getElementById('userName').textContent = user.name;
         if (document.getElementById('userEmail')) document.getElementById('userEmail').textContent = user.email;
-        
-        loadUserPosts(); // Профайл дээр өөрийн постуудыг ачаалах
+        loadUserPosts();
     }
 
-    // Нүүр хуудас дээр постуудыг ачаалах
     if (document.getElementById('post-container')) {
         loadPosts();
     }
 });
 
+// ГАРУУД ЦЭВЭРЛЭЖ ЗАСАВ
 function logoutUser() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
-    window
-    
-// Профайл товчлуур дээр дарахад ажиллах логик
+    window.location.replace('login.html');
+}
+
 function handleProfileClick() {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const user = JSON.parse(localStorage.getItem('currentUser'));
 
-    // 1. Нэвтрээгүй бол шууд login руу
     if (isLoggedIn !== 'true' || !user) {
         window.location.href = 'login.html';
         return;
     }
 
-    // 2. Хэрэв батлагдаагүй (Pending) бол хяналтын хуудас руу
     if (user.role !== 'traveler' && user.status === 'pending') {
         window.location.href = 'under-review.html';
     } else {
-        // 3. Бүх зүйл зүгээр бол профайл руу
         window.location.href = 'profile.html';
     }
 }
