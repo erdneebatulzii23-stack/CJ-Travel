@@ -68,102 +68,137 @@
     </div>
 
 <script>
-    // 1. Хуурамч дата (MongoDB-ээс ирэх ёстой)
-    let posts = [
-        {
-            id: 1,
-            text: "Өнөөдөр Хөвсгөл нуур үнэхээр гоё байна! 🌊",
-            image: "https://images.unsplash.com/photo-1544473244-f6895a69ad41",
-            likes: 12,
-            comments: [
-                { user: "Bat", text: "Ямар гоё юм бэ!" }
-            ],
-            time: "2 цагийн өмнө"
-        }
-    ];
-
-    // 2. Хуудсыг ачаалах
+    // 1. Хуудсыг ачаалах үед серверээс постуудыг татах
     window.onload = () => {
-        // URL-аас хэрэглэгчийн ID-г авах (Жишээ: profile.html?id=123)
-        const params = new URLSearchParams(window.location.search);
-        const userId = params.get('id');
+        loadPostsFromServer();
         
-        // Өөрийн профайл биш бол пост хийх хэсгийг нуух
+        // Хэрэглэгчийн мэдээллийг шалгах
+        const params = new URLSearchParams(window.location.search);
+        const profileUserId = params.get('id');
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && userId !== currentUser.id) {
-            // document.getElementById('createPostArea').classList.add('hidden');
-        }
 
-        renderPosts();
+        // Хэрэв өөрийнх нь профайл биш бол пост оруулах хэсгийг нуух
+        if (profileUserId && currentUser && profileUserId !== currentUser.id) {
+            const postArea = document.getElementById('createPostArea');
+            if (postArea) postArea.style.display = 'none';
+        }
     };
 
-    // 3. Пост харуулах функц
-    function renderPosts() {
+    // 2. Постуудыг серверээс (MongoDB) татах функц
+    async function loadPostsFromServer() {
         const feed = document.getElementById('postFeed');
-        feed.innerHTML = posts.map(post => `
-            <div class="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border dark:border-gray-800 shadow-sm post-card">
-                <div class="p-4 flex items-center justify-between text-xs text-gray-500">
-                    <span class="font-bold text-gray-900 dark:text-white">Author Name</span>
-                    <span>${post.time}</span>
-                </div>
-                ${post.image ? `<img src="${post.image}" class="w-full h-64 object-cover">` : ''}
-                <div class="p-4">
-                    <p class="text-sm dark:text-gray-300">${post.text}</p>
+        
+        try {
+            const response = await fetch('/api/posts');
+            if (!response.ok) throw new Error('Датаг татаж чадсангүй');
+            
+            const posts = await response.json();
+            
+            if (posts.length === 0) {
+                feed.innerHTML = "<p class='text-center py-10 text-gray-500'>Одоогоор пост алга.</p>";
+                return;
+            }
+
+            feed.innerHTML = posts.map(post => `
+                <div class="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border dark:border-gray-800 shadow-sm mb-5 post-card">
+                    <div class="p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img src="${post.userPic || 'https://via.placeholder.com/40'}" class="size-10 rounded-full border dark:border-gray-700">
+                            <div>
+                                <h4 class="font-bold text-sm dark:text-white">${post.userName}</h4>
+                                <p class="text-[10px] text-gray-500">${new Date(post.createdAt).toLocaleString('mn-MN')}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${post.image ? `<img src="${post.image}" class="w-full max-h-[400px] object-cover">` : ''}
                     
-                    <div class="flex items-center gap-6 mt-4 pt-4 border-t dark:border-gray-800">
-                        <button onclick="likePost(${post.id})" class="flex items-center gap-1 text-sm hover:text-red-500 transition-colors">
-                            <span class="material-symbols-outlined text-[20px]">favorite</span> ${post.likes}
-                        </button>
-                        <button class="flex items-center gap-1 text-sm">
-                            <span class="material-symbols-outlined text-[20px]">chat_bubble</span> ${post.comments.length}
-                        </button>
-                        <button onclick="sharePost(${post.id})" class="flex items-center gap-1 text-sm ml-auto">
-                            <span class="material-symbols-outlined text-[20px]">share</span>
-                        </button>
-                    </div>
+                    <div class="p-4">
+                        <p class="text-sm dark:text-gray-300 mb-4">${post.text}</p>
+                        
+                        <div class="flex items-center gap-6 pt-4 border-t dark:border-gray-800">
+                            <button onclick="handleLike('${post._id}')" class="flex items-center gap-1 text-sm hover:text-red-500 transition-colors dark:text-gray-400">
+                                <span class="material-symbols-outlined text-[20px]">favorite</span> 
+                                <span>${post.likes ? post.likes.length : 0}</span>
+                            </button>
+                            <button class="flex items-center gap-1 text-sm dark:text-gray-400">
+                                <span class="material-symbols-outlined text-[20px]">chat_bubble</span> 
+                                <span>${post.comments ? post.comments.length : 0}</span>
+                            </button>
+                            <button onclick="sharePost('${post._id}')" class="flex items-center gap-1 text-sm ml-auto dark:text-gray-400">
+                                <span class="material-symbols-outlined text-[20px]">share</span>
+                            </button>
+                        </div>
 
-                    <div class="mt-4 space-y-2">
-                        ${post.comments.map(c => `<p class="text-[12px]"><span class="font-bold">${c.user}:</span> ${c.text}</p>`).join('')}
-                        <input type="text" placeholder="Коммент бичих..." 
-                               class="w-full mt-2 bg-gray-50 dark:bg-gray-800 border-none rounded-lg text-xs"
-                               onkeydown="if(event.key==='Enter') addComment(${post.id}, this.value)">
+                        <div class="mt-4 space-y-2">
+                            ${post.comments ? post.comments.slice(0, 3).map(c => `
+                                <p class="text-[12px] dark:text-gray-400">
+                                    <span class="font-bold text-gray-900 dark:text-white">${c.user}:</span> ${c.text}
+                                </p>
+                            `).join('') : ''}
+                            <input type="text" placeholder="Коммент бичих..." 
+                                   class="w-full mt-2 bg-gray-50 dark:bg-gray-800 border-none rounded-lg text-xs p-2 focus:ring-1 focus:ring-blue-500 dark:text-white"
+                                   onkeydown="if(event.key==='Enter') addComment('${post._id}', this.value)">
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `).join('');
+        } catch (error) {
+            console.error("Алдаа:", error);
+            feed.innerHTML = "<p class='text-center text-red-500'>Мэдээлэл ачаалахад алдаа гарлаа.</p>";
+        }
     }
 
-    // 4. Үйлдэлүүд
-    function addPost() {
+    // 3. Шинэ пост нэмэх функц
+    async function addPost() {
         const input = document.getElementById('postInput');
-        if(!input.value) return;
-        posts.unshift({
-            id: Date.now(),
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (!input.value.trim()) return;
+        if (!user) {
+            alert("Нэвтэрсэн байх шаардлагатай!");
+            return;
+        }
+
+        const postData = {
             text: input.value,
-            likes: 0,
-            comments: [],
-            time: "Дөнгөж сая"
+            userId: user.id,
+            userName: user.name,
+            userPic: user.profilePic,
+            image: "" // Зураг оруулах хэсгийг дараа нэмж болно
+        };
+
+        const response = await fetch('/api/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
         });
-        input.value = "";
-        renderPosts();
+
+        if (response.ok) {
+            input.value = "";
+            loadPostsFromServer();
+        }
     }
 
-    function likePost(id) {
-        const post = posts.find(p => p.id === id);
-        post.likes++;
-        renderPosts();
+    // 4. Лайк дарах (Backend бэлэн болмогц ажиллана)
+    async function handleLike(postId) {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        if (!user) return alert("Нэвтэрнэ үү!");
+
+        await fetch(`/api/posts?id=${postId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user.id })
+        });
+        loadPostsFromServer();
     }
 
-    function sharePost(id) {
-        alert("Линкийг хууллаа! Найзууд руугаа илгээгээрэй.");
-    }
-
-    function addComment(id, text) {
-        const post = posts.find(p => p.id === id);
-        post.comments.push({ user: "Би", text: text });
-        renderPosts();
+    // 5. Хуваалцах функц
+    function sharePost(postId) {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url);
+        alert("Линк хуулагдлаа!");
     }
 </script>
-
 </body>
 </html>
