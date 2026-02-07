@@ -101,7 +101,7 @@
     
     <script src="app.js"></script>
 <script>
-    // Password харах/нуух логик
+    // Password харах/нуух логик (хэвээрээ)
     document.getElementById('toggle-password').addEventListener('click', function() {
         const passwordInput = document.getElementById('login-password');
         const icon = this.querySelector('span');
@@ -115,21 +115,12 @@
     });
 
     // Нэвтрэх товч дарах үед
-    function handleLogin() {
-        // app.js доторх функцээ дуудна
-        const user = loginUser(); 
-
-        // Хэрэв нэвтрэлт амжилттай болсон бол (user объект ирсэн бол)
-        if (user) {
-            // Pending статус шалгах
-            if (user.role !== 'traveler' && user.status === 'pending') {
-                window.location.href = 'under-review.html';
-            } else {
-                // Зөвшөөрөгдсөн бол мэндчилгээ гаргаад нүүр хуудас руу
-                alert("Тавтай морил, " + user.name + "!");
-                window.location.href = 'index.html';
-            }
-        }
+    async function handleLogin() {
+        // app.js-ийн loginUser() async учир await ашиглана
+        await loginUser(); 
+        
+        // loginUser() функц дотор redirect-ийг хийж байгаа тул 
+        // энд нэмэлт logic (alert гэх мэт) хэрэггүй болсон.
     }
 </script>
 </body>
