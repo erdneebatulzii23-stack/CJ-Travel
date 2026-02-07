@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dbConnect from '../../lib/dbConnect.js';
 import User from '../../models/User.js';
-
+ 
 export const config = {
     api: {
         bodyParser: {
