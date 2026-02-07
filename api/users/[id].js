@@ -7,22 +7,28 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  const testId = "69864861f4c3651ef8286e5d";
+  // 1. ID-г URL-аас автоматаар авна (Гараар биш)
+  const { id } = req.query;
 
   try {
     await dbConnect();
 
+    // 2. ID-г шалгах
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
     if (req.method === 'GET') {
-      const user = await User.findById(testId).select('-password');
+      const user = await User.findById(id).select('-password');
       if (!user) return res.status(404).json({ message: "User not found" });
       return res.status(200).json(user);
     }
 
     if (req.method === 'PATCH') {
       const updatedUser = await User.findByIdAndUpdate(
-        testId,
+        id,
         { $set: req.body },
-        { new: true }
+        { new: true, runValidators: true }
       );
       if (!updatedUser) return res.status(404).json({ message: "Update failed" });
       return res.status(200).json(updatedUser);
@@ -30,6 +36,7 @@ export default async function handler(req, res) {
 
     return res.status(405).json({ message: "Method not allowed" });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error("Server Error:", error);
+    return res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
