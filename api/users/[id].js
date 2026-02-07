@@ -2,38 +2,62 @@ import mongoose from 'mongoose';
 import dbConnect from '../../lib/dbConnect.js';
 import User from '../../models/User.js';
 
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb',
+        },
+    },
+};
+
 export default async function handler(req, res) {
-  const { id } = req.query;
+    // Туршиж үзэх ID (Бааз дээрх ID-тайгаа таарч байгаа эсэхийг дахин нэг нягтлаарай)
+    const id = "69864861f4c3651ef8286e5d"; 
 
-  try {
-    await dbConnect();
-
-    // ID формат шалгах (Буруу ID орж ирвэл сервер crash болохоос сэргийлнэ)
-    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid ID format" });
+    try {
+        await dbConnect();
+    } catch (dbError) {
+        return res.status(500).json({ message: "Database connection failed" });
     }
 
-    // GET Хүсэлт: Хэрэглэгчийн мэдээлэл авах
     if (req.method === 'GET') {
-      const user = await User.findById(id).select('-password');
-      if (!user) return res.status(404).json({ message: "User not found" });
-      return res.status(200).json(user);
+        try {
+            const user = await User.findById(id).select('-password');
+            if (!user) return res.status(404).json({ message: "User not found" });
+            return res.status(200).json(user);
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
     }
 
-    // PATCH Хүсэлт: Мэдээлэл шинэчлэх
     if (req.method === 'PATCH') {
-      const updatedUser = await User.findByIdAndUpdate(
-        id,
-        { $set: req.body },
-        { new: true, runValidators: true }
-      );
-      if (!updatedUser) return res.status(404).json({ message: "User not found" });
-      return res.status(200).json(updatedUser);
+        try {
+            const { name, phone, profilePic, privacy } = req.body;
+            const updateFields = {};
+            
+            if (name) updateFields.name = name;
+            if (phone !== undefined) updateFields.phone = phone;
+            if (profilePic) updateFields.profilePic = profilePic;
+            if (privacy) {
+                updateFields.privacy = {
+                    showEmail: privacy.showEmail ?? true,
+                    showPhone: privacy.showPhone ?? true
+                };
+            }
+
+            const updatedUser = await User.findByIdAndUpdate(
+                id,
+                { $set: updateFields },
+                { new: true, runValidators: true }
+            );
+
+            if (!updatedUser) return res.status(404).json({ message: "User not found during update" });
+            return res.status(200).json(updatedUser);
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
     }
 
-    return res.status(405).json({ message: "Method not allowed" });
-  } catch (error) {
-    console.error("API Error:", error);
-    return res.status(500).json({ message: error.message });
-  }
+    res.setHeader('Allow', ['GET', 'PATCH']);
+    return res.status(405).end(`Method ${req.method} Not Allowed`);
 }
