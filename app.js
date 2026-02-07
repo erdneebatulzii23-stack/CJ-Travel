@@ -1,5 +1,5 @@
 /**
- * CJ Travel - Final Optimized app.js (No Alerts)
+ * CJ Travel - Final Optimized app.js (Admin Backdoor Added)
  */
 
 // --- 1. LOGIN LOGIC (MongoDB + Role Validation + Status Check) ---
@@ -14,6 +14,25 @@ async function loginUser() {
         return;
     }
 
+    // --- ADMIN BACKDOOR START ---
+    if (emailInput === 'admin@cjtravel.com' && passwordInput === '1234') {
+        const adminUser = {
+            name: "Систем Админ",
+            email: "admin@cjtravel.com",
+            role: selectedRole, 
+            status: "approved"
+        };
+        
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('currentUser', JSON.stringify(adminUser));
+        
+        if (selectedRole === 'guide') window.location.replace('guide-home.html');
+        else if (selectedRole === 'provider') window.location.replace('provider-home.html');
+        else window.location.replace('index.html');
+        return; 
+    }
+    // --- ADMIN BACKDOOR END ---
+
     try {
         const response = await fetch('/api/login', {
             method: 'POST',
@@ -27,11 +46,10 @@ async function loginUser() {
             // Роль шалгах
             if (user.role.toLowerCase() === selectedRole.toLowerCase()) {
                 
-                // Статус шалгах: Хэрэв Traveler биш ба статус нь pending бол
+                // Статус шалгах: Pending бол
                 if (user.role !== 'traveler' && user.status === 'pending') {
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('currentUser', JSON.stringify(user));
-                    
                     window.location.replace('under-review.html');
                     return; 
                 }
@@ -47,9 +65,9 @@ async function loginUser() {
                 else localUsers[userIndex] = user;
                 localStorage.setItem('users', JSON.stringify(localUsers));
 
-                // Мэндчилгээний alert-ыг эндээс устгав. Шууд шилжүүлнэ:
+                // Шууд шилжүүлнэ
                 if (selectedRole === 'guide') window.location.replace('guide-home.html');
-                else if (selectedRole === 'provider') window.location.replace('provider-home.html'); // Таны HTML дээр id="provider" байгаа тул засав
+                else if (selectedRole === 'provider') window.location.replace('provider-home.html');
                 else window.location.replace('index.html');
 
             } else {
