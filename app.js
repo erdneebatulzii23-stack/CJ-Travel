@@ -1,53 +1,8 @@
 /**
- * CJ Travel - Final Integrated app.js (MongoDB + Multi-Role + Profile Management)
+ * CJ Travel - Final Optimized app.js
  */
 
-// 1. БҮРТГҮҮЛЭХ ХЭСЭГ (MongoDB + LocalStorage Sync)
-async function registerUser() {
-    const nameInput = document.getElementById('name')?.value;
-    const emailInput = document.getElementById('email')?.value;
-    const passwordInput = document.getElementById('password')?.value;
-    const roleInput = document.querySelector('input[name="role"]:checked')?.id;
-
-    if (!nameInput || !emailInput || !passwordInput || !roleInput) {
-        alert("Бүх талбарыг бөглөнө үү.");
-        return;
-    }
-
-    const userData = {
-        name: nameInput,
-        email: emailInput,
-        password: passwordInput,
-        role: roleInput.toLowerCase(), 
-        createdAt: new Date().toISOString()
-    };
-
-    try {
-        const response = await fetch('/api/save', { 
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData)
-        });
-
-        if (response.ok) {
-            // LocalStorage sync
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            users.push(userData);
-            localStorage.setItem('users', JSON.stringify(users));
-
-            alert("Бүртгэл амжилттай! MongoDB-д хадгалагдлаа.");
-            window.location.replace('login.html'); 
-        } else {
-            const errorData = await response.json();
-            alert("Сервер алдаа: " + (errorData.message || "Алдаа гарлаа."));
-        }
-    } catch (error) {
-        console.error("Connection Error:", error);
-        alert("Сервертэй холбогдож чадсангүй.");
-    }
-}
-
-// 2. НЭВТРЭХ ХЭСЭГ (MongoDB + Role Validation + Dashboard Redirect)
+// --- 1. LOGIN LOGIC (MongoDB + Role Validation) ---
 async function loginUser() {
     const emailInput = document.getElementById('login-email')?.value.trim();
     const passwordInput = document.getElementById('login-password')?.value;
@@ -56,14 +11,6 @@ async function loginUser() {
 
     if (!emailInput || !passwordInput || !selectedRole) {
         alert("Мэдээллээ бүрэн оруулна уу.");
-        return;
-    }
-
-    // --- ADMIN CHECK ---
-    if (emailInput === "admin@travel.mn" && passwordInput === "1234") {
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('currentUser', JSON.stringify({ email: emailInput, role: 'admin', name: 'Admin' }));
-        window.location.replace("admin-dashboard.html");
         return;
     }
 
@@ -77,54 +24,38 @@ async function loginUser() {
         if (response.ok) {
             const user = await response.json();
 
-            // Role check logic (Хэрэглэгчийн бааз дахь role сонгосон role-той таарч буй эсэх)
-            // Жишээ нь: 'traveler', 'guide', 'company' (provider)
-            let canLogin = false;
-            let targetPage = "index.html";
-
-            // Хэрэв MongoDB-д 'role' талбар байгаа бол шалгана
-            if (user.role === selectedRole || (user.businessDetails && user.businessDetails.type === (selectedRole === 'company' ? 'provider' : selectedRole))) {
-                canLogin = true;
-                
-                // Хаашаа үсрэхийг шийдэх
-                if (selectedRole === 'guide') targetPage = "guide-home.html";
-                else if (selectedRole === 'company') targetPage = "provider-home.html";
-                else targetPage = "index.html";
-            }
-
-            if (canLogin) {
-                // Pending төлөв шалгах
-                if (user.businessDetails && user.businessDetails.status === 'pending') {
-                    window.location.replace("under-review.html");
-                    return;
-                }
-
+            // Роль шалгах: Хэрэглэгчийн сонгосон роль бааз дахь рольтой таарч буй эсэх
+            if (user.role.toLowerCase() === selectedRole.toLowerCase()) {
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('currentUser', JSON.stringify(user));
-                
-                // LocalStorage sync
+
+                // LocalStorage sync (Чиний хуучин логик)
                 const localUsers = JSON.parse(localStorage.getItem('users')) || [];
-                const idx = localUsers.findIndex(u => u.email === user.email);
-                if (idx === -1) localUsers.push(user);
-                else localUsers[idx] = user;
+                const userIndex = localUsers.findIndex(u => u.email === user.email);
+                if (userIndex === -1) localUsers.push(user);
+                else localUsers[userIndex] = user;
                 localStorage.setItem('users', JSON.stringify(localUsers));
 
-                alert(`Тавтай морил, ${user.name}!`);
-                window.location.replace(targetPage);
+                alert("Тавтай морил, " + user.name + "!");
+                
+                // Ролиос хамаарч өөр хуудас руу шилжүүлж болно
+                if (selectedRole === 'guide') window.location.replace('guide-home.html');
+                else if (selectedRole === 'company') window.location.replace('provider-home.html');
+                else window.location.replace('index.html');
             } else {
-                alert(`Нэвтрэх алдаа: Та '${user.role || 'өөр'}' эрхээр бүртгүүлсэн байна.`);
+                alert(`Нэвтрэх алдаа: Та '${user.role}' эрхээр бүртгүүлсэн байна. Сонгосон роль: '${selectedRole}'`);
             }
         } else {
-            const err = await response.json();
-            alert(err.message || "Имэйл эсвэл нууц үг буруу байна.");
+            const errorData = await response.json();
+            alert(errorData.message || "Имэйл эсвэл нууц үг буруу байна.");
         }
     } catch (error) {
-        console.error("Login Error:", error);
-        alert("Сервертэй холбогдоход алдаа гарлаа.");
+        console.error("Login Connection Error:", error);
+        alert("Сервертэй холбогдож чадсангүй.");
     }
 }
 
-// 3. ГАРАХ ХЭСЭГ
+// --- 2. PROFILE & LOGOUT (Хуучин логикууд) ---
 function logoutUser() {
     if (confirm("Гарахдаа итгэлтэй байна уу?")) {
         localStorage.removeItem('isLoggedIn');
@@ -138,7 +69,6 @@ function handleProfileClick() {
     window.location.href = (isLoggedIn === 'true') ? 'profile.html' : 'login.html';
 }
 
-// 4. ПРОФАЙЛ ЗАСВАРЛАХ (Хуучин логик хэвээрээ)
 function loadUserProfileForEditing() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (!currentUser) {
@@ -166,35 +96,21 @@ function saveProfileChanges() {
     currentUser.bio = bioValue;
 
     const userIndex = users.findIndex(u => u.email === currentUser.email);
-    if (userIndex !== -1) {
-        users[userIndex] = { ...users[userIndex], ...currentUser };
-    }
+    if (userIndex !== -1) users[userIndex] = { ...users[userIndex], ...currentUser };
 
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
     localStorage.setItem('users', JSON.stringify(users));
 
-    alert("Профайл амжилттай шинэчлэгдлээ!");
+    alert("Профайл шинэчлэгдлээ!");
     window.location.href = 'profile.html';
 }
 
-// 5. UI EVENT LISTENERS
+// --- 3. UI EVENT LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Нууц үг харах/нуух
-    const passwordField = document.getElementById('login-password');
-    const toggleBtn = document.getElementById('toggle-password');
-
-    if (passwordField && toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            const isTypePassword = passwordField.type === 'password';
-            passwordField.type = isTypePassword ? 'text' : 'password';
-            const icon = toggleBtn.querySelector('span'); // Material icon span
-            if (icon) icon.textContent = isTypePassword ? 'visibility_off' : 'visibility';
-        });
-    }
-
-    // Профайл хуудасны өгөгдөл харуулах
+    // Профайл хуудас ачаалагдахад датаг харуулах
     if (window.location.pathname.includes('profile.html')) {
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn !== 'true') {
             window.location.replace('login.html');
             return;
         }
@@ -203,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentUser) {
             if (document.getElementById('userName')) document.getElementById('userName').textContent = currentUser.name;
             if (document.getElementById('userEmail')) document.getElementById('userEmail').textContent = currentUser.email;
-            if (document.getElementById('userRole')) document.getElementById('userRole').textContent = "Account Type: " + (currentUser.role || 'User');
+            if (document.getElementById('userRole')) document.getElementById('userRole').textContent = "Account Type: " + currentUser.role;
         }
     }
 });
