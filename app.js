@@ -198,3 +198,23 @@ function logoutUser() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
     window
+    
+// Профайл товчлуур дээр дарахад ажиллах логик
+function handleProfileClick() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+
+    // 1. Нэвтрээгүй бол шууд login руу
+    if (isLoggedIn !== 'true' || !user) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // 2. Хэрэв батлагдаагүй (Pending) бол хяналтын хуудас руу
+    if (user.role !== 'traveler' && user.status === 'pending') {
+        window.location.href = 'under-review.html';
+    } else {
+        // 3. Бүх зүйл зүгээр бол профайл руу
+        window.location.href = 'profile.html';
+    }
+}
