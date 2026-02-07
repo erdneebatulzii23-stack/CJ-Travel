@@ -208,16 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // 3. СТАТУС ШАЛГАХ (Гайд болон Провайдер)
-    // Зөвхөн 'pending' статус бүхий Гайд болон Провайдеруудыг Review хуудас руу явуулна
+    // 3. СТАТУС ШАЛГАХ (Хамгийн чухал хэсэг)
+    // Provider эсвэл Guide бөгөөд статус нь pending бол шууд review хуудас руу шиднэ
     if (user.role !== 'traveler' && user.status === 'pending') {
-        // Хэрэв танд 'under-review.html' файл байхгүй бол 404 гарна. 
-        // Тэр файлыг заавал үүсгэсэн байх ёстойг анхаарна уу!
         window.location.href = 'under-review.html';
-        return; 
+        return; // Үүнээс доошхи кодыг ажиллуулахгүй зогсооно
     }
 
-    // 4. Дэлгэцийн мэдээллийг бөглөх
+    // 4. Хэрэв зөвшөөрөгдсөн бол дэлгэцийн мэдээллийг бөглөх
     document.getElementById('userName').textContent = user.name || "User";
     document.getElementById('userEmail').textContent = user.email || "";
     document.getElementById('userRoleBadge').textContent = user.role;
@@ -228,11 +226,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 5. ROLE-д тохирсон цэсийг ил гаргах
-    // Эхлээд бүх цэсийг нууна (дахин баталгаажуулалт)
-    document.getElementById('traveler-links').classList.add('hidden');
-    document.getElementById('provider-links').classList.add('hidden');
-    document.getElementById('guide-links').classList.add('hidden');
+    // Бүх цэсийг эхлээд нуух
+    const sections = ['traveler-links', 'provider-links', 'guide-links'];
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+    });
 
+    // Харгалзах цэсийг нээх
     if (user.role === 'traveler') {
         document.getElementById('traveler-links').classList.remove('hidden');
     } else if (user.role === 'provider') {
@@ -242,14 +243,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// ГАРАХ ФУНКЦ: Энэ нь localStorage-ийг бүрэн цэвэрлэх тул өөр аккаунтаар орох боломжийг нээнэ
+/**
+ * ГАРАХ ФУНКЦ
+ * Хэрэглэгчийг системээс бүрэн гаргаж, localStorage-ийг цэвэрлэнэ.
+ * Ингэснээр 'pending' төлөвтэй хэрэглэгч гацалгүйгээр login хуудас руу очих боломжтой.
+ */
 function logoutUser() {
     if(confirm("Та системээс гарахдаа итгэлтэй байна уу?")) {
-        localStorage.removeItem('currentUser'); // Хэрэглэгчийн датаг устгах
-        window.location.href = 'login.html'; // Login руу үсрэх
+        localStorage.removeItem('currentUser'); 
+        window.location.href = 'login.html';
     }
 }
 </script>
-
 </body>
 </html>
