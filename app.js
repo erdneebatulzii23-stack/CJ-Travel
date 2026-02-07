@@ -1,8 +1,9 @@
 /**
- * CJ Travel - Optimized app.js (MongoDB Integrated)
+ * CJ Travel - Final Optimized app.js
+ * Бүх логик (Login, Profile, Post, Like) нэгтгэгдсэн хувилбар
  */
 
-// --- 1. LOGIN LOGIC ---
+// --- 1. LOGIN & AUTH LOGIC (Хэвээр үлдээв) ---
 async function loginUser() {
     const emailInput = document.getElementById('login-email')?.value.trim();
     const passwordInput = document.getElementById('login-password')?.value;
@@ -14,7 +15,7 @@ async function loginUser() {
         return;
     }
 
-    // --- ADMIN BACKDOOR START ---
+    // ADMIN BACKDOOR
     if (emailInput === 'admin@cjtravel.com' && passwordInput === '1234') {
         const adminUser = {
             id: "admin_001",
@@ -29,7 +30,6 @@ async function loginUser() {
         window.location.replace('index.html');
         return; 
     }
-    // --- ADMIN BACKDOOR END ---
 
     try {
         const response = await fetch('/api/login', {
@@ -40,21 +40,15 @@ async function loginUser() {
 
         if (response.ok) {
             const user = await response.json();
-
-            // Роль шалгах
             if (user.role.toLowerCase() === selectedRole.toLowerCase()) {
-                
-                // Хадгалах
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('currentUser', JSON.stringify(user));
 
-                // Батлагдаагүй (Pending) эсэхийг шалгах
                 if (user.role !== 'traveler' && user.status === 'pending') {
                     window.location.replace('under-review.html');
                 } else {
                     window.location.replace('index.html');
                 }
-
             } else {
                 alert(`Login Error: You are registered as '${user.role}'.`);
             }
@@ -63,63 +57,26 @@ async function loginUser() {
             alert(errorData.message || "Invalid email or password.");
         }
     } catch (error) {
-        console.error("Login Connection Error:", error);
         alert("Could not connect to the server.");
     }
 }
 
-// --- 2. POSTS LOGIC (Шинээр нэмэгдсэн) ---
+// --- 2. POST & LIKE LOGIC (Янзалсан хэсэг) ---
 
-// Постуудыг дата баазаас татаж харуулах
-async function loadPosts() {
-    const postContainer = document.getElementById('post-container');
-    if (!postContainer) return;
-
-    try {
-        const response = await fetch('/api/posts');
-        const posts = await response.json();
-        
-        postContainer.innerHTML = ''; 
-
-        posts.forEach(post => {
-            const postHtml = `
-                <div class="post">
-                    <div class="post-header">
-                        <img src="${post.userPic || 'default-avatar.png'}" class="avatar">
-                        <h4>${post.userName}</h4>
-                    </div>
-                    <p>${post.text}</p>
-                    ${post.image ? `<img src="${post.image}" class="post-img">` : ''}
-                    <div class="post-actions">
-                        <button onclick="likePost('${post._id}')">❤️ ${post.likes?.length || 0}</button>
-                    </div>
-                </div>
-            `;
-            postContainer.insertAdjacentHTML('beforeend', postHtml);
-        });
-    } catch (error) {
-        console.error("Error loading posts:", error);
-    }
-}
-
-// Шинэ пост оруулах
+// Пост нэмэх
 async function addPost() {
     const postInput = document.getElementById('postInput');
     const user = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (!user) {
-        alert("Please login first!");
-        return;
-    }
-
+    if (!user) return alert("Please login first!");
     if (!postInput.value.trim()) return;
 
     const postData = {
         text: postInput.value,
-        userId: user.id,
+        userId: user.id || user._id,
         userName: user.name,
-        userPic: user.profilePic || "",
-        image: "" // Зураг оруулах хэсэг дараагийн алхамд
+        userPic: user.profilePic || "https://i.pravatar.cc/150",
+        createdAt: new Date()
     };
 
     try {
@@ -131,18 +88,113 @@ async function addPost() {
 
         if (response.ok) {
             postInput.value = '';
-            loadPosts(); // Постуудыг шинэчлэх
+            // Хэрэв профайл дээр байгаа бол loadUserPosts, нүүр хуудас бол loadPosts
+            if (document.getElementById('user-posts-container')) loadUserPosts();
+            if (document.getElementById('post-container')) loadPosts();
         }
     } catch (error) {
-        alert("Error posting.");
+        console.error("Post Error:", error);
     }
 }
 
-// --- 3. PROFILE & LOGOUT ---
+// Бүх постуудыг харуулах (Нүүр хуудас)
+async function loadPosts() {
+    const container = document.getElementById('post-container');
+    if (!container) return;
+
+    try {
+        const response = await fetch('/api/posts');
+        const posts = await response.json();
+        
+        container.innerHTML = posts.map(post => renderPostHTML(post)).join('');
+    } catch (error) {
+        console.error("Load Posts Error:", error);
+    }
+}
+
+// Зөвхөн өөрийн постуудыг харуулах (Профайл хуудас)
+async function loadUserPosts() {
+    const container = document.getElementById('user-posts-container');
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!container || !user) return;
+
+    try {
+        const response = await fetch('/api/posts');
+        const allPosts = await response.json();
+        const myId = user.id || user._id;
+        const myPosts = allPosts.filter(p => p.userId === myId);
+
+        container.innerHTML = myPosts.length > 0 
+            ? myPosts.map(post => renderPostHTML(post)).join('')
+            : "<p>You haven't posted anything yet.</p>";
+    } catch (error) {
+        console.error("Load User Posts Error:", error);
+    }
+}
+
+// Постын HTML бүтэц (Template)
+function renderPostHTML(post) {
+    return `
+        <div class="post-card" style="border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <img src="${post.userPic}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                <strong>${post.userName}</strong>
+            </div>
+            <p>${post.text}</p>
+            <div style="margin-top: 10px;">
+                <button onclick="likePost('${post._id}')" style="cursor:pointer; border:none; background:none;">
+                    ❤️ ${post.likes ? post.likes.length : 0} Likes
+                </button>
+                <small style="color: #888; margin-left: 15px;">${new Date(post.createdAt).toLocaleDateString()}</small>
+            </div>
+        </div>
+    `;
+}
+
+// Лайк дарах
+async function likePost(postId) {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user) return alert("Please login to like!");
+
+    try {
+        await fetch('/api/posts', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ postId: postId, userId: user.id || user._id })
+        });
+        
+        // Дахин ачаалж тоог шинэчлэх
+        if (document.getElementById('post-container')) loadPosts();
+        if (document.getElementById('user-posts-container')) loadUserPosts();
+    } catch (error) {
+        console.error("Like Error:", error);
+    }
+}
+
+// --- 3. UI INITIALIZATION ---
+document.addEventListener('DOMContentLoaded', () => {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+    // Профайл хуудасны мэдээлэл бөглөх
+    if (window.location.pathname.includes('profile.html')) {
+        if (isLoggedIn !== 'true' || !user) {
+            window.location.replace('login.html');
+            return;
+        }
+        if (document.getElementById('userName')) document.getElementById('userName').textContent = user.name;
+        if (document.getElementById('userEmail')) document.getElementById('userEmail').textContent = user.email;
+        
+        loadUserPosts(); // Профайл дээр өөрийн постуудыг ачаалах
+    }
+
+    // Нүүр хуудас дээр постуудыг ачаалах
+    if (document.getElementById('post-container')) {
+        loadPosts();
+    }
+});
+
 function logoutUser() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
-    window.location.replace('login.html');
-}
-
-// ... Бусад handleProfileClick болон saveProfile хэсэг хэвээрээ байна ...
+    window
