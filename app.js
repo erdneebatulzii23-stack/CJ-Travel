@@ -1,5 +1,5 @@
 /**
- * CJ Travel - Final Optimized app.js (Fixed for Status Checking)
+ * CJ Travel - Final Optimized app.js (No Alerts)
  */
 
 // --- 1. LOGIN LOGIC (MongoDB + Role Validation + Status Check) ---
@@ -27,18 +27,16 @@ async function loginUser() {
             // Роль шалгах
             if (user.role.toLowerCase() === selectedRole.toLowerCase()) {
                 
-                // --- ШИНЭ: Статус шалгах хэсэг ---
-                // Хэрэв Traveler биш (Guide эсвэл Company) ба статус нь pending бол
+                // Статус шалгах: Хэрэв Traveler биш ба статус нь pending бол
                 if (user.role !== 'traveler' && user.status === 'pending') {
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     
-                    // Сануулах бичиг гаргахгүйгээр шууд шилжүүлнэ
                     window.location.replace('under-review.html');
                     return; 
                 }
 
-                // Зөвшөөрөгдсөн хэрэглэгчид доорх хэсэг рүү үргэлжилнэ
+                // Зөвшөөрөгдсөн хэрэглэгчид
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('currentUser', JSON.stringify(user));
 
@@ -49,15 +47,13 @@ async function loginUser() {
                 else localUsers[userIndex] = user;
                 localStorage.setItem('users', JSON.stringify(localUsers));
 
-                alert("Тавтай морил, " + user.name + "!");
-                
-                // Ролиос хамаарч шилжүүлэх
+                // Мэндчилгээний alert-ыг эндээс устгав. Шууд шилжүүлнэ:
                 if (selectedRole === 'guide') window.location.replace('guide-home.html');
-                else if (selectedRole === 'company') window.location.replace('provider-home.html');
+                else if (selectedRole === 'provider') window.location.replace('provider-home.html'); // Таны HTML дээр id="provider" байгаа тул засав
                 else window.location.replace('index.html');
 
             } else {
-                alert(`Нэвтрэх алдаа: Та '${user.role}' эрхээр бүртгүүлсэн байна. Сонгосон роль: '${selectedRole}'`);
+                alert(`Нэвтрэх алдаа: Та '${user.role}' эрхээр бүртгүүлсэн байна.`);
             }
         } else {
             const errorData = await response.json();
@@ -87,7 +83,6 @@ function handleProfileClick() {
         return;
     }
 
-    // Хэрэв profile дарах үед статус нь pending хэвээр байвал хаах хамгаалалт
     if (user.role !== 'traveler' && user.status === 'pending') {
         window.location.href = 'under-review.html';
     } else {
@@ -95,7 +90,6 @@ function handleProfileClick() {
     }
 }
 
-// Профайл засах үед өгөгдөл дуудах
 function loadUserProfileForEditing() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (!currentUser) {
@@ -108,7 +102,6 @@ function loadUserProfileForEditing() {
     if (document.getElementById('edit-bio')) document.getElementById('edit-bio').value = currentUser.bio || '';
 }
 
-// Өөрчлөлтийг хадгалах
 function saveProfileChanges() {
     const nameValue = document.getElementById('edit-name')?.value;
     const phoneValue = document.getElementById('edit-phone')?.value;
@@ -144,13 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Profile хуудас дээрх хамгаалалт
         if (user.role !== 'traveler' && user.status === 'pending') {
             window.location.replace('under-review.html');
             return;
         }
 
-        // Мэдээлэл харуулах
         if (document.getElementById('userName')) document.getElementById('userName').textContent = user.name;
         if (document.getElementById('userEmail')) document.getElementById('userEmail').textContent = user.email;
         if (document.getElementById('userRole')) document.getElementById('userRole').textContent = "Account Type: " + user.role;
