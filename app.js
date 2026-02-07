@@ -1,5 +1,5 @@
 /**
- * CJ Travel - Final Optimized app.js (Admin Backdoor Added)
+ * CJ Travel - Final Optimized app.js (English UI, Admin 404 Fix)
  */
 
 // --- 1. LOGIN LOGIC (MongoDB + Role Validation + Status Check) ---
@@ -10,14 +10,14 @@ async function loginUser() {
     const selectedRole = selectedRoleElement ? selectedRoleElement.id : null;
 
     if (!emailInput || !passwordInput || !selectedRole) {
-        alert("Мэдээллээ бүрэн оруулна уу.");
+        alert("Please fill in all fields.");
         return;
     }
 
-    // --- ADMIN BACKDOOR START ---
+    // --- ADMIN BACKDOOR START (Админ нэвтрэх хэсэг) ---
     if (emailInput === 'admin@cjtravel.com' && passwordInput === '1234') {
         const adminUser = {
-            name: "Систем Админ",
+            name: "System Admin",
             email: "admin@cjtravel.com",
             role: selectedRole, 
             status: "approved"
@@ -26,9 +26,8 @@ async function loginUser() {
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('currentUser', JSON.stringify(adminUser));
         
-        if (selectedRole === 'guide') window.location.replace('guide-home.html');
-        else if (selectedRole === 'provider') window.location.replace('provider-home.html');
-        else window.location.replace('index.html');
+        // 404 алдаанаас сэргийлж бүх тохиолдолд index.html рүү шилжүүлнэ
+        window.location.replace('index.html');
         return; 
     }
     // --- ADMIN BACKDOOR END ---
@@ -46,7 +45,7 @@ async function loginUser() {
             // Роль шалгах
             if (user.role.toLowerCase() === selectedRole.toLowerCase()) {
                 
-                // Статус шалгах: Pending бол
+                // Статус шалгах: Хэрэв зөвшөөрөгдөөгүй бол
                 if (user.role !== 'traveler' && user.status === 'pending') {
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('currentUser', JSON.stringify(user));
@@ -54,38 +53,36 @@ async function loginUser() {
                     return; 
                 }
 
-                // Зөвшөөрөгдсөн хэрэглэгчид
+                // Нэвтрэлт амжилттай болсон үед
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('currentUser', JSON.stringify(user));
 
-                // LocalStorage sync
+                // LocalStorage өгөгдөл синхрончлох
                 const localUsers = JSON.parse(localStorage.getItem('users')) || [];
                 const userIndex = localUsers.findIndex(u => u.email === user.email);
                 if (userIndex === -1) localUsers.push(user);
                 else localUsers[userIndex] = user;
                 localStorage.setItem('users', JSON.stringify(localUsers));
 
-                // Шууд шилжүүлнэ
-                if (selectedRole === 'guide') window.location.replace('guide-home.html');
-                else if (selectedRole === 'provider') window.location.replace('provider-home.html');
-                else window.location.replace('index.html');
+                // Үндсэн хуудас руу шилжих
+                window.location.replace('index.html');
 
             } else {
-                alert(`Нэвтрэх алдаа: Та '${user.role}' эрхээр бүртгүүлсэн байна.`);
+                alert(`Login Error: You are registered as '${user.role}'.`);
             }
         } else {
             const errorData = await response.json();
-            alert(errorData.message || "Имэйл эсвэл нууц үг буруу байна.");
+            alert(errorData.message || "Invalid email or password.");
         }
     } catch (error) {
         console.error("Login Connection Error:", error);
-        alert("Сервертэй холбогдож чадсангүй.");
+        alert("Could not connect to the server.");
     }
 }
 
-// --- 2. PROFILE & LOGOUT ---
+// --- 2. PROFILE & LOGOUT (Профайл болон Гарах хэсэг) ---
 function logoutUser() {
-    if (confirm("Гарахдаа итгэлтэй байна уу?")) {
+    if (confirm("Are you sure you want to log out?")) {
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('currentUser');
         window.location.href = "index.html";
@@ -140,11 +137,11 @@ function saveProfileChanges() {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
     localStorage.setItem('users', JSON.stringify(users));
 
-    alert("Профайл шинэчлэгдлээ!");
+    alert("Profile updated successfully!");
     window.location.href = 'profile.html';
 }
 
-// --- 3. UI EVENT LISTENERS ---
+// --- 3. UI EVENT LISTENERS (Хуудас ачаалагдах үеийн тохиргоо) ---
 document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('profile.html')) {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
