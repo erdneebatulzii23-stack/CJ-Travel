@@ -186,6 +186,10 @@
             <span class="material-symbols-outlined">holiday_village</span>
             <span class="text-[10px] font-semibold">Resorts</span>
         </a>
+        <a href="favorites.html" class="flex flex-col items-center gap-1 text-[#4c739a] dark:text-slate-400">
+            <span class="material-symbols-outlined">favorite</span>
+            <span class="text-[10px] font-semibold">Favorites</span>
+        </a>
         <a href="profile.html" class="flex flex-col items-center gap-1 text-primary">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_circle</span>
             <span class="text-[10px] font-semibold">My Profile</span>
@@ -202,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // 1. Статус шалгах (Pending бол нэвтрүүлэхгүй)
+    // 1. Статус шалгах
     if (user.role !== 'traveler' && user.status === 'pending') {
         window.location.href = 'under-review.html';
         return;
