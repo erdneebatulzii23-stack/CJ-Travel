@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import dbConnect from '../../lib/dbConnect.js'; // .js нэмэв
-import User from '../../models/User.js';       // .js нэмэв
+import dbConnect from '../../lib/dbConnect.js';
+import User from '../../models/User.js';
 
 export const config = {
     api: {
@@ -11,12 +11,11 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-    // const { id } = req.query;  <-- Энийг түр хаачих
-    const id = "69864861f4c3651ef8286e5d"; // Чиний бааз дээрх бодит ID-г яг ийм хашилтанд хийгээд бич
+    // Туршиж үзэх ID (Бааз дээрх ID-тайгаа таарч байгаа эсэхийг дахин нэг нягтлаарай)
+    const id = "69864861f4c3651ef8286e5d"; 
 
-    await dbConnect();
-    // ... бусад код хэвээрээ ...
-    
+    try {
+        await dbConnect();
     } catch (dbError) {
         return res.status(500).json({ message: "Database connection failed" });
     }
@@ -35,6 +34,7 @@ export default async function handler(req, res) {
         try {
             const { name, phone, profilePic, privacy } = req.body;
             const updateFields = {};
+            
             if (name) updateFields.name = name;
             if (phone !== undefined) updateFields.phone = phone;
             if (profilePic) updateFields.profilePic = profilePic;
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
                 { new: true, runValidators: true }
             );
 
-            if (!updatedUser) return res.status(404).json({ message: "User not found" });
+            if (!updatedUser) return res.status(404).json({ message: "User not found during update" });
             return res.status(200).json(updatedUser);
         } catch (error) {
             return res.status(500).json({ message: error.message });
@@ -59,5 +59,5 @@ export default async function handler(req, res) {
     }
 
     res.setHeader('Allow', ['GET', 'PATCH']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    return res.status(405).end(`Method ${req.method} Not Allowed`);
 }
