@@ -199,20 +199,25 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. localStorage-оос хэрэглэгчийг авах
     const user = JSON.parse(localStorage.getItem('currentUser'));
 
+    // 2. Хэрэглэгч байхгүй бол шууд Login рүү
     if (!user) {
         window.location.href = 'login.html';
         return;
     }
 
-    // 1. Статус шалгах
+    // 3. СТАТУС ШАЛГАХ (Гайд болон Провайдер)
+    // Зөвхөн 'pending' статус бүхий Гайд болон Провайдеруудыг Review хуудас руу явуулна
     if (user.role !== 'traveler' && user.status === 'pending') {
+        // Хэрэв танд 'under-review.html' файл байхгүй бол 404 гарна. 
+        // Тэр файлыг заавал үүсгэсэн байх ёстойг анхаарна уу!
         window.location.href = 'under-review.html';
-        return;
+        return; 
     }
 
-    // 2. Profile мэдээлэл бөглөх
+    // 4. Дэлгэцийн мэдээллийг бөглөх
     document.getElementById('userName').textContent = user.name || "User";
     document.getElementById('userEmail').textContent = user.email || "";
     document.getElementById('userRoleBadge').textContent = user.role;
@@ -222,7 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
         profilePic.style.backgroundImage = `url('${user.profilePic}')`;
     }
 
-    // 3. ROLE-д тохирсон цэсийг ил гаргах
+    // 5. ROLE-д тохирсон цэсийг ил гаргах
+    // Эхлээд бүх цэсийг нууна (дахин баталгаажуулалт)
+    document.getElementById('traveler-links').classList.add('hidden');
+    document.getElementById('provider-links').classList.add('hidden');
+    document.getElementById('guide-links').classList.add('hidden');
+
     if (user.role === 'traveler') {
         document.getElementById('traveler-links').classList.remove('hidden');
     } else if (user.role === 'provider') {
@@ -232,10 +242,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// ГАРАХ ФУНКЦ: Энэ нь localStorage-ийг бүрэн цэвэрлэх тул өөр аккаунтаар орох боломжийг нээнэ
 function logoutUser() {
-    if(confirm("Are you sure you want to logout?")) {
-        localStorage.removeItem('currentUser');
-        window.location.href = 'login.html';
+    if(confirm("Та системээс гарахдаа итгэлтэй байна уу?")) {
+        localStorage.removeItem('currentUser'); // Хэрэглэгчийн датаг устгах
+        window.location.href = 'login.html'; // Login руу үсрэх
     }
 }
 </script>
