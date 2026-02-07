@@ -23,21 +23,23 @@ export default async function handler(req, res) {
         const database = client.db('cj_travel'); 
         const users = database.collection('users');
 
-        const { email, password } = req.body;
+        const { email, password } = req.body
 
         // MongoDB-ээс хайх
         const user = await users.findOne({ email, password });
 
         if (user) {
-            // Нууц үгийг хариунаас хасах
+            // Нууц үгийг хариунаас хасаад, _id-г string болгоно
             const { password: _, ...userWithoutPassword } = user;
-            return res.status(200).json(userWithoutPassword);
+            return res.status(200).json({
+                ...userWithoutPassword,
+                id: user._id.toString() 
+            });
         } else {
-            // 401 Unauthorized алдаа
+            // Хэрэв хэрэглэгч олдохгүй бол энд орж ирнэ
             return res.status(401).json({ message: 'Имэйл эсвэл нууц үг буруу байна.' });
         }
+
     } catch (error) {
-        console.error("Login Error:", error);
-        return res.status(500).json({ message: 'Серверт алдаа гарлаа.' });
+        // ... алдаа барих хэсэг ...
     }
-}
