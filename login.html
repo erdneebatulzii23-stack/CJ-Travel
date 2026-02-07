@@ -99,8 +99,9 @@
         </div>
     </div>
     
-    <script src="app.js"></script> <script>
-    // Зөвхөн Password харах/нуух логик энд үлдэнэ
+    <script src="app.js"></script>
+<script>
+    // Password харах/нуух логик
     document.getElementById('toggle-password').addEventListener('click', function() {
         const passwordInput = document.getElementById('login-password');
         const icon = this.querySelector('span');
@@ -113,9 +114,22 @@
         }
     });
 
-    // Товчлуур дарах үед app.js доторх loginUser() функцыг дуудна
+    // Нэвтрэх товч дарах үед
     function handleLogin() {
-        loginUser(); 
+        // app.js доторх функцээ дуудна
+        const user = loginUser(); 
+
+        // Хэрэв нэвтрэлт амжилттай болсон бол (user объект ирсэн бол)
+        if (user) {
+            // Pending статус шалгах
+            if (user.role !== 'traveler' && user.status === 'pending') {
+                window.location.href = 'under-review.html';
+            } else {
+                // Зөвшөөрөгдсөн бол мэндчилгээ гаргаад нүүр хуудас руу
+                alert("Тавтай морил, " + user.name + "!");
+                window.location.href = 'index.html';
+            }
+        }
     }
 </script>
 </body>
