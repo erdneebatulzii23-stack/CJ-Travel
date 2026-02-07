@@ -202,52 +202,48 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. localStorage-оос хэрэглэгчийг авах
     const user = JSON.parse(localStorage.getItem('currentUser'));
 
-    // 2. Хэрэглэгч байхгүй бол шууд Login рүү
+    // 2. Хэрэглэгч байхгүй бол шууд Login рүү (Хамгаалалт 1)
     if (!user) {
         window.location.href = 'login.html';
         return;
     }
 
-    // 3. СТАТУС ШАЛГАХ (Хамгийн чухал хэсэг)
-    // Provider эсвэл Guide бөгөөд статус нь pending бол шууд review хуудас руу шиднэ
+    // 3. СТАТУС ШАЛГАХ (Хамгаалалт 2)
+    // Хүлээгдэж буй Guide/Provider бол "Тавтай морил" гэхгүйгээр шууд шилжүүлнэ
     if (user.role !== 'traveler' && user.status === 'pending') {
         window.location.href = 'under-review.html';
-        return; // Үүнээс доошхи кодыг ажиллуулахгүй зогсооно
+        return; 
     }
 
-    // 4. Хэрэв зөвшөөрөгдсөн бол дэлгэцийн мэдээллийг бөглөх
+    // 4. Мэдээллийг дэлгэцэнд хэвлэх
     document.getElementById('userName').textContent = user.name || "User";
     document.getElementById('userEmail').textContent = user.email || "";
     document.getElementById('userRoleBadge').textContent = user.role;
     
     const profilePic = document.getElementById('mainProfilePic');
-    if (user.profilePic) {
+    if (user.profilePic && profilePic) {
         profilePic.style.backgroundImage = `url('${user.profilePic}')`;
     }
 
-    // 5. ROLE-д тохирсон цэсийг ил гаргах
-    // Бүх цэсийг эхлээд нуух
-    const sections = ['traveler-links', 'provider-links', 'guide-links'];
-    sections.forEach(id => {
+    // 5. Роль бүрт тохирсон цэсийг харуулах
+    renderMenu(user.role);
+});
+
+// Цэс харуулах функц (Кодоо цэгцтэй байлгах үүднээс салгав)
+function renderMenu(role) {
+    const roles = ['traveler-links', 'provider-links', 'guide-links'];
+    roles.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
     });
 
-    // Харгалзах цэсийг нээх
-    if (user.role === 'traveler') {
-        document.getElementById('traveler-links').classList.remove('hidden');
-    } else if (user.role === 'provider') {
-        document.getElementById('provider-links').classList.remove('hidden');
-    } else if (user.role === 'guide') {
-        document.getElementById('guide-links').classList.remove('hidden');
+    const activeMenu = document.getElementById(`${role}-links`);
+    if (activeMenu) {
+        activeMenu.classList.remove('hidden');
     }
-});
+}
 
-/**
- * ГАРАХ ФУНКЦ
- * Хэрэглэгчийг системээс бүрэн гаргаж, localStorage-ийг цэвэрлэнэ.
- * Ингэснээр 'pending' төлөвтэй хэрэглэгч гацалгүйгээр login хуудас руу очих боломжтой.
- */
+// Гарах функц
 function logoutUser() {
     if(confirm("Та системээс гарахдаа итгэлтэй байна уу?")) {
         localStorage.removeItem('currentUser'); 
