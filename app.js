@@ -1,9 +1,9 @@
 /**
- * CJ Travel - Final Optimized app.js (Fixed Syntax)
- * Бүх логик (Login, Profile, Post, Like) нэгтгэгдсэн хувилбар
+ * CJ Travel - Final Optimized app.js
+ * Пост оруулах, харах, лайк дарах горим бүрэн орсон хувилбар
  */
 
-// --- 1. LOGIN & AUTH LOGIC ---
+// --- 1. LOGIN & AUTH (Хэвээр үлдээв) ---
 async function loginUser() {
     const emailInput = document.getElementById('login-email')?.value.trim();
     const passwordInput = document.getElementById('login-password')?.value;
@@ -15,7 +15,6 @@ async function loginUser() {
         return;
     }
 
-    // ADMIN BACKDOOR
     if (emailInput === 'admin@cjtravel.com' && passwordInput === '1234') {
         const adminUser = {
             id: "admin_001",
@@ -43,7 +42,6 @@ async function loginUser() {
             if (user.role.toLowerCase() === selectedRole.toLowerCase()) {
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('currentUser', JSON.stringify(user));
-
                 if (user.role !== 'traveler' && user.status === 'pending') {
                     window.location.replace('under-review.html');
                 } else {
@@ -61,8 +59,9 @@ async function loginUser() {
     }
 }
 
-// --- 2. POST & LIKE LOGIC ---
+// --- 2. POSTING SYSTEM (Энэ хэсэгт пост харах, оруулах горим байна) ---
 
+// Шинэ пост оруулах
 async function addPost() {
     const postInput = document.getElementById('postInput');
     const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -86,15 +85,15 @@ async function addPost() {
         });
 
         if (response.ok) {
-            postInput.value = '';
-            if (document.getElementById('user-posts-container')) loadUserPosts();
-            if (document.getElementById('post-container')) loadPosts();
+            postInput.value = ''; // Текст талбарыг цэвэрлэх
+            loadPosts(); // Шинэ постыг шууд харуулах
         }
     } catch (error) {
         console.error("Post Error:", error);
     }
 }
 
+// Бүх постуудыг баазаас уншиж харуулах
 async function loadPosts() {
     const container = document.getElementById('post-container');
     if (!container) return;
@@ -102,49 +101,34 @@ async function loadPosts() {
     try {
         const response = await fetch('/api/posts');
         const posts = await response.json();
-        container.innerHTML = posts.map(post => renderPostHTML(post)).join('');
+        
+        // Хамгийн сүүлийн пост дээрээ харагдахаар эрэмбэлэх
+        const sortedPosts = posts.reverse();
+        
+        container.innerHTML = sortedPosts.map(post => `
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm mb-4 border border-slate-100 dark:border-slate-700">
+                <div class="flex items-center gap-3 mb-3">
+                    <img src="${post.userPic}" class="w-10 h-10 rounded-full object-cover">
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white">${post.userName}</h4>
+                        <span class="text-xs text-slate-500">${new Date(post.createdAt).toLocaleDateString()}</span>
+                    </div>
+                </div>
+                <p class="text-slate-700 dark:text-slate-300 mb-4">${post.text}</p>
+                <div class="flex items-center gap-4 pt-3 border-t border-slate-50 dark:border-slate-700">
+                    <button onclick="likePost('${post._id}')" class="flex items-center gap-1 text-slate-500 hover:text-red-500 transition-colors">
+                        <span class="material-symbols-outlined text-xl">favorite</span>
+                        <span>${post.likes ? post.likes.length : 0}</span>
+                    </button>
+                </div>
+            </div>
+        `).join('');
     } catch (error) {
         console.error("Load Posts Error:", error);
     }
 }
 
-async function loadUserPosts() {
-    const container = document.getElementById('user-posts-container');
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    if (!container || !user) return;
-
-    try {
-        const response = await fetch('/api/posts');
-        const allPosts = await response.json();
-        const myId = user.id || user._id;
-        const myPosts = allPosts.filter(p => p.userId === myId);
-
-        container.innerHTML = myPosts.length > 0 
-            ? myPosts.map(post => renderPostHTML(post)).join('')
-            : "<p>You haven't posted anything yet.</p>";
-    } catch (error) {
-        console.error("Load User Posts Error:", error);
-    }
-}
-
-function renderPostHTML(post) {
-    return `
-        <div class="post-card" style="border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
-            <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                <img src="${post.userPic}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
-                <strong>${post.userName}</strong>
-            </div>
-            <p>${post.text}</p>
-            <div style="margin-top: 10px;">
-                <button onclick="likePost('${post._id}')" style="cursor:pointer; border:none; background:none;">
-                    ❤️ ${post.likes ? post.likes.length : 0} Likes
-                </button>
-                <small style="color: #888; margin-left: 15px;">${new Date(post.createdAt).toLocaleDateString()}</small>
-            </div>
-        </div>
-    `;
-}
-
+// Лайк дарах горим
 async function likePost(postId) {
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (!user) return alert("Please login to like!");
@@ -155,19 +139,24 @@ async function likePost(postId) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ postId: postId, userId: user.id || user._id })
         });
-        if (document.getElementById('post-container')) loadPosts();
-        if (document.getElementById('user-posts-container')) loadUserPosts();
+        loadPosts(); // Тоог шинэчлэх
     } catch (error) {
         console.error("Like Error:", error);
     }
 }
 
-// --- 3. UI INITIALIZATION & UTILS ---
+// --- 3. UI INITIALIZATION & NAVIGATION ---
 
 document.addEventListener('DOMContentLoaded', () => {
     const user = JSON.parse(localStorage.getItem('currentUser'));
     const isLoggedIn = localStorage.getItem('isLoggedIn');
 
+    // Хэрэв нүүр хуудас бол постуудыг ачаалах
+    if (document.getElementById('post-container')) {
+        loadPosts();
+    }
+
+    // Профайл хуудас дээрх мэдээлэл
     if (window.location.pathname.includes('profile.html')) {
         if (isLoggedIn !== 'true' || !user) {
             window.location.replace('login.html');
@@ -175,20 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (document.getElementById('userName')) document.getElementById('userName').textContent = user.name;
         if (document.getElementById('userEmail')) document.getElementById('userEmail').textContent = user.email;
-        loadUserPosts();
-    }
-
-    if (document.getElementById('post-container')) {
-        loadPosts();
     }
 });
-
-// ГАРУУД ЦЭВЭРЛЭЖ ЗАСАВ
-function logoutUser() {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('currentUser');
-    window.location.replace('login.html');
-}
 
 function handleProfileClick() {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -204,4 +181,10 @@ function handleProfileClick() {
     } else {
         window.location.href = 'profile.html';
     }
+}
+
+function logoutUser() {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUser');
+    window.location.replace('login.html');
 }
