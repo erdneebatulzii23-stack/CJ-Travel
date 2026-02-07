@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import dbConnect from '../../lib/dbConnect.js'; // .js нэмэв
 import User from '../../models/User.js';       // .js нэмэв
 
