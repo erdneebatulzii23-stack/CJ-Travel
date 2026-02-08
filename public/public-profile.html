@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Public Profile - CJ Travel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#2b8cee" }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: "Plus Jakarta Sans", sans-serif; }
+        .post-card { transition: transform 0.2s; }
+        .post-card:active { transform: scale(0.98); }
+    </style>
+</head>
+<body class="bg-[#f6f7f8] dark:bg-[#101922] text-[#0d141b] dark:text-white pb-20">
+
+    <div class="relative h-48 bg-gradient-to-br from-primary to-blue-700">
+        <button onclick="history.back()" class="absolute top-4 left-4 bg-white/20 backdrop-blur-md p-2 rounded-full text-white">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+    </div>
+
+    <div class="max-w-md mx-auto px-4 -mt-16 relative z-10">
+        <div class="bg-white dark:bg-gray-900 rounded-3xl p-6 shadow-xl border dark:border-gray-800">
+            <div class="flex flex-col items-center text-center">
+                <div id="targetProfilePic" class="size-32 rounded-3xl border-4 border-white dark:border-gray-900 shadow-2xl bg-cover bg-center mb-4 bg-gray-200" 
+                     style="background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');">
+                </div>
+                <h1 id="targetName" class="text-2xl font-black">Loading...</h1>
+                <span id="targetRole" class="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full mt-1 italic">GUIDE</span>
+                
+                <p id="targetBio" class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                    Аялах дуртай, байгальд хайртай. Хамтдаа гоё дурсамж бүтээцгээе! 🏔️✨
+                </p>
+
+                <div class="flex gap-3 w-full mt-6">
+                    <button class="flex-1 bg-primary text-white font-bold py-3 rounded-2xl shadow-lg shadow-primary/30 flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">send</span> Message
+                    </button>
+                    <button class="bg-gray-100 dark:bg-gray-800 p-3 rounded-2xl">
+                        <span class="material-symbols-outlined">share</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="createPostArea" class="mt-6 bg-white dark:bg-gray-900 p-4 rounded-2xl border dark:border-gray-800">
+            <textarea id="postInput" placeholder="Юу бодож байна?" class="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm focus:ring-primary"></textarea>
+            <div class="flex justify-between items-center mt-3">
+                <button class="text-gray-500 flex items-center gap-1 text-sm"><span class="material-symbols-outlined">image</span> Зураг</button>
+                <button onclick="addPost()" class="bg-primary px-4 py-2 text-white text-xs font-bold rounded-lg">Постлох</button>
+            </div>
+        </div>
+
+        <div id="postFeed" class="mt-6 space-y-4">
+            </div>
+    </div>
+
+<script>
+    // 1. Хуудсыг ачаалах үед серверээс постуудыг татах
+    window.onload = () => {
+        loadPostsFromServer();
+        
+        // Хэрэглэгчийн мэдээллийг шалгах
+        const params = new URLSearchParams(window.location.search);
+        const profileUserId = params.get('id');
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        // Хэрэв өөрийнх нь профайл биш бол пост оруулах хэсгийг нуух
+        if (profileUserId && currentUser && profileUserId !== currentUser.id) {
+            const postArea = document.getElementById('createPostArea');
+            if (postArea) postArea.style.display = 'none';
+        }
+    };
+
+    // 2. Постуудыг серверээс (MongoDB) татах функц
+    async function loadPostsFromServer() {
+        const feed = document.getElementById('postFeed');
+        
+        try {
+            const response = await fetch('/api/posts');
+            if (!response.ok) throw new Error('Датаг татаж чадсангүй');
+            
+            const posts = await response.json();
+            
+            if (posts.length === 0) {
+                feed.innerHTML = "<p class='text-center py-10 text-gray-500'>Одоогоор пост алга.</p>";
+                return;
+            }
+
+            feed.innerHTML = posts.map(post => `
+                <div class="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border dark:border-gray-800 shadow-sm mb-5 post-card">
+                    <div class="p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img src="${post.userPic || 'https://via.placeholder.com/40'}" class="size-10 rounded-full border dark:border-gray-700">
+                            <div>
+                                <h4 class="font-bold text-sm dark:text-white">${post.userName}</h4>
+                                <p class="text-[10px] text-gray-500">${new Date(post.createdAt).toLocaleString('mn-MN')}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${post.image ? `<img src="${post.image}" class="w-full max-h-[400px] object-cover">` : ''}
+                    
+                    <div class="p-4">
+                        <p class="text-sm dark:text-gray-300 mb-4">${post.text}</p>
+                        
+                        <div class="flex items-center gap-6 pt-4 border-t dark:border-gray-800">
+                            <button onclick="handleLike('${post._id}')" class="flex items-center gap-1 text-sm hover:text-red-500 transition-colors dark:text-gray-400">
+                                <span class="material-symbols-outlined text-[20px]">favorite</span> 
+                                <span>${post.likes ? post.likes.length : 0}</span>
+                            </button>
+                            <button class="flex items-center gap-1 text-sm dark:text-gray-400">
+                                <span class="material-symbols-outlined text-[20px]">chat_bubble</span> 
+                                <span>${post.comments ? post.comments.length : 0}</span>
+                            </button>
+                            <button onclick="sharePost('${post._id}')" class="flex items-center gap-1 text-sm ml-auto dark:text-gray-400">
+                                <span class="material-symbols-outlined text-[20px]">share</span>
+                            </button>
+                        </div>
+
+                        <div class="mt-4 space-y-2">
+                            ${post.comments ? post.comments.slice(0, 3).map(c => `
+                                <p class="text-[12px] dark:text-gray-400">
+                                    <span class="font-bold text-gray-900 dark:text-white">${c.user}:</span> ${c.text}
+                                </p>
+                            `).join('') : ''}
+                            <input type="text" placeholder="Коммент бичих..." 
+                                   class="w-full mt-2 bg-gray-50 dark:bg-gray-800 border-none rounded-lg text-xs p-2 focus:ring-1 focus:ring-blue-500 dark:text-white"
+                                   onkeydown="if(event.key==='Enter') addComment('${post._id}', this.value)">
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error("Алдаа:", error);
+            feed.innerHTML = "<p class='text-center text-red-500'>Мэдээлэл ачаалахад алдаа гарлаа.</p>";
+        }
+    }
+
+    // 3. Шинэ пост нэмэх функц
+    async function addPost() {
+        const input = document.getElementById('postInput');
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (!input.value.trim()) return;
+        if (!user) {
+            alert("Нэвтэрсэн байх шаардлагатай!");
+            return;
+        }
+
+        const postData = {
+            text: input.value,
+            userId: user.id,
+            userName: user.name,
+            userPic: user.profilePic,
+            image: "" // Зураг оруулах хэсгийг дараа нэмж болно
+        };
+
+        const response = await fetch('/api/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+        });
+
+        if (response.ok) {
+            input.value = "";
+            loadPostsFromServer();
+        }
+    }
+
+    // 4. Лайк дарах (Backend бэлэн болмогц ажиллана)
+    async function handleLike(postId) {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        if (!user) return alert("Нэвтэрнэ үү!");
+
+        await fetch(`/api/posts?id=${postId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user.id })
+        });
+        loadPostsFromServer();
+    }
+
+    // 5. Хуваалцах функц
+    function sharePost(postId) {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url);
+        alert("Линк хуулагдлаа!");
+    }
+</script>
+</body>
+</html>
