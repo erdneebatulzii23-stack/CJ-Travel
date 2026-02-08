@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Traveler Interests Selection</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .interest-card-selected {
+                @apply border-2 border-primary relative ring-2 ring-primary/20;
+            }
+            .interest-card-selected::after {
+                content: 'check_circle';
+                font-family: 'Material Symbols Outlined';
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                color: #2b8cee;
+                font-size: 24px;
+                font-variation-settings: 'FILL' 1;
+                text-shadow: 0 0 10px rgba(255,255,255,0.8);
+            }
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100dvh;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 0px;
+        }
+        /* Картуудыг дарахад анимейшн орох */
+        .interest-card {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .interest-card:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-50 font-display flex flex-col h-screen overflow-hidden">
+
+<header class="sticky top-0 z-30 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md p-4 pb-4 border-b border-gray-200 dark:border-gray-800 shrink-0">
+    <h2 class="text-[#0d141b] dark:text-slate-50 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">CJ Travel</h2>
+</header>
+
+<main class="flex-1 overflow-y-auto custom-scrollbar">
+    <div class="px-6 pt-8 pb-6">
+        <h1 class="text-[#0d141b] dark:text-slate-50 tracking-tight text-[28px] font-bold leading-tight text-center">What are your interests?</h1>
+        <p id="counter-text" class="text-center text-gray-500 dark:text-gray-400 mt-2 text-sm">Pick 3 or more to personalize your travel feed.</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 px-4 pb-32">
+        <div onclick="toggleSelection(this, 'Hiking')" class="interest-card bg-gray-200 dark:bg-gray-800 flex flex-col gap-3 rounded-2xl justify-end p-4 aspect-square shadow-sm border-2 border-transparent" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%), url("https://images.unsplash.com/photo-1551632811-561732d1e306?w=400"); background-size: cover;'>
+            <span class="material-symbols-outlined text-white mb-auto text-3xl">hiking</span>
+            <p class="text-white text-base font-bold leading-tight">Hiking</p>
+        </div>
+
+        <div onclick="toggleSelection(this, 'History')" class="interest-card bg-gray-200 dark:bg-gray-800 flex flex-col gap-3 rounded-2xl justify-end p-4 aspect-square shadow-sm border-2 border-transparent" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%), url("https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400"); background-size: cover;'>
+            <span class="material-symbols-outlined text-white mb-auto text-3xl">history_edu</span>
+            <p class="text-white text-base font-bold leading-tight">History</p>
+        </div>
+
+        <div onclick="toggleSelection(this, 'Food & Dining')" class="interest-card bg-gray-200 dark:bg-gray-800 flex flex-col gap-3 rounded-2xl justify-end p-4 aspect-square shadow-sm border-2 border-transparent" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%), url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400"); background-size: cover;'>
+            <span class="material-symbols-outlined text-white mb-auto text-3xl">restaurant</span>
+            <p class="text-white text-base font-bold leading-tight">Food & Dining</p>
+        </div>
+
+        <div onclick="toggleSelection(this, 'Camping')" class="interest-card bg-gray-200 dark:bg-gray-800 flex flex-col gap-3 rounded-2xl justify-end p-4 aspect-square shadow-sm border-2 border-transparent" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%), url("https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400"); background-size: cover;'>
+            <span class="material-symbols-outlined text-white mb-auto text-3xl">camping</span>
+            <p class="text-white text-base font-bold leading-tight">Camping</p>
+        </div>
+
+        <div onclick="toggleSelection(this, 'Photography')" class="interest-card bg-gray-200 dark:bg-gray-800 flex flex-col gap-3 rounded-2xl justify-end p-4 aspect-square shadow-sm border-2 border-transparent" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%), url("https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400"); background-size: cover;'>
+            <span class="material-symbols-outlined text-white mb-auto text-3xl">camera_alt</span>
+            <p class="text-white text-base font-bold leading-tight">Photography</p>
+        </div>
+
+        <div onclick="toggleSelection(this, 'Nightlife')" class="interest-card bg-gray-200 dark:bg-gray-800 flex flex-col gap-3 rounded-2xl justify-end p-4 aspect-square shadow-sm border-2 border-transparent" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%), url("https://images.unsplash.com/photo-1514525253361-bee165567044?w=400"); background-size: cover;'>
+            <span class="material-symbols-outlined text-white mb-auto text-3xl">nightlife</span>
+            <p class="text-white text-base font-bold leading-tight">Nightlife</p>
+        </div>
+        </div>
+</main>
+
+<footer class="sticky bottom-0 z-30 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md px-4 pt-4 pb-10 border-t border-gray-200 dark:border-gray-800 shrink-0">
+    <div class="flex gap-4 max-w-md mx-auto">
+        <button onclick="window.location.href='guides-setup.html'" class="flex-1 cursor-pointer items-center justify-center rounded-2xl h-14 bg-gray-200 dark:bg-gray-700 text-[#0d141b] dark:text-slate-50 text-base font-bold active:scale-95 transition-transform">
+            Back
+        </button>
+        <button id="finish-btn" onclick="handleFinish()" class="flex-1 cursor-pointer items-center justify-center rounded-2xl h-14 bg-primary text-white text-base font-bold shadow-lg shadow-primary/30 active:scale-95 transition-transform opacity-50 cursor-not-allowed">
+            Finish
+        </button>
+    </div>
+</footer>
+
+<script>
+    // 1. Сонголт хийх логик (UI тал)
+    function toggleSelection(element, interestName) {
+        element.classList.toggle('interest-card-selected');
+        updateUI();
+    }
+
+    function updateUI() {
+        const finishBtn = document.getElementById('finish-btn');
+        const counterText = document.getElementById('counter-text');
+        const selectedCount = document.querySelectorAll('.interest-card-selected').length;
+        const MIN_SELECTION = 3;
+
+        if (selectedCount >= MIN_SELECTION) {
+            finishBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            finishBtn.disabled = false;
+            counterText.innerHTML = `<span class="text-primary font-bold">Great!</span> You've selected ${selectedCount} interests.`;
+        } else {
+            finishBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            finishBtn.disabled = true;
+            counterText.innerText = `Pick ${MIN_SELECTION - selectedCount} more to personalize your travel feed.`;
+        }
+    }
+
+    // 2. Буцах товчлуур
+    const backBtn = document.querySelector('button.bg-gray-200, button.dark\\:bg-gray-700');
+    if (backBtn) {
+        backBtn.onclick = () => {
+            window.location.href = "guides-setup.html";
+        };
+    }
+
+    // 3. Дуусгах (MongoDB рүү илгээх)
+    async function handleFinish() {
+        const selectedCards = document.querySelectorAll('.interest-card-selected');
+        const finishBtn = document.getElementById('finish-btn');
+        
+        if (selectedCards.length < 3) {
+            alert("Please select at least 3 interests!");
+            return;
+        }
+
+        // Процесс эхэлснийг харуулах
+        finishBtn.disabled = true;
+        finishBtn.innerText = "Processing...";
+
+        // Сонгосон сонирхлуудыг жагсаалт болгох
+        const selectedInterests = Array.from(selectedCards).map(card => 
+            card.querySelector('p').textContent
+        );
+
+        // guides-setup.html-ээс хадгалагдсан өгөгдлийг авах
+        const pendingUser = JSON.parse(localStorage.getItem('pending_user'));
+
+        if (!pendingUser) {
+            alert("Session expired. Please fill your details again.");
+            window.location.href = "guides-setup.html";
+            return;
+        }
+
+        // Илгээх эцсийн датаг бэлдэх
+        const finalUserData = {
+            ...pendingUser,
+            interests: selectedInterests,
+            role: 'guide', // Guide гэдгийг баталгаажуулж нэмэх
+            status: 'pending', // Guide учраас хяналтын шатанд байна гэсэн төлөв
+            createdAt: new Date()
+        };
+
+        try {
+            // --- VERCEL API ХОЛБОЛТ ---
+            const response = await fetch('/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(finalUserData),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Амжилттай болсон бол LocalStorage цэвэрлээд шилжинэ
+                localStorage.setItem('currentUser', JSON.stringify(finalUserData));
+                localStorage.removeItem('pending_user');
+                
+                // Guide-ийн хувьд "Under Review" хуудас руу шилжих нь тохиромжтой
+                window.location.href = "guides-under-review.html";
+            } else {
+                alert("Error: " + (result.message || "Failed to save to database."));
+                finishBtn.disabled = false;
+                finishBtn.innerText = "Finish";
+            }
+        } catch (error) {
+            console.error("Submission error:", error);
+            alert("Could not connect to the server. Please check your internet.");
+            finishBtn.disabled = false;
+            finishBtn.innerText = "Finish";
+        }
+    }
+</script>
+
+</body>
+</html>
