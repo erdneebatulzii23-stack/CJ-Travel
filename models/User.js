@@ -13,5 +13,6 @@ const UserSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-// Vercel дээр моделийг дахин дахин үүсгэхээс сэргийлэх логик
-export default mongoose.models.User || mongoose.model('User', UserSchema);
+// Хуучин байсан: export default mongoose.models.User || mongoose.model('User', UserSchema);
+// Шинэ (Хүчээр заах):
+export default mongoose.models.User || mongoose.model('User', UserSchema, 'users');
