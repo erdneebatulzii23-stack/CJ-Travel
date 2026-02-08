@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Favorites - CJ Travel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: "Plus Jakarta Sans", sans-serif; }
+        .filled-icon { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <header class="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center p-4 max-w-md mx-auto">
+            <h1 class="text-[#0d141b] dark:text-white text-xl font-bold leading-tight flex-1">Favorites</h1>
+            <button class="flex size-10 items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-primary">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 w-full max-w-md mx-auto pb-32">
+        <nav class="bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-800">
+            <div class="flex px-4 gap-6">
+                <a class="border-b-2 border-primary text-primary pb-3 pt-4 px-2" href="#">
+                    <p class="text-sm font-bold">Saved Guides</p>
+                </a>
+                <a class="border-b-2 border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4 px-2" href="#">
+                    <p class="text-sm font-bold">Resorts</p>
+                </a>
+            </div>
+        </nav>
+
+        <div class="px-4 py-4 space-y-4">
+            <div class="flex items-center justify-between px-1">
+                <h3 class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Your curated list</h3>
+                <span class="text-primary text-[11px] font-bold bg-primary/10 px-2 py-1 rounded">3 GUIDES</span>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/60 p-4 rounded-2xl shadow-sm flex items-center gap-4">
+                <div class="h-16 w-16 rounded-full bg-center bg-cover shrink-0 border-2 border-white dark:border-slate-700 shadow-sm" style='background-image: url("https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop");'></div>
+                <div class="flex-1">
+                    <p class="text-base font-bold text-[#0d141b] dark:text-white leading-tight">Elena Rodriguez</p>
+                    <div class="flex items-center gap-1 mt-0.5">
+                        <span class="material-symbols-outlined text-amber-500 text-[14px] filled-icon">star</span>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">5.0 (120) • Historic Tours</p>
+                    </div>
+                    <p class="text-[11px] text-emerald-500 font-bold mt-1 uppercase">Available now</p>
+                </div>
+                <button class="text-red-500 hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined filled-icon">favorite</span>
+                </button>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/60 p-4 rounded-2xl shadow-sm flex items-center gap-4">
+                <div class="h-16 w-16 rounded-full bg-center bg-cover shrink-0 border-2 border-white dark:border-slate-700 shadow-sm" style='background-image: url("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop");'></div>
+                <div class="flex-1">
+                    <p class="text-base font-bold text-[#0d141b] dark:text-white leading-tight">Mark Thompson</p>
+                    <div class="flex items-center gap-1 mt-0.5">
+                        <span class="material-symbols-outlined text-amber-500 text-[14px] filled-icon">star</span>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">4.8 (85) • Adventure</p>
+                    </div>
+                </div>
+                <button class="text-red-500 hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined filled-icon">favorite</span>
+                </button>
+            </div>
+
+            <div class="pt-6">
+                <h3 class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 px-1 mb-4">Saved Resorts</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="group relative bg-white dark:bg-slate-800/40 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800/60">
+                        <div class="h-32 bg-center bg-cover relative" style='background-image: url("https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=300&auto=format&fit=crop");'>
+                            <button class="absolute top-2 right-2 p-1.5 bg-white/90 dark:bg-black/40 backdrop-blur-md rounded-full text-red-500 shadow-sm">
+                                <span class="material-symbols-outlined text-lg filled-icon">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-sm font-bold text-[#0d141b] dark:text-white line-clamp-1">Azure Bay Resort</p>
+                            <div class="flex items-center gap-1 mt-0.5">
+                                <span class="material-symbols-outlined text-amber-500 text-[12px] filled-icon">star</span>
+                                <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold">4.9 (450)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group relative bg-white dark:bg-slate-800/40 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800/60">
+                        <div class="h-32 bg-center bg-cover relative" style='background-image: url("https://images.unsplash.com/photo-1519451241324-207602394a45?q=80&w=300&auto=format&fit=crop");'>
+                            <button class="absolute top-2 right-2 p-1.5 bg-white/90 dark:bg-black/40 backdrop-blur-md rounded-full text-red-500 shadow-sm">
+                                <span class="material-symbols-outlined text-lg filled-icon">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-sm font-bold text-[#0d141b] dark:text-white line-clamp-1">Peak Valley Lodge</p>
+                            <div class="flex items-center gap-1 mt-0.5">
+                                <span class="material-symbols-outlined text-amber-500 text-[12px] filled-icon">star</span>
+                                <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold">4.7 (312)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#101922]/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 pb-6 pt-3">
+    <div class="max-w-md mx-auto flex justify-around items-center px-2">
+        
+        <a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="index.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-medium">Home</span>
+        </a>
+
+        <a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="guides.html">
+            <span class="material-symbols-outlined">person_search</span>
+            <span class="text-[10px] font-medium">Guides</span>
+        </a>
+
+        <a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="resort.html">
+            <span class="material-symbols-outlined">holiday_village</span>
+            <span class="text-[10px] font-medium">Resort</span>
+        </a>
+
+        <a class="flex flex-col items-center gap-1 text-primary" href="favorites.html">
+            <span class="material-symbols-outlined filled-icon">favorite</span>
+            <span class="text-[10px] font-bold">Favorites</span>
+        </a>
+
+        <a href="javascript:void(0)" onclick="handleProfileClick()" class="flex flex-col items-center ...">
+    <span class="material-symbols-outlined">account_circle</span>
+    <span class="text-[10px]">My Profile</span>
+</a>
+    </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
